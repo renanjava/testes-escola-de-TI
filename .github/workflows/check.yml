@@ -1,0 +1,25 @@
+name: 'Verificação básica de código'
+
+on:
+  push:
+    branches-ignore:
+      - 'main'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Subir o Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.12.2'
+
+      - name: Instalar as dependências
+        run: npm install
+
+      - name: Rodar o ESLint
+        run: npm run lint
+
+      - name: Rodar os testes unitários
+        run: npm run test
