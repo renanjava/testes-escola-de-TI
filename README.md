@@ -1,3 +1,5 @@
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN)
+
 <h2>📌 Visão Geral</h2>
 <p>Este é o back-end de um sistema de delivery para padarias, desenvolvido em TypeScript utilizando o framework NestJS.</p>
 
@@ -10,37 +12,23 @@
 <ul>
     <li><strong>Linguagem:</strong> TypeScript</li>
     <li><strong>Framework:</strong> NestJS</li>
-    <li><strong>Configuração:</strong> dotenv</li>
-    <li><strong>Padronização de Código:</strong> Prettier, ESLint</li>
+    <li><strong>Configuração:</strong> DotEnv</li>
+    <li><strong>Padronização de Código:</strong> Prettier e ESLint</li>
     <li><strong>CI/CD:</strong> Validação automática de linter e testes unitários</li>
 </ul>
 
-<h2>📂 Estrutura do Projeto</h2>
-    <pre>
-      /src
-      |-- modules/            # Módulos da aplicação
-      |-- controllers/        # Controladores das rotas
-      |-- services/           # Serviços e regras de negócio
-      |-- entities/           # Modelagem das entidades
-      |-- config/             # Configuração do sistema
-      |-- main.ts             # Arquivo principal
-    </pre>
+<h2>📂 Estrutura do Projeto - Arquitetura MVC</h2>
+<pre>
+  /src
+  |-- modules/            # Módulos da aplicação
+  |-- controllers/        # Controladores das rotas
+  |-- services/           # Serviços e regras de negócio
+  |-- entities/           # Modelagem das entidades
+  |-- config/             # Configuração do sistema
+  |-- main.ts             # Arquivo principal
+</pre>
 
-<h2>Instalação</h2>
-<h3>Instalação do projeto</h3>
-<ol>
-    <li>Clone o repositório:<br><code>git clone https://github.com/renanjava/testes-escola-de-ti</code></li>
-    <li>Acesse o diretório do projeto:<br><code>cd testes-escola-de-ti</code></li>
-    <li>Instale as dependências:<br><code>npm install</code></li>
-    <li>Configure as variáveis de ambiente:<br><code>cp .env.example .env</code></li>
-</ol>
-
-<h2>Como rodar a API</h2>
-<ol>
-    <li>Inicie a aplicação em ambiente de desenvolvimento:<br><code>npm run start:dev</code></li>
-</ol>
-
-<h2>Git Flow</h2>
+<h2>🔀 Git Flow</h2>
 <ul>
     <li>Apenas a branch <code>main</code> representa o ambiente de produção.</li>
     <li><strong>Ninguém pode fazer push direto para <code>main</code></strong>, apenas via <strong>Pull Request</strong>.</li>
@@ -49,7 +37,20 @@
     <li>O PR <strong>só será aceito se passar na pipeline de CI/CD</strong> (validação de linter e testes unitários).</li>
 </ul>
 
-<h2>Testes</h2>
+<h2>🛠️ Instalação do projeto</h2>
+<ol>
+    <li>Clone o repositório:<br><code>git clone https://github.com/renanjava/testes-escola-de-ti</code></li>
+    <li>Acesse o diretório do projeto:<br><code>cd testes-escola-de-ti</code></li>
+    <li>Instale as dependências:<br><code>npm install</code></li>
+    <li>Configure as variáveis de ambiente:<br><code>cp .env.example .env</code></li>
+</ol>
+
+<h2>▶️ Como rodar a API</h2>
+<ol>
+    <li>Inicie a aplicação em ambiente de desenvolvimento:<br><code>npm run start:dev</code></li>
+</ol>
+
+<h2>⚙️ Testes</h2>
 <ul>
     <li>Para rodar os testes unitários:<br><code>npm run test:unit</code></li>
     <li>Para rodar os testes de integração:<br><code>npm run test:int</code></li>
