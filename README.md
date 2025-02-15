@@ -3,7 +3,7 @@
 <h2>📌 Visão Geral</h2>
 <p>Este é o back-end de um sistema de delivery para padarias, desenvolvido em TypeScript utilizando o framework NestJS.</p>
 
-<h2>🔥 Stack utilizada</h2>
+<h2>🔥 Stack Utilizada</h2>
 <ul>
     <li>node: v20.12.2</li>
 </ul>
@@ -45,7 +45,7 @@
     <li>Configure as variáveis de ambiente:<br><code>cp .env.example .env</code></li>
 </ol>
 
-<h2>▶️ Como rodar a API</h2>
+<h2>🖥️ Como rodar a API</h2>
 <ol>
     <li>Inicie a aplicação em ambiente de desenvolvimento:<br><code>npm run start:dev</code></li>
 </ol>
