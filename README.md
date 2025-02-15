@@ -4,7 +4,9 @@
         <code>git clone https://github.com/renanjava/testes-escola-de-ti</code>
     </li>
     <li>Acesse o diretório e instale as dependências:<br>
-        <code>cd testes-escola-de-ti<br>npm install</code>
+        <code>cd testes-escola-de-ti</code>
+        <br>
+        <code>npm install</code>
     </li>
     <li>Configure as variáveis de ambiente:<br>
         <code>cp .env.example .env</code>
