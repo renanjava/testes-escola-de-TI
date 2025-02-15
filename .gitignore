@@ -19,6 +19,9 @@ lerna-debug.log*
 /coverage
 /.nyc_output
 
+#docker
+.docker/dbdata/*
+
 # IDEs and editors
 /.idea
 .project
@@ -39,6 +42,7 @@ lerna-debug.log*
 .env
 .env.development.local
 .env.test.local
+.env.test
 .env.production.local
 .env.local
 

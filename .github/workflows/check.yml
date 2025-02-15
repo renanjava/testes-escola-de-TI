@@ -22,4 +22,4 @@ jobs:
         run: npm run lint
 
       - name: Rodar os testes unitários
-        run: npm run test
+        run: npm run test:unit
