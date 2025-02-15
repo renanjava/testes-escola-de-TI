@@ -3,13 +3,16 @@
     <li>Clone o repositório:<br>
         <code>git clone https://github.com/renanjava/testes-escola-de-ti</code>
     </li>
-    <li>Acesse o diretório e instale as dependências:<br>
+    <li>Acesse o diretório:<br>
         <code>cd testes-escola-de-ti</code>
-        <br>
-        <code>npm install</code>
+    </li>
+    <li>Instale as dependências:<br>
+      <code>npm install</code>
+    </li>
+    <li>Crie as variáveis de ambiente:<br>
+        <code>cp .env.example .env</code>
     </li>
     <li>Configure as variáveis de ambiente:<br>
-        <code>cp .env.example .env</code>
     </li>
     <li>Inicie a aplicação em ambiente de desenvolvimento:<br>
         <code>npm run start:dev</code>
