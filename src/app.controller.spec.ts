@@ -15,8 +15,8 @@ describe('AppController', () => {
   })
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!')
+    it('should return "Esta é uma rota protegida!"', () => {
+      expect(appController. getProtectedData()).toBe({message: 'Esta é uma rota protegida!'})
     })
   })
 })
