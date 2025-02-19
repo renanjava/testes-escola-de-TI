@@ -12,8 +12,7 @@ export class AuthController {
 
   @Post('login')
   login(@Body() body: AuthLoginDto) {
-    const user = { id: 1, username: body.username }
-    return this.authService.generateToken(user)
+    return this.authService.generateToken({ id: 1, username: body.username })
   }
 
   @Post('register')
