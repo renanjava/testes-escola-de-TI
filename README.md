@@ -11,7 +11,7 @@
 <h2>🚀 Tecnologias Utilizadas</h2>
 <ul>
     <li><strong>Linguagem:</strong> TypeScript</li>
-    <li><strong>Framework:</strong> NestJS</li>
+    <li><strong>Framework:</strong> NestJS, Flutter</li>
     <li><strong>Configuração:</strong> DotEnv</li>
     <li><strong>Padronização de Código:</strong> Prettier e ESLint</li>
     <li><strong>CI/CD:</strong> Validação automática de linter e testes unitários</li>
