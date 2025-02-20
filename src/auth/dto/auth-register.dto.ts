@@ -2,12 +2,15 @@ import { ICreateUserDto } from '@/user/dto/create-user.dto'
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator'
 
 export class AuthRegisterDto implements ICreateUserDto {
+  @IsNotEmpty()
   @IsString()
   name: string
 
+  @IsNotEmpty()
   @IsString()
-  username: string
+  user: string
 
+  @IsNotEmpty()
   @IsEmail()
   email: string
 
