@@ -1,13 +1,13 @@
 import { IsString } from 'class-validator'
 
-interface IAuthLoginDto {
-  username: string
+export interface IAuthLoginDto {
+  user: string
   password: string
 }
 
 export class AuthLoginDto implements IAuthLoginDto {
   @IsString()
-  username: string
+  user: string
 
   @IsString()
   password: string
