@@ -3,11 +3,11 @@ import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
-import { Logger } from '@nestjs/common'
+import { Logger, ValidationPipe } from '@nestjs/common'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-
+  app.useGlobalPipes(new ValidationPipe())
   app.use(helmet())
   app.use(
     rateLimit({
