@@ -12,7 +12,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   eslintPluginPrettierRecommended,
-  security.configs.recommended, 
+  security.configs.recommended,
   {
     languageOptions: {
       globals: {
