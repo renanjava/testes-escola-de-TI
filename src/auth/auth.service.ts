@@ -18,8 +18,7 @@ export class AuthService {
 
   async registerUser(registeredUser: ICreateUserDto): Promise<ICreateUserDto> {
     const userExists = await this.userService.user({
-      email: registeredUser.email,
-      user: registeredUser.user,
+      OR: [{ user: registeredUser.user }, { email: registeredUser.email }],
     })
 
     if (userExists)
