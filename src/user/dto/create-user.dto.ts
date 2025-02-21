@@ -1,13 +1,13 @@
 export interface ICreateUserDto {
-  name: string
-  user: string
+  realname: string
+  username: string
   email: string
   password: string
 }
 
 export class CreateUserDto implements ICreateUserDto {
-  name: string
-  user: string
+  realname: string
+  username: string
   email: string
   password: string
 }

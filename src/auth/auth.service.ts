@@ -20,7 +20,9 @@ export class AuthService {
   async loginUser(
     loggedUser: AuthLoginProps,
   ): Promise<{ access_token: string }> {
-    const userExists = await this.userService.user({ user: loggedUser.user })
+    const userExists = await this.userService.user({
+      username: loggedUser.username,
+    })
     if (!userExists) {
       throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND)
     }
@@ -33,12 +35,18 @@ export class AuthService {
       throw new HttpException('Senha inválida', HttpStatus.UNAUTHORIZED)
     }
 
-    return this.generateToken({ id: userExists.id, username: userExists.user })
+    return this.generateToken({
+      id: userExists.id,
+      username: userExists.username,
+    })
   }
 
   async registerUser(registeredUser: ICreateUserDto): Promise<ICreateUserDto> {
     const userExists = await this.userService.user({
-      OR: [{ user: registeredUser.user }, { email: registeredUser.email }],
+      OR: [
+        { username: registeredUser.username },
+        { email: registeredUser.email },
+      ],
     })
 
     if (userExists) {
@@ -51,8 +59,8 @@ export class AuthService {
     const hashedPassword = await this.hashPassword(registeredUser.password)
 
     const userData: ICreateUserDto = {
-      user: registeredUser.user,
-      name: registeredUser.name,
+      username: registeredUser.username,
+      realname: registeredUser.realname,
       email: registeredUser.email,
       password: hashedPassword,
     }
