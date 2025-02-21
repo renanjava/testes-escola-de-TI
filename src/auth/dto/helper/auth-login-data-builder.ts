@@ -3,7 +3,7 @@ import { AuthLoginProps } from '../auth-login.dto'
 
 export function AuthLoginDataBuilder(props: AuthLoginProps): AuthLoginProps {
   return {
-    user: props.user ?? faker.person.fullName(),
+    username: props.username ?? faker.person.firstName(),
     password:
       props.password ??
       faker.internet.password({
