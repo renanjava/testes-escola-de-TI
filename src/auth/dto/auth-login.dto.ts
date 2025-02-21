@@ -1,8 +1,8 @@
 import { IsString, MaxLength } from 'class-validator'
 
 export type AuthLoginProps = {
-  user: string | undefined
-  password: string | undefined
+  user: string
+  password: string
 }
 
 export class AuthLoginDto implements AuthLoginProps {
@@ -15,7 +15,7 @@ export class AuthLoginDto implements AuthLoginProps {
   password: string
 
   constructor(user: string, password: string) {
-    this.user = user.trim()
+    this.user = user
     this.password = password
   }
 }

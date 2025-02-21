@@ -9,15 +9,12 @@ describe('AuthLoginDto unit tests', () => {
   })
 
   it('constructor method', () => {
-    let sut = AuthLoginFactory.create('  usuario teste ', '83dskjwj222')
+    let sut = AuthLoginFactory.create('usuario teste', '83dskjwj222')
 
     expect(sut.user).toBe('usuario teste')
     expect(sut.password).toBe('83dskjwj222')
 
-    sut = AuthLoginFactory.create(
-      props.user as string,
-      props.password as string,
-    )
+    sut = AuthLoginFactory.create(props.user, props.password)
 
     expect(sut.user).toBe(props.user)
     expect(sut.password).toBe(props.password)

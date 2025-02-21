@@ -26,7 +26,7 @@ export class AuthService {
     }
 
     const validPassword = await this.comparePasswords(
-      loggedUser.password as string,
+      loggedUser.password,
       userExists.password,
     )
     if (!validPassword) {
