@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import { UserService } from '@/user/user.service'
 import { ICreateUserDto } from '@/user/dto/create-user.dto'
-import { IAuthLoginDto } from './dto/auth-login.dto'
+import { AuthLoginProps } from './dto/auth-login.dto'
 
 interface UserPayload {
   id: number
@@ -18,7 +18,7 @@ export class AuthService {
   ) {}
 
   async loginUser(
-    loggedUser: IAuthLoginDto,
+    loggedUser: AuthLoginProps,
   ): Promise<{ access_token: string }> {
     const userExists = await this.userService.user({ user: loggedUser.user })
     if (!userExists) {
@@ -41,11 +41,12 @@ export class AuthService {
       OR: [{ user: registeredUser.user }, { email: registeredUser.email }],
     })
 
-    if (userExists)
+    if (userExists) {
       throw new HttpException(
         'Email ou User já registrado',
         HttpStatus.BAD_REQUEST,
       )
+    }
 
     const hashedPassword = await this.hashPassword(registeredUser.password)
 
