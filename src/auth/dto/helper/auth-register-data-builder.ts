@@ -5,8 +5,8 @@ export function AuthRegisterDataBuilder(
   props: AuthRegisterProps,
 ): AuthRegisterProps {
   return {
-    realname: props.realname ?? faker.person.firstName(),
-    username: props.username ?? faker.person.fullName(),
+    realname: props.realname ?? faker.person.fullName(),
+    username: props.username ?? faker.person.firstName(),
     email: props.email ?? faker.internet.email(),
     password:
       props.password ??

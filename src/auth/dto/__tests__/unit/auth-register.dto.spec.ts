@@ -34,7 +34,7 @@ describe('AuthRegisterDto unit tests', () => {
     expect(sut.password).toBe(props.password)
   })
 
-  it('should return error when username is invalid', async () => {
+  it('should return error when username is not a string', async () => {
     const sut = AuthRegisterFactory.create(
       props.realname,
       123 as any,
@@ -51,7 +51,53 @@ describe('AuthRegisterDto unit tests', () => {
     })
   })
 
-  it('should return error when email is not valid', async () => {
+  it('should return error when username is empty', async () => {
+    const sut = AuthRegisterFactory.create(
+      props.realname,
+      '',
+      props.email,
+      props.password,
+    )
+    const errors = await validate(sut)
+
+    expect(errors.length).not.toBe(0)
+    expect(errors[0].constraints).toStrictEqual({
+      isNotEmpty: 'O nome de usuário não pode estar vazio.',
+      minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+    })
+  })
+
+  it('should return error when username is too short', async () => {
+    const sut = AuthRegisterFactory.create(
+      props.realname,
+      'ab',
+      props.email,
+      props.password,
+    )
+    const errors = await validate(sut)
+
+    expect(errors.length).not.toBe(0)
+    expect(errors[0].constraints).toStrictEqual({
+      minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+    })
+  })
+
+  it('should return error when username is too long', async () => {
+    const sut = AuthRegisterFactory.create(
+      props.realname,
+      'um-nome-de-usuario-muito-longo',
+      props.email,
+      props.password,
+    )
+    const errors = await validate(sut)
+
+    expect(errors.length).not.toBe(0)
+    expect(errors[0].constraints).toStrictEqual({
+      maxLength: 'O nome de usuário deve ter no máximo 20 caracteres.',
+    })
+  })
+
+  it('should return error when email is invalid', async () => {
     const sut = AuthRegisterFactory.create(
       props.realname,
       props.username,
@@ -63,6 +109,22 @@ describe('AuthRegisterDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       isEmail: 'O email deve ser um endereço de email válido.',
+    })
+  })
+
+  it('should return error when email is empty', async () => {
+    const sut = AuthRegisterFactory.create(
+      props.realname,
+      props.username,
+      '',
+      props.password,
+    )
+    const errors = await validate(sut)
+
+    expect(errors.length).not.toBe(0)
+    expect(errors[0].constraints).toStrictEqual({
+      isEmail: 'O email deve ser um endereço de email válido.',
+      isNotEmpty: 'O email não pode estar vazio.',
     })
   })
 
@@ -78,6 +140,37 @@ describe('AuthRegisterDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       minLength: 'A senha deve ter pelo menos 6 caracteres.',
+    })
+  })
+
+  it('should return error when password is empty', async () => {
+    const sut = AuthRegisterFactory.create(
+      props.realname,
+      props.username,
+      props.email,
+      '',
+    )
+    const errors = await validate(sut)
+
+    expect(errors.length).not.toBe(0)
+    expect(errors[0].constraints).toStrictEqual({
+      isNotEmpty: 'A senha não pode estar vazia.',
+      minLength: 'A senha deve ter pelo menos 6 caracteres.',
+    })
+  })
+
+  it('should return error when password is too long', async () => {
+    const sut = AuthRegisterFactory.create(
+      props.realname,
+      props.username,
+      props.email,
+      'uma-senha-muito-longa-que-excede-20-caracteres',
+    )
+    const errors = await validate(sut)
+
+    expect(errors.length).not.toBe(0)
+    expect(errors[0].constraints).toStrictEqual({
+      maxLength: 'A senha deve ter no máximo 20 caracteres.',
     })
   })
 
