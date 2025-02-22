@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { JwtService } from '@nestjs/jwt'
 import { UserService } from '@/user/user.service'
-import * as bcrypt from 'bcrypt'
 import { HttpException, HttpStatus } from '@nestjs/common'
 import { AuthLoginProps } from '@/auth/dto/auth-login.dto'
 import { AuthService } from '@/auth/auth.service'
 import { AuthLoginDataBuilder } from '@/auth/dto/helper/auth-login-data-builder'
 import { AuthRegisterProps } from '@/auth/dto/auth-register.dto'
 import { AuthRegisterDataBuilder } from '@/auth/dto/helper/auth-register-data-builder'
+import { Password } from '@/common/utils/password'
 
 describe('AuthService', () => {
   const mockUserService = {
@@ -52,7 +52,7 @@ describe('AuthService', () => {
       mockUserService.user.mockResolvedValue({
         id: 1,
         username: loginProps.username,
-        password: await bcrypt.hash(loginProps.password, 10),
+        password: await Password.generateEncrypted(loginProps.password, 10),
       })
       mockJwtService.sign.mockReturnValue('mock_token')
 
@@ -84,8 +84,7 @@ describe('AuthService', () => {
         password: 'senha-invalida',
       } as AuthLoginProps)
 
-      const hashedPassword = await bcrypt.hash('password123', 10)
-
+      const hashedPassword = await Password.generateEncrypted('password123', 10)
       mockUserService.user.mockResolvedValue({
         id: 1,
         username: loginProps.username,
@@ -107,7 +106,10 @@ describe('AuthService', () => {
     it('should register a new user successfully', async () => {
       registerProps = AuthRegisterDataBuilder({} as AuthRegisterProps)
 
-      const hashedPassword = await bcrypt.hash(registerProps.password, 10)
+      const hashedPassword = await Password.generateEncrypted(
+        registerProps.password,
+        10,
+      )
 
       mockUserService.user.mockResolvedValue(null)
       mockUserService.createUser.mockResolvedValue({
@@ -115,9 +117,10 @@ describe('AuthService', () => {
         password: hashedPassword,
       })
 
-      jest.spyOn(authService, 'hashPassword').mockResolvedValue(hashedPassword)
-
-      const result = await authService.registerUser(registerProps)
+      const result = await authService.registerUser({
+        ...registerProps,
+        password: hashedPassword,
+      })
 
       expect(result.username).toEqual(registerProps.username)
       expect(result.email).toEqual(registerProps.email)
@@ -137,7 +140,7 @@ describe('AuthService', () => {
         await authService.registerUser(registerProps)
       } catch (e) {
         expect(e).toBeInstanceOf(HttpException)
-        expect(e.response).toBe('Email ou User já registrado')
+        expect(e.response).toBe('Email ou Username já existe')
         expect(e.status).toBe(HttpStatus.BAD_REQUEST)
       }
     })
@@ -149,14 +152,14 @@ describe('AuthService', () => {
       const hashedPassword = await authService.hashPassword(password)
 
       expect(hashedPassword).not.toEqual(password)
-      expect(await bcrypt.compare(password, hashedPassword)).toBe(true)
+      expect(await Password.verify(password, hashedPassword)).toBe(true)
     })
   })
 
   describe('comparePasswords', () => {
     it('should return true if passwords match', async () => {
       const password = 'password123'
-      const hashedPassword = await bcrypt.hash(password, 10)
+      const hashedPassword = await Password.generateEncrypted(password, 10)
 
       const result = await authService.comparePasswords(
         password,
