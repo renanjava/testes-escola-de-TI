@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import * as bcrypt from 'bcrypt'
 import { UserService } from '@/user/user.service'
 import { ICreateUserDto } from '@/user/dto/create-user.dto'
 import { AuthLoginProps } from './dto/auth-login.dto'
 import { EmailOuUsernameExistenteException } from './exceptions/email-ou-username-existente.exception'
 import { SenhaInvalidaException } from './exceptions/senha-invalida.exception'
 import { UsuarioNaoEncontradoException } from './exceptions/usuario-nao-encontrado.exception'
+import { Password } from '@/common/utils/password'
 
 interface UserPayload {
   id: number
   username: string
+}
+
+export type TokenProps = {
+  access_token: string
 }
 
 @Injectable()
@@ -56,29 +60,19 @@ export class AuthService {
       throw new EmailOuUsernameExistenteException()
     }
 
-    const hashedPassword = await this.hashPassword(registeredUser.password)
-
-    const userData: ICreateUserDto = {
-      username: registeredUser.username,
-      realname: registeredUser.realname,
-      email: registeredUser.email,
-      password: hashedPassword,
-    }
-
-    await this.userService.createUser(userData)
+    await this.userService.createUser(registeredUser)
     return { ...registeredUser }
   }
 
   async hashPassword(password: string): Promise<string> {
-    const saltRounds = 10
-    return await bcrypt.hash(password, saltRounds)
+    return await Password.generateEncrypted(password, 10)
   }
 
   async comparePasswords(password: string, hash: string): Promise<boolean> {
-    return await bcrypt.compare(password, hash)
+    return await Password.verify(password, hash)
   }
 
-  generateToken(user: UserPayload): { access_token: string } {
+  generateToken(user: UserPayload): TokenProps {
     const payload = { username: user.username, sub: user.id }
     return {
       access_token: this.jwtService.sign(payload),
