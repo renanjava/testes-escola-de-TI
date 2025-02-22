@@ -137,7 +137,7 @@ describe('AuthService', () => {
         await authService.registerUser(registerProps)
       } catch (e) {
         expect(e).toBeInstanceOf(HttpException)
-        expect(e.response).toBe('Email ou User já registrado')
+        expect(e.response).toBe('Email ou Username já existe')
         expect(e.status).toBe(HttpStatus.BAD_REQUEST)
       }
     })

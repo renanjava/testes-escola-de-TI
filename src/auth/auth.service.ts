@@ -1,9 +1,12 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import { UserService } from '@/user/user.service'
 import { ICreateUserDto } from '@/user/dto/create-user.dto'
 import { AuthLoginProps } from './dto/auth-login.dto'
+import { EmailOuUsernameExistenteException } from './exceptions/email-ou-username-existente.exception'
+import { SenhaInvalidaException } from './exceptions/senha-invalida.exception'
+import { UsuarioNaoEncontradoException } from './exceptions/usuario-nao-encontrado.exception'
 
 interface UserPayload {
   id: number
@@ -24,7 +27,7 @@ export class AuthService {
       username: loggedUser.username,
     })
     if (!userExists) {
-      throw new HttpException('Usuário não encontrado', HttpStatus.NOT_FOUND)
+      throw new UsuarioNaoEncontradoException()
     }
 
     const validPassword = await this.comparePasswords(
@@ -32,7 +35,7 @@ export class AuthService {
       userExists.password,
     )
     if (!validPassword) {
-      throw new HttpException('Senha inválida', HttpStatus.UNAUTHORIZED)
+      throw new SenhaInvalidaException()
     }
 
     return this.generateToken({
@@ -50,10 +53,7 @@ export class AuthService {
     })
 
     if (userExists) {
-      throw new HttpException(
-        'Email ou User já registrado',
-        HttpStatus.BAD_REQUEST,
-      )
+      throw new EmailOuUsernameExistenteException()
     }
 
     const hashedPassword = await this.hashPassword(registeredUser.password)
