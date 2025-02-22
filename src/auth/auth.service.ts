@@ -24,9 +24,7 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  async loginUser(
-    loggedUser: AuthLoginProps,
-  ): Promise<{ access_token: string }> {
+  async loginUser(loggedUser: AuthLoginProps): Promise<TokenProps> {
     const userExists = await this.userService.user({
       username: loggedUser.username,
     })
