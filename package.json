@@ -18,7 +18,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:unit": "jest --runInBand --config ./jest.unit.config.ts",
     "test:int": "jest --runInBand --config ./jest.int.config.ts",
-    "test:e2e": "jest --runInBand --config ./jest.e2e.config.ts"
+    "test:e2e": "jest --runInBand --config ./jest.e2e.config.ts",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up",
+    "docker:down": "docker compose down"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.10",
