@@ -6,16 +6,32 @@
 <h2>🔥 Stack Utilizada</h2>
 <ul>
     <li>node: v20.12.2</li>
+    <li>@nestjs/jwt: v11.0.0</li>
+    <li>bcrypt: v5.1.1</li>
+    <li>class-transformer: v0.5.1</li>
+    <li>class-validator: v0.14.1</li>
+    <li>jest: v29.7.0</li>
+    <li>prettier: v3.4.2</li>
+    <li>prisma: v6.4.0</li>
+    <li>@prisma/client: v6.4.0</li>
+    <li>eslint: v9.20.1</li>
+    <li>@faker-js/faker: v9.5.0</li>
 </ul>
 
 <h2>🚀 Tecnologias Utilizadas</h2>
 <ul>
     <li><strong>Linguagem:</strong> TypeScript</li>
-    <li><strong>Framework:</strong> NestJS, Flutter</li>
-    <li><strong>Configuração:</strong> DotEnv</li>
+    <li><strong>Framework:</strong> NestJS</li>
+    <li><strong>Autenticação:</strong> JWT e Bcrypt</li>
+    <li><strong>Transformação de Dados:</strong> Class Transformer</li>
+    <li><strong>Validação de Dados:</strong> Class Validator</li>
+    <li><strong>Testes:</strong> Jest</li>
     <li><strong>Padronização de Código:</strong> Prettier e ESLint</li>
+    <li><strong>ORM:</strong> Prisma</li>
+    <li><strong>Fakes e Mocking:</strong> Faker.js</li>
     <li><strong>CI/CD:</strong> Validação automática de linter e testes unitários</li>
 </ul>
+
 
 <h2>📂 Estrutura do Projeto - Arquitetura MVC</h2>
 <pre>
@@ -55,6 +71,6 @@
     <li>Para rodar os testes unitários:<br><code>npm run test:unit</code></li>
     <li>Para rodar os testes de integração:<br><code>npm run test:int</code></li>
     <li>Para rodar os testes de ponta a ponta (E2E):<br><code>npm run test:e2e</code></li>
-    <li>Para rodar os testes com cobertura de código:<br><code>npm run test:cov</code></li>
-    <li>Para rodar os testes em modo watch:<br><code>npm run test:watch</code></li>
+    <li>Para rodar os testes unitários com cobertura de código:<br><code>npm run test:cov</code></li>
+    <li>Para rodar os testes unitários em modo watch:<br><code>npm run test:watch</code></li>
 </ul>
