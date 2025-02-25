@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontescolati/service/auth_service.dart';
 import 'cadastro_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -6,71 +7,93 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( // Cria a estrutura básica da tela
-      body: Center( // Centraliza o conteúdo da tela
-        child: Container( // Contêiner para organizar os elementos de forma estilizada
-          padding: const EdgeInsets.all(20), // Define o padding interno do container
-          width: 350, // Define a largura do container
-          decoration: BoxDecoration( // Define o estilo de fundo e bordas do container
-            color: Colors.white, // Cor de fundo do container
-            borderRadius: BorderRadius.circular(10), // Bordas arredondadas
-            boxShadow: [ // Efeito de sombra para dar profundidade
+    final TextEditingController _usernameController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+    final AuthService _authService = AuthService(); // Instância do AuthService
+
+    return Scaffold(
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          width: 350,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1), // Cor e opacidade da sombra
-                blurRadius: 10, // Raio de desfocagem da sombra
-                spreadRadius: 4, // Quanto a sombra vai se espalhar
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                spreadRadius: 4,
               ),
             ],
           ),
-          child: Column( // Organiza os elementos de forma vertical
-            mainAxisSize: MainAxisSize.min, // Utiliza o mínimo necessário de espaço
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              const Text( // Exibe o título da tela
+              const Text(
                 'Café com Type',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), // Estilo do título
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 10), // Espaçamento entre título e subtítulo
-              const Text( // Exibe o subtítulo "Acesse sua conta"
+              const SizedBox(height: 10),
+              const Text(
                 'Acesse sua conta',
-                style: TextStyle(fontSize: 18), // Estilo do subtítulo
+                style: TextStyle(fontSize: 18),
               ),
-              const SizedBox(height: 20), // Espaçamento entre o subtítulo e os campos de entrada
-              _buildInputField('Usuário', Icons.person), // Campo de entrada para o nome de usuário
-              _buildInputField('Senha', Icons.lock, obscureText: true), // Campo de entrada para senha com texto oculto
-              const SizedBox(height: 10), // Espaçamento entre os campos de entrada e o link
-              TextButton( // Link "Esqueci minha senha"
-                onPressed: () {}, // Ação do botão (ainda não implementada)
+              const SizedBox(height: 20),
+              _buildInputField('Usuário', Icons.person, controller: _usernameController),
+              _buildInputField('Senha', Icons.lock, obscureText: true, controller: _passwordController),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {},
                 child: const Text(
                   'Esqueci minha senha',
-                  style: TextStyle(color: Colors.blue, fontSize: 14), // Estilo do texto
+                  style: TextStyle(color: Colors.blue, fontSize: 14),
                 ),
               ),
-              const SizedBox(height: 10), // Espaçamento entre o link e o botão de login
-              ElevatedButton( // Botão "Entrar"
+              const SizedBox(height: 10),
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow, // Cor de fundo do botão
-                  shape: RoundedRectangleBorder( // Bordas arredondadas do botão
+                  backgroundColor: Colors.yellow,
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50), // Padding interno do botão
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                 ),
-                onPressed: () {}, // Ação do botão (ainda não implementada)
-                child: const Text( // Texto dentro do botão
+                onPressed: () async {
+                  final username = _usernameController.text;
+                  final password = _passwordController.text;
+
+                  try {
+                    final token = await _authService.login(username, password);
+                    if (token != null) {
+                      // Navegar para a tela principal
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Login bem-sucedido! Token: $token')),
+                      );
+                      // Exemplo: Navigator.pushReplacementNamed(context, '/home');
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Erro no login: $e')),
+                    );
+                  }
+                },
+                child: const Text(
                   'Entrar',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), // Estilo do texto
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(height: 10), // Espaçamento entre o botão de login e o link para cadastro
-              TextButton( // Link "Não possuo cadastro"
-                onPressed: () { // Ao clicar, navega para a tela de cadastro
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CadastroScreen()), // Navega para a tela de cadastro
+                    MaterialPageRoute(builder: (context) => const CadastroScreen()),
                   );
                 },
                 child: const Text(
                   'Não possuo cadastro',
-                  style: TextStyle(color: Colors.blue, fontSize: 14), // Estilo do texto
+                  style: TextStyle(color: Colors.blue, fontSize: 14),
                 ),
               ),
             ],
@@ -80,26 +103,26 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // Função que cria o campo de entrada
-  Widget _buildInputField(String label, IconData icon, {bool obscureText = false}) {
+  Widget _buildInputField(String label, IconData icon, {bool obscureText = false, TextEditingController? controller}) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15), // Espaçamento inferior entre os campos
+      padding: const EdgeInsets.only(bottom: 15),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // Alinha os itens à esquerda
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text( // Rótulo do campo
+          Text(
             label,
-            style: const TextStyle(fontSize: 14), // Estilo do rótulo
+            style: const TextStyle(fontSize: 14),
           ),
-          const SizedBox(height: 5), // Espaçamento entre o rótulo e o campo de entrada
-          TextField( // Campo de entrada de texto
-            obscureText: obscureText, // Define se o texto será oculto (para senhas)
-            decoration: InputDecoration( // Decoração do campo de texto
-              prefixIcon: Icon(icon, color: Colors.grey), // Ícone dentro do campo de texto
-              border: OutlineInputBorder( // Borda arredondada para o campo
+          const SizedBox(height: 5),
+          TextField(
+            obscureText: obscureText,
+            controller: controller,
+            decoration: InputDecoration(
+              prefixIcon: Icon(icon, color: Colors.grey),
+              border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
               ),
-              contentPadding: const EdgeInsets.all(10), // Padding dentro do campo de texto
+              contentPadding: const EdgeInsets.all(10),
             ),
           ),
         ],
