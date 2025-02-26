@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger'
 import {
   IsNotEmpty,
   IsString,
@@ -12,6 +13,10 @@ export type AuthLoginProps = {
 }
 
 export class AuthLoginDto implements AuthLoginProps {
+  @ApiProperty({
+    description: 'Username do usuário',
+    type: String,
+  })
   @IsString({ message: 'O nome de usuário deve ser uma string.' })
   @IsNotEmpty({ message: 'O nome de usuário não pode estar vazio.' })
   @MaxLength(20, {
@@ -25,6 +30,10 @@ export class AuthLoginDto implements AuthLoginProps {
   })
   username: string
 
+  @ApiProperty({
+    description: 'Senha do usuário',
+    type: String,
+  })
   @IsString({ message: 'A senha deve ser uma string.' })
   @IsNotEmpty({ message: 'A senha não pode estar vazia.' })
   @MaxLength(20, { message: 'A senha deve ter no máximo 20 caracteres.' })

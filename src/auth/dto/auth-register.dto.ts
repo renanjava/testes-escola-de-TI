@@ -1,4 +1,5 @@
 import { ICreateUserDto } from '@/user/dto/create-user.dto'
+import { ApiProperty } from '@nestjs/swagger'
 import {
   IsEmail,
   IsNotEmpty,
@@ -16,12 +17,20 @@ export type AuthRegisterProps = {
 }
 
 export class AuthRegisterDto implements ICreateUserDto {
+  @ApiProperty({
+    description: 'Nome real do usuário',
+    type: String,
+  })
   @IsNotEmpty({ message: 'O nome real não pode estar vazio.' })
   @IsString({ message: 'O nome real deve ser uma string.' })
   @MaxLength(80, { message: 'O nome real deve ter no máximo 80 caracteres.' })
   @MinLength(3, { message: 'O nome real deve ter pelo menos 3 caracteres.' })
   realname: string
 
+  @ApiProperty({
+    description: 'Username do usuário',
+    type: String,
+  })
   @IsNotEmpty({ message: 'O nome de usuário não pode estar vazio.' })
   @IsString({ message: 'O nome de usuário deve ser uma string.' })
   @MaxLength(20, {
@@ -35,10 +44,18 @@ export class AuthRegisterDto implements ICreateUserDto {
   })
   username: string
 
+  @ApiProperty({
+    description: 'Email do usuário',
+    type: String,
+  })
   @IsNotEmpty({ message: 'O email não pode estar vazio.' })
   @IsEmail({}, { message: 'O email deve ser um endereço de email válido.' })
   email: string
 
+  @ApiProperty({
+    description: 'Senha do usuário',
+    type: String,
+  })
   @IsNotEmpty({ message: 'A senha não pode estar vazia.' })
   @IsString({ message: 'A senha deve ser uma string.' })
   @MaxLength(20, { message: 'A senha deve ter no máximo 20 caracteres.' })
