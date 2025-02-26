@@ -17,6 +17,8 @@ services:
     ports:
       - 3000:3000
     environment:
+      - NODE_ENV=production 
+      - PORT=${PORT}
       - JWT_SECRET=${JWT_SECRET}
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_URL=${DATABASE_URL}
