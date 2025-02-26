@@ -13,7 +13,7 @@ export function AuthRegisterDataBuilder(
       faker.internet.password({
         length: 20,
         memorable: true,
-        pattern: /[A-Z]/,
+        pattern: /^[A-Za-z0-9*]+$/,
       }),
   }
 }
