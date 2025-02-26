@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsString,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator'
@@ -29,6 +30,9 @@ export class AuthRegisterDto implements ICreateUserDto {
   @MinLength(3, {
     message: 'O nome de usuário deve ter pelo menos 3 caracteres.',
   })
+  @Matches(/^[A-Za-z0-9_-]+$/, {
+    message: 'O nome de usuário deve conter letras, números, _ ou -',
+  })
   username: string
 
   @IsNotEmpty({ message: 'O email não pode estar vazio.' })
@@ -39,6 +43,9 @@ export class AuthRegisterDto implements ICreateUserDto {
   @IsString({ message: 'A senha deve ser uma string.' })
   @MaxLength(20, { message: 'A senha deve ter no máximo 20 caracteres.' })
   @MinLength(6, { message: 'A senha deve ter pelo menos 6 caracteres.' })
+  @Matches(/^[A-Za-z0-9*]+$/, {
+    message: 'A senha deve conter letras, números ou o caractere *',
+  })
   password: string
 
   constructor(

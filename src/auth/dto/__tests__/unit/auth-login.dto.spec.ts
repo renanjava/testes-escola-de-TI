@@ -29,6 +29,7 @@ describe('AuthLoginDto unit tests', () => {
     expect(errors[0].constraints).toStrictEqual({
       maxLength: 'O nome de usuário deve ter no máximo 20 caracteres.',
       isString: 'O nome de usuário deve ser uma string.',
+      matches: 'O nome de usuário deve conter letras, números, _ ou -',
       minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
     })
   })
@@ -42,6 +43,7 @@ describe('AuthLoginDto unit tests', () => {
       maxLength: 'O nome de usuário deve ter no máximo 20 caracteres.',
       isString: 'O nome de usuário deve ser uma string.',
       minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+      matches: 'O nome de usuário deve conter letras, números, _ ou -',
     })
   })
 
@@ -65,6 +67,7 @@ describe('AuthLoginDto unit tests', () => {
       isString: 'O nome de usuário deve ser uma string.',
       isNotEmpty: 'O nome de usuário não pode estar vazio.',
       minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+      matches: 'O nome de usuário deve conter letras, números, _ ou -',
     })
   })
 
@@ -78,6 +81,7 @@ describe('AuthLoginDto unit tests', () => {
       isString: 'O nome de usuário deve ser uma string.',
       isNotEmpty: 'O nome de usuário não pode estar vazio.',
       minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+      matches: 'O nome de usuário deve conter letras, números, _ ou -',
     })
   })
 
@@ -90,6 +94,7 @@ describe('AuthLoginDto unit tests', () => {
       maxLength: 'O nome de usuário deve ter no máximo 20 caracteres.',
       isString: 'O nome de usuário deve ser uma string.',
       minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+      matches: 'O nome de usuário deve conter letras, números, _ ou -',
     })
   })
 
@@ -101,6 +106,7 @@ describe('AuthLoginDto unit tests', () => {
     expect(errors[0].constraints).toStrictEqual({
       isNotEmpty: 'O nome de usuário não pode estar vazio.',
       minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+      matches: 'O nome de usuário deve conter letras, números, _ ou -',
     })
   })
 
@@ -118,6 +124,7 @@ describe('AuthLoginDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       maxLength: 'A senha deve ter no máximo 20 caracteres.',
+      matches: 'A senha deve conter letras, números ou o caractere *',
       isString: 'A senha deve ser uma string.',
       minLength: 'A senha deve ter pelo menos 6 caracteres.',
     })
@@ -130,6 +137,7 @@ describe('AuthLoginDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       maxLength: 'A senha deve ter no máximo 20 caracteres.',
+      matches: 'A senha deve conter letras, números ou o caractere *',
       isString: 'A senha deve ser uma string.',
       minLength: 'A senha deve ter pelo menos 6 caracteres.',
     })
@@ -152,6 +160,7 @@ describe('AuthLoginDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       isString: 'A senha deve ser uma string.',
+      matches: 'A senha deve conter letras, números ou o caractere *',
       isNotEmpty: 'A senha não pode estar vazia.',
       minLength: 'A senha deve ter pelo menos 6 caracteres.',
       maxLength: 'A senha deve ter no máximo 20 caracteres.',
@@ -165,6 +174,7 @@ describe('AuthLoginDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       maxLength: 'A senha deve ter no máximo 20 caracteres.',
+      matches: 'A senha deve conter letras, números ou o caractere *',
       isString: 'A senha deve ser uma string.',
       isNotEmpty: 'A senha não pode estar vazia.',
       minLength: 'A senha deve ter pelo menos 6 caracteres.',
@@ -178,6 +188,7 @@ describe('AuthLoginDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       maxLength: 'A senha deve ter no máximo 20 caracteres.',
+      matches: 'A senha deve conter letras, números ou o caractere *',
       isString: 'A senha deve ser uma string.',
       minLength: 'A senha deve ter pelo menos 6 caracteres.',
     })
@@ -190,6 +201,7 @@ describe('AuthLoginDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       isNotEmpty: 'A senha não pode estar vazia.',
+      matches: 'A senha deve conter letras, números ou o caractere *',
       minLength: 'A senha deve ter pelo menos 6 caracteres.',
     })
   })

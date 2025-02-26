@@ -47,6 +47,7 @@ describe('AuthRegisterDto unit tests', () => {
     expect(errors[0].constraints).toStrictEqual({
       isString: 'O nome de usuário deve ser uma string.',
       maxLength: 'O nome de usuário deve ter no máximo 20 caracteres.',
+      matches: 'O nome de usuário deve conter letras, números, _ ou -',
       minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
     })
   })
@@ -64,6 +65,7 @@ describe('AuthRegisterDto unit tests', () => {
     expect(errors[0].constraints).toStrictEqual({
       isNotEmpty: 'O nome de usuário não pode estar vazio.',
       minLength: 'O nome de usuário deve ter pelo menos 3 caracteres.',
+      matches: 'O nome de usuário deve conter letras, números, _ ou -',
     })
   })
 
@@ -156,6 +158,7 @@ describe('AuthRegisterDto unit tests', () => {
     expect(errors[0].constraints).toStrictEqual({
       isNotEmpty: 'A senha não pode estar vazia.',
       minLength: 'A senha deve ter pelo menos 6 caracteres.',
+      matches: 'A senha deve conter letras, números ou o caractere *',
     })
   })
 
@@ -171,6 +174,7 @@ describe('AuthRegisterDto unit tests', () => {
     expect(errors.length).not.toBe(0)
     expect(errors[0].constraints).toStrictEqual({
       maxLength: 'A senha deve ter no máximo 20 caracteres.',
+      matches: 'A senha deve conter letras, números ou o caractere *',
     })
   })
 
