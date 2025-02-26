@@ -40,6 +40,7 @@ describe('AuthRegister Data Builder unit tests', () => {
 
     const result = AuthRegisterDataBuilder(input)
 
+    // eslint-disable-next-line security/detect-unsafe-regex
     expect(result.email).toMatch(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
   })
 

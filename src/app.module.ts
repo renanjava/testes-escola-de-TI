@@ -4,7 +4,7 @@ import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { ConfigModule } from '@nestjs/config'
 import { UserModule } from './user/user.module'
-import { PrismaService } from './prisma.service'
+import { PrismaService } from '../prisma/prisma.service'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 import { GlobalLoggerInterceptor } from './common/interceptors/global-logger.interceptor'
 

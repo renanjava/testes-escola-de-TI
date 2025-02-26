@@ -36,6 +36,7 @@ export default tseslint.config(
       "@typescript-eslint/no-unsafe-member-access": "off",
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/security/detect-unsafe-regex': 'off',
       'no-console': 'warn',
       'security/detect-object-injection': 'warn',
       "@typescript-eslint/no-unsafe-call": "off",
