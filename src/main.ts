@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
+import { AppModule } from '@/config/modules/app.module'
 import { ConfigService } from '@nestjs/config'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
