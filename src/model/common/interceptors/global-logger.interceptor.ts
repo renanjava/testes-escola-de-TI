@@ -19,7 +19,7 @@ export class GlobalLoggerInterceptor implements NestInterceptor {
 
     const { url, method } = request
 
-    function retornaLog(nativeLogger) {
+    function retornaLog(nativeLogger: ConsoleLogger) {
       response.on('finish', () => {
         const { statusCode } = response
         nativeLogger.log(`${method} ${url} ${statusCode}`)
