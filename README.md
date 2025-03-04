@@ -77,13 +77,18 @@
 <h2>📂 Estrutura do Projeto</h2>
 <pre>
   /src
-  |-- controller/         # Controladores das rotas
-  |-- model/              # Modelos, serviços, repositórios e DTOs
+  |-- config/             # Arquivos de configuração
+  |   |-- database.config.ts  # Configuração do banco de dados
+  |   |-- jwt.config.ts       # Configuração do JWT
+  |-- controllers/        # Controladores das rotas
+  |   |-- auth.controller.ts  # Controlador de autenticação
+  |   |-- user.controller.ts  # Controlador de usuários
+  |-- models/             # Modelos, serviços, repositórios e DTOs
   |   |-- common/         # Utilitários, pipes, interceptors
   |   |-- entities/       # Modelagem das entidades e DTOs
   |   |-- repositories/   # Repositórios para acesso ao banco de dados
   |   |-- services/       # Serviços e regras de negócio
-  |-- view/               # Interface de usuário desenvolvida com React e Vite
+  |-- views/              # Interface de usuário desenvolvida com React e Vite
   |-- main.ts             # Arquivo principal
 </pre>
 
@@ -115,10 +120,17 @@
 <h3>Ambiente de Produção (com Docker)</h3>
 <ol>
     <li>Certifique-se de ter o Docker instalado e em execução.</li>
-    <li>Construa a imagem Docker:<br><code>docker build -t padaria-delivery .</code></li>
-    <li>Execute o contêiner Docker:<br><code>docker run -d -p 3000:3000 --env-file .env padaria-delivery</code></li>
+    <li>Construa a imagem Docker:<br><code>npm run docker:build</code></li>
+    <li>Execute o contêiner Docker:<br><code>npm run docker:up</code></li>
     <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
 </ol>
+
+<h2>📚 Rotas da API</h2>
+<h3>Autenticação</h3>
+<ul>
+    <li><code>POST /auth/login</code>: Autentica um usuário e retorna um token JWT.</li>
+    <li><code>POST /auth/register</code>: Registra um novo usuário.</li>
+</ul>
 
 <h2>⚙️ Testes</h2>
 <ul>
