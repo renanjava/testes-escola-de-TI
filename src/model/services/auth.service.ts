@@ -8,7 +8,7 @@ import { SenhaInvalidaException } from '@/model/exceptions/senha-invalida.except
 import { UsuarioNaoEncontradoException } from '@/model/exceptions/usuario-nao-encontrado.exception'
 import { Password } from '@/model/common/utils/password'
 
-interface UserPayload {
+type UserPayload = {
   id: number
   username: string
 }
