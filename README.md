@@ -78,17 +78,16 @@
 <pre>
   /src
   |-- config/             # Arquivos de configuração
-  |   |-- database.config.ts  # Configuração do banco de dados
-  |   |-- jwt.config.ts       # Configuração do JWT
-  |-- controllers/        # Controladores das rotas
-  |   |-- auth.controller.ts  # Controlador de autenticação
-  |   |-- user.controller.ts  # Controlador de usuários
-  |-- models/             # Modelos, serviços, repositórios e DTOs
+  |   |-- modules/        # Módulos de configuração
+  |-- controller/         # Intermediário entre view e model
+  |   |-- controllers/    # Controladores das rotas
+  |   |-- auth/           # Controladores de autenticação
+  |-- model/              # Modelos, serviços, repositórios e DTOs
   |   |-- common/         # Utilitários, pipes, interceptors
   |   |-- entities/       # Modelagem das entidades e DTOs
   |   |-- repositories/   # Repositórios para acesso ao banco de dados
   |   |-- services/       # Serviços e regras de negócio
-  |-- views/              # Interface de usuário desenvolvida com React e Vite
+  |-- view/               # Interface de usuário desenvolvida com React e Vite
   |-- main.ts             # Arquivo principal
 </pre>
 
