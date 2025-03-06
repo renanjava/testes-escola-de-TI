@@ -14,6 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: renancesu/cafe-com-type:latest
     ports:
       - 3000:3000
     environment:
@@ -26,6 +27,8 @@ services:
       - postgres
     networks:
       - my-bridge
+    volumes:
+      - ./artefatos:/output
 
 networks:
   my-bridge:

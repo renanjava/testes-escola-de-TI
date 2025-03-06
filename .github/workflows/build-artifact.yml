@@ -1,0 +1,25 @@
+name: Build e Generação de Artifato
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  artifact:
+    runs-on: ubuntu-latest
+    steps:
+        uses: actions/checkout@v4
+        
+      - name: Subir Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Buildar imagem Docker
+        run: |
+          docker compose build
+      
+      - name: Upload do artefato
+        uses: actions/upload-artifact@v2
+        with:
+          name: cafe-com-type
+          path: ./output/
