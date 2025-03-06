@@ -19,7 +19,7 @@ jobs:
           docker compose build
       
       - name: Upload do artefato
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: cafe-com-type
           path: ./artefatos/
