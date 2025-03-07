@@ -65,7 +65,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: renancesu
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          password: ${{ secrets.PASSWORD_DOCKERHUB }}
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
