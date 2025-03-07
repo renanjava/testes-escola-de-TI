@@ -36,7 +36,7 @@ jobs:
           docker save -o artefatos/cafe-com-type.tar renancesu/cafe-com-type
 
       - name: Upload do artefato
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cafe-com-type
-          path: ./artefatos/
+          path: ./artefatos/cafe-com-type.tar
