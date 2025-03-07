@@ -39,13 +39,13 @@ jobs:
 
       - name: Salvar imagem Docker como artefato
         run: |
-          docker save -o artefatos/cafe-com-type:${{ github.sha }}.tar renancesu/cafe-com-type:${{ github.sha }}
+          docker save -o artefatos/cafe-com-type.tar renancesu/cafe-com-type
 
       - name: Upload do artefato
         uses: actions/upload-artifact@v4
         with:
           name: cafe-com-type
-          path: ./artefatos/cafe-com-type:${{ github.sha }}.tar
+          path: ./artefatos/cafe-com-type.tar
   dockerhub:
     needs: artifact
     runs-on: ubuntu-latest
@@ -68,9 +68,9 @@ jobs:
 
       - name: Load Docker image from artifact
         run: |
-          docker load -i cafe-com-type:${{ github.sha }}.tar
+          docker load -i cafe-com-type.tar
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker tag renancesu/cafe-com-type:${{ github.sha }} renancesu/cafe-com-type:${{ github.sha }}
+          docker tag renancesu/cafe-com-type renancesu/cafe-com-type:${{ github.sha }}
           docker push renancesu/cafe-com-type:${{ github.sha }}
