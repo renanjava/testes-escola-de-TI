@@ -1,4 +1,4 @@
-name: 'Geração de Artefato'
+name: 'Push para o DockerHub'
 
 on:
   pull_request:
