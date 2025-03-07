@@ -1,0 +1,20 @@
+name: Build e Geração de Artefato
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: setup Docker Build
+        uses: docker/setup-buildx-action@v2.0.0
+
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: cafe-com-type
