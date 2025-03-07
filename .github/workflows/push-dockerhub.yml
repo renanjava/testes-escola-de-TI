@@ -46,7 +46,6 @@ jobs:
         with:
           name: cafe-com-type
           path: ./artefatos/cafe-com-type.tar
-
   dockerhub:
     needs: artifact
     runs-on: ubuntu-latest
@@ -73,5 +72,5 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker tag renancesu/cafe-com-type:latest renancesu/cafe-com-type:latest
-          docker push renancesu/cafe-com-type:latest
+          docker tag renancesu/cafe-com-type renancesu/cafe-com-type:${{ github.sha }}
+          docker push renancesu/cafe-com-type:${{ github.sha }}
