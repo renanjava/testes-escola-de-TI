@@ -33,7 +33,7 @@ jobs:
 
       - name: Salvar imagem Docker como artefato
         run: |
-          docker save -o artefatos/cafe-com-type.tar padaria-delivery
+          docker save -o artefatos/cafe-com-type.tar renancesu/cafe-com-type
 
       - name: Upload do artefato
         uses: actions/upload-artifact@v2.3.0
