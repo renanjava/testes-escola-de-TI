@@ -12,9 +12,31 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: setup Docker Build
-        uses: docker/setup-buildx-action@v2.0.0
+        uses: docker/setup-buildx-action@v2
 
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v3.0.0
+      - name: Instalar Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Buildar imagem Docker
+        run: |
+          docker compose build
+
+      - name: Verificar imagem Docker
+        run: |
+          docker images
+
+      - name: Criar diretório de artefatos
+        run: |
+          mkdir -p artefatos
+
+      - name: Salvar imagem Docker como artefato
+        run: |
+          docker save -o artefatos/cafe-com-type.tar padaria-delivery
+
+      - name: Upload do artefato
+        uses: actions/upload-artifact@v3
         with:
           name: cafe-com-type
+          path: ./artefatos/
