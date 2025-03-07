@@ -23,3 +23,8 @@ jobs:
 
       - name: Rodar os testes unitários
         run: npm run test:unit
+
+  artifact:
+    needs: check
+    uses: ./.github/workflows/artifact.yml
+    secrets: inherit

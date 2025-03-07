@@ -14,7 +14,6 @@ describe('AuthService', () => {
     user: jest.fn(),
     createUser: jest.fn(),
   }
-
   const mockJwtService = {
     sign: jest.fn(),
   }
