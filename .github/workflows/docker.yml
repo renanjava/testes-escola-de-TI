@@ -67,9 +67,11 @@ jobs:
           username: renancesu
           password: ${{ secrets.PASSWORD_DOCKERHUB }}
 
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v3
-        with:
-          file: ./artefatos/cafe-com-type.tar
-          push: true
-          tags: renancesu/cafe-com-type:latest
+      - name: Load Docker image from artifact
+        run: |
+          docker load -i cafe-com-type.tar
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker tag renancesu/cafe-com-type:latest renancesu/cafe-com-type:latest
+          docker push renancesu/cafe-com-type:latest
