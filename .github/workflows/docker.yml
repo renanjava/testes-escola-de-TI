@@ -72,4 +72,4 @@ jobs:
         with:
           file: ./artefatos/cafe-com-type.tar
           push: true
-          tags: renancesu/cafe-com-type:${{ github.ref_name }}
+          tags: renancesu/cafe-com-type:latest
