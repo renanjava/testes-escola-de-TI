@@ -1,0 +1,76 @@
+name: 'Push para o DockerHub'
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  artifact:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+      PORT: 3000
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      DATABASE_NAME: escola-ti_db
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: setup Docker Build
+        uses: docker/setup-buildx-action@v2
+
+      - name: Instalar Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Buildar imagem Docker
+        run: |
+          docker compose build
+
+      - name: Verificar imagem Docker
+        run: |
+          docker images
+
+      - name: Criar diretório de artefatos
+        run: |
+          mkdir -p artefatos
+
+      - name: Salvar imagem Docker como artefato
+        run: |
+          docker save -o artefatos/cafe-com-type.tar renancesu/cafe-com-type
+
+      - name: Upload do artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: cafe-com-type
+          path: ./artefatos/cafe-com-type.tar
+  dockerhub:
+    needs: artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: setup Docker Build
+        uses: docker/setup-buildx-action@v2
+
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: cafe-com-type
+
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          username: renancesu
+          password: ${{ secrets.PASSWORD_DOCKERHUB }}
+
+      - name: Load Docker image from artifact
+        run: |
+          docker load -i cafe-com-type.tar
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker tag renancesu/cafe-com-type renancesu/cafe-com-type:${{ github.sha }}
+          docker push renancesu/cafe-com-type:${{ github.sha }}
