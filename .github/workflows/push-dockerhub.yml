@@ -70,7 +70,12 @@ jobs:
         run: |
           docker load -i cafe-com-type.tar
 
-      - name: Push Docker image to Docker Hub
+      - name: Push Docker image with dynamic tag to Docker Hub
         run: |
           docker tag renancesu/cafe-com-type renancesu/cafe-com-type:${{ github.sha }}
           docker push renancesu/cafe-com-type:${{ github.sha }}
+
+      - name: Push Docker image with latest tag to Docker Hub
+        run: |
+          docker tag renancesu/cafe-com-type renancesu/cafe-com-type:latest
+          docker push renancesu/cafe-com-type:latest
