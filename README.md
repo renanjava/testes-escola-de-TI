@@ -178,8 +178,9 @@
 <h3>Ambiente de Produção (com Docker)</h3>
 <ol>
     <li>Certifique-se de ter o Docker instalado e em execução.</li>
-    <li>Construa a imagem Docker:<br><code>npm run docker:build</code></li>
-    <li>Execute o contêiner Docker:<br><code>npm run docker:up</code></li>
+    <li>Faça o pull da imagem Docker:<br><code>docker pull renancesu/cafe-com-type:latest</code></li>
+    <li>Suba o contêiner do PostgreSQL:<br><code>docker run --name postgres -e POSTGRES_DB=escola-ti_db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres</code></li>
+    <li>Execute o contêiner da aplicação:<br><code>docker run --name cafe-com-type --link postgres:postgres -e NODE_ENV=production -e PORT=3000 -e JWT_SECRET=your_jwt_secret -e DATABASE_NAME=escola-ti_db -e DATABASE_URL=postgres://postgres:postgres@postgres:5432/escola-ti_db -p 3000:3000 -d renancesu/cafe-com-type:latest</code></li>
     <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
 </ol>
 
