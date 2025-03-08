@@ -107,10 +107,10 @@
 <p>Este workflow é acionado em pull requests para a branch <code>main</code> e é responsável por construir a imagem Docker e salvar como um artefato.</p>
 <ul>
     <li><strong>Nome:</strong> Geração de Artefato</li>
-    <li><strong>Evento:</strong> pull_request</li>
+    <li><strong>Evento:</strong> pull_request (branch: main)</li>
     <li><strong>Jobs:</strong></li>
     <ul>
-        <li><strong>artifact:</strong> 
+        <li><strong>artifact:</strong>
             <ul>
                 <li>Configura o Docker Buildx</li>
                 <li>Instala o Docker Compose</li>
@@ -126,7 +126,7 @@
 <p>Este workflow é acionado em pushs para a branch <code>main</code> e é responsável por baixar o artefato gerado e fazer o push da imagem Docker para o Docker Hub.</p>
 <ul>
     <li><strong>Nome:</strong> Push para o Docker Hub</li>
-    <li><strong>Evento:</strong> push</li>
+    <li><strong>Evento:</strong> push (branch: main)</li>
     <li><strong>Jobs:</strong></li>
     <ul>
         <li><strong>dockerhub:</strong>
@@ -136,6 +136,24 @@
                 <li>Baixa o artefato gerado</li>
                 <li>Faz login no Docker Hub</li>
                 <li>Constrói e faz o push da imagem Docker para o Docker Hub</li>
+            </ul>
+        </li>
+    </ul>
+</ul>
+
+<h3>✅ Check</h3>
+<p>Este workflow é acionado em pull requests para a branch <code>main</code> e é responsável por verificar a qualidade do código e rodar os testes.</p>
+<ul>
+    <li><strong>Nome:</strong> Check</li>
+    <li><strong>Evento:</strong> push (branch: todas, exceto main)</li>
+    <li><strong>Jobs:</strong></li>
+    <ul>
+        <li><strong>check:</strong>
+            <ul>
+                <li>Faz o checkout do código</li>
+                <li>Instala as dependências</li>
+                <li>Roda o linter</li>
+                <li>Roda os testes unitários</li>
             </ul>
         </li>
     </ul>
