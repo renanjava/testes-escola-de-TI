@@ -25,8 +25,8 @@ jobs:
       - name: Rodar os testes unitários
         run: npm run test:unit
 
-      - name: Subir o PostgreSQL
-        run: npm run docker:up postgres --build -d
+      - name: Subir o Postgres
+        run: npm run docker:up -d postgres
 
       - name: Rodar os testes de integração
         run: npm run test:int
