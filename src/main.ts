@@ -38,7 +38,7 @@ async function bootstrap() {
   const environment = configService.get<string>('NODE_ENV') || 'development'
   let databaseUrl = configService.get<string>('DATABASE_URL')
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }))
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }))
 
   await app.listen(PORT)
   if (environment === 'development') {

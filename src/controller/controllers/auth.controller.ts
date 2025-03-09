@@ -1,7 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common'
 import { AuthService } from '@/model/services/auth.service'
 import { AuthLoginDto } from '@/model/entities/dto/auth-login.dto'
-import { ICreateUserDto } from '@/model/entities/dto/create-user.dto'
 import { HashPasswordPipe } from '@/model/common/pipes/hash-password.pipe'
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthRegisterDto } from '@/model/entities/dto//auth-register.dto'
@@ -28,7 +27,7 @@ export class AuthController {
   @ApiResponse({ status: 400, description: 'Username ou Email já existente.' })
   async register(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Body() { password, ...body }: ICreateUserDto,
+    @Body() { password, ...body }: AuthRegisterDto,
     @Body('password', HashPasswordPipe) hashedPassword: string,
   ) {
     return await this.authService.registerUser({

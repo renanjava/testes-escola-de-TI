@@ -19,7 +19,7 @@ describe('Auth Controller Integration Tests', () => {
     }).compile()
 
     app = moduleFixture.createNestApplication()
-    app.useGlobalPipes(new ValidationPipe({ transform: true }))
+    app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }))
 
     await app.init()
   })
@@ -39,6 +39,18 @@ describe('Auth Controller Integration Tests', () => {
         password: registerProps.password,
       })
     expect(response.status).toBe(201)
+  })
+
+  it('should fail to register a new user with invalid data', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/register')
+      .send({
+        realname: '',
+        username: '',
+        email: 'invalid-email',
+        password: '123',
+      })
+    expect(response.status).toBe(400)
   })
 
   it('should login an existing user', async () => {
