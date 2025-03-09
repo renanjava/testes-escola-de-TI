@@ -26,10 +26,10 @@ jobs:
         run: npm run test:unit
 
       - name: Buildar o Postgres
-        run: docker-compose -build postgres
+        run: docker compose -build postgres
 
       - name: Subir o Postgres
-        run: docker-compose postgres up -d
+        run: docker compose postgres up -d
 
       - name: Rodar os testes de integração
         run: npm run test:int
