@@ -1,0 +1,64 @@
+import { Test, TestingModule } from '@nestjs/testing'
+import { INestApplication, ValidationPipe } from '@nestjs/common'
+import request from 'supertest'
+import { AppModule } from '@/config/modules/app.module'
+import { execSync } from 'child_process'
+import { AuthRegisterProps } from '@/model/entities/dto/auth-register.dto'
+import { AuthRegisterDataBuilder } from '@/model/common/helper/auth-register-data-builder'
+
+describe('Auth Controller Integration Tests', () => {
+  let app: INestApplication
+  let registerProps: AuthRegisterProps
+
+  beforeAll(async () => {
+    registerProps = AuthRegisterDataBuilder({} as AuthRegisterProps)
+    execSync('npx prisma migrate deploy')
+
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile()
+
+    app = moduleFixture.createNestApplication()
+    app.useGlobalPipes(new ValidationPipe({ transform: true }))
+
+    await app.init()
+  })
+
+  afterAll(async () => {
+    await app.close()
+    execSync('npx prisma migrate reset --force')
+  })
+
+  it('should register a new user', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/register')
+      .send({
+        realname: registerProps.realname,
+        username: registerProps.username,
+        email: registerProps.email,
+        password: registerProps.password,
+      })
+    expect(response.status).toBe(201)
+  })
+
+  it('should login an existing user', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        username: registerProps.username,
+        password: registerProps.password,
+      })
+    expect(response.status).toBe(201)
+    expect(response.body).toHaveProperty('access_token')
+  })
+
+  it('should fail to login with incorrect password', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        username: registerProps.username,
+        password: 'wrongpassword',
+      })
+    expect(response.status).toBe(401)
+  })
+})
