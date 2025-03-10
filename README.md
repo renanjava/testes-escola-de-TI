@@ -97,7 +97,66 @@
     <li><strong>Ninguém pode fazer push direto para <code>main</code></strong>, apenas via <strong>Pull Request</strong>.</li>
     <li>Cada desenvolvedor deve criar sua branch no formato:<br><code>dev/nome</code></li>
     <li>Após finalizar a implementação, deve abrir um Pull Request para <code>main</code>.</li>
-    <li>O PR <strong>só será aceito se passar na pipeline de CI/CD</strong> (validação de linter e testes unitários).</li>
+    <li>O PR <strong>só será aceito se passar na pipeline de CI/CD</strong></li>
+</ul>
+
+<h2>🚀 Workflows e Jobs de CI/CD</h2>
+<p>O projeto utiliza GitHub Actions para automação de CI/CD. Abaixo estão descritos os workflows e jobs configurados:</p>
+
+<h3>📦 Geração de Artefato</h3>
+<p>Este workflow é acionado em pull requests para a branch <code>main</code> e é responsável por construir a imagem Docker e salvar como um artefato.</p>
+<ul>
+    <li><strong>Nome:</strong> Geração de Artefato</li>
+    <li><strong>Evento:</strong> pull_request (branch: main)</li>
+    <li><strong>Jobs:</strong></li>
+    <ul>
+        <li><strong>artifact:</strong>
+            <ul>
+                <li>Configura o Docker Buildx</li>
+                <li>Instala o Docker Compose</li>
+                <li>Constrói a imagem Docker</li>
+                <li>Salva a imagem Docker como um artefato</li>
+                <li>Faz o upload do artefato</li>
+            </ul>
+        </li>
+    </ul>
+</ul>
+
+<h3>🚀 Push para o Docker Hub</h3>
+<p>Este workflow é acionado em pushs para a branch <code>main</code> e é responsável por baixar o artefato gerado e fazer o push da imagem Docker para o Docker Hub.</p>
+<ul>
+    <li><strong>Nome:</strong> Push para o Docker Hub</li>
+    <li><strong>Evento:</strong> push (branch: main)</li>
+    <li><strong>Jobs:</strong></li>
+    <ul>
+        <li><strong>dockerhub:</strong>
+            <ul>
+                <li>Faz o checkout do código</li>
+                <li>Configura o Docker Buildx</li>
+                <li>Baixa o artefato gerado</li>
+                <li>Faz login no Docker Hub</li>
+                <li>Constrói e faz o push da imagem Docker para o Docker Hub</li>
+            </ul>
+        </li>
+    </ul>
+</ul>
+
+<h3>✅ Check</h3>
+<p>Este workflow é acionado em pull requests para a branch <code>main</code> e é responsável por verificar a qualidade do código e rodar os testes.</p>
+<ul>
+    <li><strong>Nome:</strong> Check</li>
+    <li><strong>Evento:</strong> push (branch: todas, exceto main)</li>
+    <li><strong>Jobs:</strong></li>
+    <ul>
+        <li><strong>check:</strong>
+            <ul>
+                <li>Faz o checkout do código</li>
+                <li>Instala as dependências</li>
+                <li>Roda o linter</li>
+                <li>Roda os testes unitários</li>
+            </ul>
+        </li>
+    </ul>
 </ul>
 
 <h2>🛠️ Instalação do projeto</h2>
@@ -119,8 +178,9 @@
 <h3>Ambiente de Produção (com Docker)</h3>
 <ol>
     <li>Certifique-se de ter o Docker instalado e em execução.</li>
-    <li>Construa a imagem Docker:<br><code>npm run docker:build</code></li>
-    <li>Execute o contêiner Docker:<br><code>npm run docker:up</code></li>
+    <li>Faça o pull da imagem Docker:<br><code>docker pull renancesu/cafe-com-type:latest</code></li>
+    <li>Suba o contêiner do PostgreSQL:<br><code>docker run --name postgres -e POSTGRES_DB=escola-ti_db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres</code></li>
+    <li>Execute o contêiner da aplicação:<br><code>docker run --name cafe-com-type --link postgres:postgres -e NODE_ENV=production -e PORT=3000 -e JWT_SECRET=your_jwt_secret -e DATABASE_NAME=escola-ti_db -e DATABASE_URL=postgres://postgres:postgres@postgres:5432/escola-ti_db -p 3000:3000 -d renancesu/cafe-com-type:latest</code></li>
     <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
 </ol>
 
