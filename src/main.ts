@@ -5,9 +5,13 @@ import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { GlobalExceptionFilter } from './model/common/filters/exception.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+
+  app.useGlobalPipes(new ValidationPipe({ transform: true }))
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Café com Type')
