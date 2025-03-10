@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Checkbox from "../components/Checkbox";
 import SignupButton from "../components/shared/SignupButton";
 import SignupInputField from "../components/shared/SignupInputField";
@@ -32,7 +33,9 @@ const Signup = () => {
         <SignupInputField label="Confirmar senha" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} type="password" icon="🔒" />
         <Checkbox label="Estou de acordo com os termos do aplicativo" name="termsAccepted" checked={formData.termsAccepted} onChange={handleChange} />
         <SignupButton text="Criar conta" />
-        <p className="text-center mt-4 text-blue-600 cursor-pointer">Já possuo uma conta</p>
+        <p className="text-center mt-4 text-blue-600 cursor-pointer">
+          <Link to="/login" className="text-blue-600">Já possuo uma conta</Link>
+        </p>
       </div>
     </div>
   );
