@@ -9,6 +9,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
       DATABASE_NAME: escola-ti_db
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:

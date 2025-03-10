@@ -5,6 +5,7 @@ import { AppModule } from '@/config/modules/app.module'
 import { execSync } from 'child_process'
 import { AuthRegisterProps } from '@/model/entities/dto/auth-register.dto'
 import { AuthRegisterDataBuilder } from '@/model/common/helper/auth-register-data-builder'
+import { ConfigService } from '@nestjs/config'
 
 describe('Auth Controller Integration Tests', () => {
   let app: INestApplication
@@ -20,6 +21,17 @@ describe('Auth Controller Integration Tests', () => {
 
     app = moduleFixture.createNestApplication()
     app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }))
+
+    const configService = app.get(ConfigService)
+    const databaseUrl = configService.get<string>('DATABASE_URL')
+    if (!databaseUrl) {
+      throw new Error('DATABASE_URL is not defined')
+    }
+    const updatedDatabaseUrl = databaseUrl.replace(
+      'postgres:5432',
+      'localhost:5432',
+    )
+    configService.set('DATABASE_URL', updatedDatabaseUrl)
 
     await app.init()
   })
