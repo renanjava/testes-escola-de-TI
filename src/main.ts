@@ -9,8 +9,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }))
-
   const config = new DocumentBuilder()
     .setTitle('Café com Type')
     .setDescription('Descrição da API Café com Type')
@@ -39,6 +37,8 @@ async function bootstrap() {
   const PORT = configService.get<number>('PORT') || 3000
   const environment = configService.get<string>('NODE_ENV') || 'development'
   let databaseUrl = configService.get<string>('DATABASE_URL')
+
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }))
 
   await app.listen(PORT)
   if (environment === 'development') {

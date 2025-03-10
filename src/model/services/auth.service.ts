@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { UserRepository } from '@/model/repositories/user.repository'
 import { ICreateUserDto } from '@/model/entities/dto/create-user.dto'
-import { AuthLoginProps } from '@/model/entities/dto/auth-login.dto'
+import { AuthLoginDto } from '@/model/entities/dto/auth-login.dto'
 import { EmailOuUsernameExistenteException } from '@/model/exceptions/email-ou-username-existente.exception'
 import { SenhaInvalidaException } from '@/model/exceptions/senha-invalida.exception'
 import { UsuarioNaoEncontradoException } from '@/model/exceptions/usuario-nao-encontrado.exception'
@@ -24,7 +24,7 @@ export class AuthService {
     private userRepository: UserRepository,
   ) {}
 
-  async loginUser(loggedUser: AuthLoginProps): Promise<TokenProps> {
+  async loginUser(loggedUser: AuthLoginDto): Promise<TokenProps> {
     const userExists = await this.userRepository.user({
       username: loggedUser.username,
     })
