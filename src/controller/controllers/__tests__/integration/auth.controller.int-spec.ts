@@ -65,6 +65,18 @@ describe('Auth Controller Integration Tests', () => {
     expect(response.status).toBe(400)
   })
 
+  it('should fail to register a new user with existing username or email', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/register')
+      .send({
+        realname: registerProps.realname,
+        username: registerProps.username,
+        email: registerProps.email,
+        password: registerProps.password,
+      })
+    expect(response.status).toBe(400)
+  })
+
   it('should login an existing user', async () => {
     const response = await request(app.getHttpServer())
       .post('/auth/login')
@@ -84,5 +96,22 @@ describe('Auth Controller Integration Tests', () => {
         password: 'wrongpassword',
       })
     expect(response.status).toBe(401)
+  })
+
+  it('should fail to login with non-existing username', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        username: 'nonexistinguser',
+        password: 'somepassword',
+      })
+    expect(response.status).toBe(404)
+  })
+
+  it('should fail to login with missing credentials', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({})
+    expect(response.status).toBe(400)
   })
 })
