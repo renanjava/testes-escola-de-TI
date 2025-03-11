@@ -10,7 +10,7 @@ import { AuthRegisterDataBuilder } from '@/model/common/helper/auth-register-dat
 import { Password } from '@/model/common/utils/password'
 
 describe('AuthService', () => {
-  const mockUserService = {
+  const mockUserRepository = {
     user: jest.fn(),
     createUser: jest.fn(),
   }
@@ -31,7 +31,7 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        { provide: UserRepository, useValue: mockUserService },
+        { provide: UserRepository, useValue: mockUserRepository },
         { provide: JwtService, useValue: mockJwtService },
       ],
     }).compile()
@@ -49,7 +49,7 @@ describe('AuthService', () => {
     it('should return a token if login is successful', async () => {
       loginProps = AuthLoginDataBuilder({} as AuthLoginProps)
 
-      mockUserService.user.mockResolvedValue({
+      mockUserRepository.user.mockResolvedValue({
         id: 1,
         username: loginProps.username,
         password: await Password.generateEncrypted(loginProps.password, 10),
@@ -59,7 +59,7 @@ describe('AuthService', () => {
       const result = await authService.loginUser(loginProps)
 
       expect(result.access_token).toEqual('mock_token')
-      expect(mockUserService.user).toHaveBeenCalledWith({
+      expect(mockUserRepository.user).toHaveBeenCalledWith({
         username: loginProps.username,
       })
       expect(mockJwtService.sign).toHaveBeenCalled()
@@ -68,7 +68,7 @@ describe('AuthService', () => {
     it('should throw an error if user is not found', async () => {
       loginProps = AuthLoginDataBuilder({} as AuthLoginProps)
 
-      mockUserService.user.mockResolvedValue(null)
+      mockUserRepository.user.mockResolvedValue(null)
 
       try {
         await authService.loginUser(loginProps)
@@ -85,7 +85,7 @@ describe('AuthService', () => {
       } as AuthLoginProps)
 
       const hashedPassword = await Password.generateEncrypted('password123', 10)
-      mockUserService.user.mockResolvedValue({
+      mockUserRepository.user.mockResolvedValue({
         id: 1,
         username: loginProps.username,
         password: hashedPassword,
@@ -111,8 +111,8 @@ describe('AuthService', () => {
         10,
       )
 
-      mockUserService.user.mockResolvedValue(null)
-      mockUserService.createUser.mockResolvedValue({
+      mockUserRepository.user.mockResolvedValue(null)
+      mockUserRepository.createUser.mockResolvedValue({
         ...registerProps,
         password: hashedPassword,
       })
@@ -125,7 +125,7 @@ describe('AuthService', () => {
       expect(result.username).toEqual(registerProps.username)
       expect(result.email).toEqual(registerProps.email)
 
-      expect(mockUserService.createUser).toHaveBeenCalledWith({
+      expect(mockUserRepository.createUser).toHaveBeenCalledWith({
         ...registerProps,
         password: hashedPassword,
       })
@@ -134,7 +134,7 @@ describe('AuthService', () => {
     it('should throw an error if user already exists', async () => {
       registerProps = AuthRegisterDataBuilder({} as AuthRegisterProps)
 
-      mockUserService.user.mockResolvedValue({ id: 1, ...registerProps })
+      mockUserRepository.user.mockResolvedValue({ id: 1, ...registerProps })
 
       try {
         await authService.registerUser(registerProps)
