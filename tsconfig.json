@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "noEmitOnError": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2022",
+    "target": "ES6",
     "sourceMap": true,
     "outDir": "./dist/src",
     "baseUrl": "./",
