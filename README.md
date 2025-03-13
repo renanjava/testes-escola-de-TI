@@ -18,6 +18,7 @@
     <li><strong>Prisma</strong>: v6.4.0 - ORM moderno para facilitar manipulação do banco.</li>
     <li><strong>ESLint</strong>: v9.20.1 - Análise estática para garantir qualidade e boas práticas.</li>
     <li><strong>Faker.js</strong>: @faker-js/faker v9.5.0 - Geração de dados fictícios para testes e mocks.</li>
+    <li><strong>Supertest</strong>: v6.3.3 - Biblioteca para testes de integração de APIs.</li>
 </ul>
 
 <h2>🚀 Tecnologias Utilizadas</h2>
@@ -47,9 +48,9 @@
             <li><small>Permite validar dados de entrada usando decorators simples e intuitivos.</small></li>
         </ul>
     </li>
-    <li><strong>Testes: Jest</strong> 
+    <li><strong>Testes: Jest e Supertest</strong> 
         <ul>
-            <li><small>Framework de testes abrangente para testes unitários, integração e E2E.</small></li>
+            <li><small>Jest para testes unitários e de integração, e Supertest para testes de integração de APIs.</small></li>
         </ul>
     </li>
     <li><strong>Padronização de Código: Prettier e ESLint</strong> 
@@ -67,9 +68,10 @@
             <li><small>Gera dados fictícios realistas para criação de cenários de testes.</small></li>
         </ul>
     </li>
-    <li><strong>CI/CD: Validação automática de linter e testes unitários</strong> 
+    <li><strong>CI/CD: GitHub Actions</strong> 
         <ul>
             <li><small>Pipeline automatizado garante qualidade e integridade do código antes do merge.</small></li>
+            <li><small>Geração de artefatos Docker e push para Docker Hub.</small></li>
         </ul>
     </li>
 </ul>
@@ -135,7 +137,9 @@
                 <li>Configura o Docker Buildx</li>
                 <li>Baixa o artefato gerado</li>
                 <li>Faz login no Docker Hub</li>
-                <li>Constrói e faz o push da imagem Docker para o Docker Hub</li>
+                <li>Constrói as imagem Docker</li>
+                <li>Dá um push da imagem Docker com tag dinâmica para o DockerHub</li>
+                <li>Dá um push da imagem Docker com tag latest para o DockerHub</li>
             </ul>
         </li>
     </ul>
@@ -154,6 +158,8 @@
                 <li>Instala as dependências</li>
                 <li>Roda o linter</li>
                 <li>Roda os testes unitários</li>
+                <li>Sobe um banco de dados</li>
+                <li>Roda os testes de integração</li>
             </ul>
         </li>
     </ul>

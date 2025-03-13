@@ -10,17 +10,6 @@ services:
     networks:
       - my-bridge
 
-  postgres_test:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_HOST_AUTH_METHOD: trust
-      POSTGRES_DB: test_db
-    ports:
-      - 5433:5432
-    networks:
-      - my-bridge
-
   cafe-com-type:
     build:
       context: .
