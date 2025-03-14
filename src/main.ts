@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from '@/config/modules/app.module'
 import { ConfigService } from '@nestjs/config'
 import { Logger, ValidationPipe } from '@nestjs/common'
-import { GlobalExceptionFilter } from './model/common/filters/global-exception.filter'
 import setupSwagger from './config/setup-swagger'
 import setupSecurity from './config/setup-security'
 
@@ -10,7 +9,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
-  app.useGlobalFilters(new GlobalExceptionFilter())
 
   setupSwagger(app)
   setupSecurity(app)
