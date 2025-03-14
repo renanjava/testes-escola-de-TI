@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { GlobalExceptionFilter } from '../../global-exception.filter'
 import { HttpAdapterHost } from '@nestjs/core'
-import { ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common'
+import { ArgumentsHost, HttpStatus } from '@nestjs/common'
 
 describe('GlobalExceptionFilter', () => {
   let filter: GlobalExceptionFilter
