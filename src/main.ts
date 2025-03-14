@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from '@/config/modules/app.module'
 import { ConfigService } from '@nestjs/config'
 import { Logger, ValidationPipe } from '@nestjs/common'
-import { GlobalExceptionFilter } from './model/common/filters/exception.filter'
+import { GlobalExceptionFilter } from './model/common/filters/global-exception.filter'
 import setupSwagger from './config/setup-swagger'
 import setupSecurity from './config/setup-security'
 
