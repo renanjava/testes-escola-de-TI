@@ -9,7 +9,7 @@ import { UsuarioNaoEncontradoException } from '@/model/exceptions/usuario-nao-en
 import { Password } from '@/model/common/utils/password'
 
 type UserPayload = {
-  id: number
+  id: string
   username: string
 }
 
