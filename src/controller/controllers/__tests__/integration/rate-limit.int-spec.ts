@@ -37,3 +37,5 @@ describe('Rate Limit Integration Test', () => {
     )
   })
 })
+
+//Arquivo de Teste para o RateLimit
