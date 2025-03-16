@@ -11,7 +11,6 @@ import { User, UserRole } from '@prisma/client'
 import { UserService } from '@/model/services/user.service'
 import { UpdateUserDto } from '@/model/entities/dto/update-user.dto'
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard'
-import { RolesGuard } from '../auth/rbac/roles.guard'
 import { Roles } from '../auth/rbac/roles.decorator'
 
 @Controller('user')
@@ -19,8 +18,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @Roles(UserRole.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.USER)
   async findAll(): Promise<User[]> {
     return this.userService.findAll()
   }
@@ -42,7 +41,7 @@ export class UserController {
 
   @Delete(':id')
   @Roles(UserRole.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string): Promise<User> {
     return this.userService.remove(id)
   }
