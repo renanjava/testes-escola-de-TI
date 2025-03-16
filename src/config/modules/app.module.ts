@@ -5,16 +5,26 @@ import { AuthModule } from '@/config/modules/auth.module'
 import { ConfigModule } from '@nestjs/config'
 import { UserModule } from './user.module'
 import { PrismaService } from '@/model/services/prisma.service'
-import { APP_INTERCEPTOR } from '@nestjs/core'
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 import { GlobalLoggerInterceptor } from '@/model/common/interceptors/global-logger.interceptor'
+import { RolesGuard } from '@/controller/auth/rbac/roles.guard'
+import { GlobalExceptionFilter } from '@/model/common/filters/global-exception.filter'
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({ isGlobal: true }), UserModule],
   controllers: [AppController],
   providers: [
     {
+      provide: APP_FILTER,
+      useClass: GlobalExceptionFilter,
+    },
+    {
       provide: APP_INTERCEPTOR,
       useClass: GlobalLoggerInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
     AppService,
     PrismaService,
