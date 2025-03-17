@@ -5,8 +5,9 @@ import { AppModule } from '@/config/modules/app.module';
 import { PrismaService } from '@/model/services/prisma.service';
 import rateLimit from 'express-rate-limit';
 
+// 🔹 Definição de variáveis para evitar erros no teste
 process.env.JWT_SECRET = 'test-secret';
-process.env.DATABASE_URL = 'postgresql://user:password@localhost:5432/testdb';
+process.env.DATABASE_URL = 'postgresql://user:password@localhost:5432/testdb'; // Fake para evitar erro do Prisma
 
 describe('Rate Limit Test', () => {
   let app: INestApplication;
@@ -21,10 +22,11 @@ describe('Rate Limit Test', () => {
 
     app = moduleRef.createNestApplication();
 
+    // 🔹 Sobrescrevendo o Rate Limit global apenas para os testes
     app.use(
       rateLimit({
-        windowMs: 60 * 1000,
-        max: 4,
+        windowMs: 60 * 1000, // 1 minuto
+        max: 4, // Agora limita para apenas 4 requisições
         message: 'Muitas requisições, tente novamente mais tarde.',
       }),
     );
