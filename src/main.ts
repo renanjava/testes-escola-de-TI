@@ -1,35 +1,21 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from '@/config/modules/app.module'
 import { ConfigService } from '@nestjs/config'
-import helmet from 'helmet'
-import rateLimit from 'express-rate-limit'
 import { Logger, ValidationPipe } from '@nestjs/common'
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { GlobalExceptionFilter } from './model/common/filters/exception.filter'
+import setupSwagger from './config/setup-swagger'
+import setupSecurity from './config/setup-security'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
+<<<<<<< HEAD
   app.useGlobalFilters(new GlobalExceptionFilter())
+=======
+>>>>>>> main
 
-  const config = new DocumentBuilder()
-    .setTitle('Café com Type')
-    .setDescription('Descrição da API Café com Type')
-    .setVersion('1.0')
-    .addTag('padaria')
-    .build()
-  const documentFactory = () => SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, documentFactory)
-
-  app.use(helmet())
-  app.use(
-    rateLimit({
-      windowMs: 15 * 60 * 1000,
-      max: 100,
-      message: 'Muitas requisições, tente novamente mais tarde.',
-    }),
-  )
+  setupSwagger(app)
+  setupSecurity(app)
 
   app.enableCors({
     origin: '*',
@@ -41,8 +27,6 @@ async function bootstrap() {
   const PORT = configService.get<number>('PORT') || 3000
   const environment = configService.get<string>('NODE_ENV') || 'development'
   let databaseUrl = configService.get<string>('DATABASE_URL')
-
-  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }))
 
   await app.listen(PORT)
   if (environment === 'development') {
