@@ -26,6 +26,7 @@
     "docker:build": "docker compose build",
     "docker:up": "docker compose up",
     "docker:down": "docker compose down",
+    "docker:postgres": "docker compose up postgres",
     "dev": "vite",
     "build:vite": "vite build",
     "preview": "vite preview"

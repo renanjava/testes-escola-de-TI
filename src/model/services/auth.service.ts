@@ -7,11 +7,7 @@ import { EmailOuUsernameExistenteException } from '@/model/exceptions/email-ou-u
 import { SenhaInvalidaException } from '@/model/exceptions/senha-invalida.exception'
 import { UsuarioNaoEncontradoException } from '@/model/exceptions/usuario-nao-encontrado.exception'
 import { Password } from '@/model/common/utils/password'
-
-type UserPayload = {
-  id: number
-  username: string
-}
+import { IUserPayload } from '@/controller/payloads/user-payload.interface'
 
 export type TokenProps = {
   access_token: string
@@ -41,8 +37,9 @@ export class AuthService {
     }
 
     return this.generateToken({
-      id: userExists.id,
+      sub: userExists.id,
       username: userExists.username,
+      role: userExists.role,
     })
   }
 
@@ -70,8 +67,12 @@ export class AuthService {
     return await Password.verify(password, hash)
   }
 
-  generateToken(user: UserPayload): TokenProps {
-    const payload = { username: user.username, sub: user.id }
+  generateToken(user: IUserPayload): TokenProps {
+    const payload = {
+      username: user.username,
+      sub: user.sub,
+      role: user.role,
+    }
     return {
       access_token: this.jwtService.sign(payload),
     }

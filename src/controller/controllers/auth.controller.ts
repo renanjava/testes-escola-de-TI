@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Post, Body } from '@nestjs/common'
 import { AuthService } from '@/model/services/auth.service'
 import { AuthLoginDto } from '@/model/entities/dto/auth-login.dto'
@@ -26,7 +27,6 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'Usuário criado.' })
   @ApiResponse({ status: 400, description: 'Username ou Email já existente.' })
   async register(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @Body() { password, ...body }: AuthRegisterDto,
     @Body('password', HashPasswordPipe) hashedPassword: string,
   ) {
