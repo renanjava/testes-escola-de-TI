@@ -32,6 +32,7 @@
     <li><strong>Supertest</strong>: v6.3.3 - Biblioteca para testes de integração de APIs.</li>
     <li><strong>React</strong>: v18.2.0 - Biblioteca para construção de interfaces de usuário.</li>
     <li><strong>Vite</strong>: v3.2.3 - Ferramenta de build rápida para desenvolvimento de front-end.</li>
+    <li><strong>UUID</strong>: v9.0.0 - Geração de valores válidos de UUID para testes.</li>
 </ul>
 
 <h2>🚀 Tecnologias Utilizadas</h2>
@@ -112,6 +113,11 @@
             <li><small>React para construção de interfaces de usuário e Vite para build rápida e eficiente.</small></li>
         </ul>
     </li>
+    <li><strong>UUID</strong> 
+        <ul>
+            <li><small>Usado para gerar e armazenar UUIDs, garantindo que não haverá repetição e que não serão fáceis de descobrir.</small></li>
+        </ul>
+    </li>
 </ul>
 
 <h2>📂 Estrutura do Projeto</h2>
@@ -166,7 +172,7 @@
 </ul>
 
 <h3>🚀 Push para o Docker Hub</h3>
-<p>Este workflow é acionado em pushs para a branch <code>main</code> e é responsável por baixar o artefato gerado e fazer o push da imagem Docker para o Docker Hub.</p>
+<p>Este workflow é acionado em pull requests para a <code>main</code> e é responsável por baixar o artefato gerado e fazer o push da imagem Docker para o Docker Hub.</p>
 <ul>
     <li><strong>Nome:</strong> Push para o Docker Hub</li>
     <li><strong>Evento:</strong> pull_request (branch: main)</li>

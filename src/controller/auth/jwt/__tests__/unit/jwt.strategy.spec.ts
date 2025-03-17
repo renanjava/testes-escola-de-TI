@@ -1,5 +1,6 @@
 import { JwtStrategy } from '@/controller/auth/jwt/jwt.strategy'
 import { UserRole } from '@prisma/client'
+import { v4 as uuidv4 } from 'uuid'
 
 describe('JwtStrategy unit tests', () => {
   it('should extract and validate JWT token from Authorization header', () => {
@@ -9,8 +10,10 @@ describe('JwtStrategy unit tests', () => {
 
     const strategy = new JwtStrategy(mockConfigService as any)
 
+    const uuid = uuidv4()
+
     const payload = {
-      sub: '1642d170-4163-4403-bd3c-d66df9dc8218',
+      sub: uuid,
       username: 'testuser',
       role: UserRole.ADMIN,
     }
@@ -18,7 +21,7 @@ describe('JwtStrategy unit tests', () => {
     const result = strategy.validate(payload)
 
     expect(result).toEqual({
-      sub: '1642d170-4163-4403-bd3c-d66df9dc8218',
+      sub: uuid,
       username: 'testuser',
       role: UserRole.ADMIN,
     })
@@ -55,7 +58,7 @@ describe('JwtStrategy unit tests', () => {
     const strategy = new JwtStrategy(mockConfigService as any)
 
     const expiredPayload = {
-      sub: '1642d170-4163-4403-bd3c-d66df9dc8218',
+      sub: uuidv4(),
       username: 'testuser',
       role: UserRole.ADMIN,
       exp: Math.floor(Date.now() / 1000) - 10,
