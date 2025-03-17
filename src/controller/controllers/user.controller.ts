@@ -41,7 +41,7 @@ export class UserController {
     return this.userService.update(request.user.sub, updateUserDto)
   }
 
-  @Delete(':id')
+  @Delete('admin/:id')
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string): Promise<User> {
