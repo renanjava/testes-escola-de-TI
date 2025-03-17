@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Patch,
+  Req,
   UseGuards,
 } from '@nestjs/common'
 import { User, UserRole } from '@prisma/client'
@@ -12,31 +13,32 @@ import { UserService } from '@/model/services/user.service'
 import { UpdateUserDto } from '@/model/entities/dto/update-user.dto'
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard'
 import { Roles } from '../auth/rbac/roles.decorator'
+import { IUserRequest } from '../payloads/user-request.interface'
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
+  @Get('admin')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
   async findAll(): Promise<User[]> {
     return this.userService.findAll()
   }
 
-  @Get(':id')
+  @Get()
   @UseGuards(JwtAuthGuard)
-  async findOne(@Param('id') id: string): Promise<User> {
-    return await this.userService.findOne(id)
+  async findOne(@Req() request: IUserRequest): Promise<User> {
+    return await this.userService.findOne(request.user.sub)
   }
 
-  @Patch(':id')
+  @Patch()
   @UseGuards(JwtAuthGuard)
   async update(
-    @Param('id') id: string,
+    @Req() request: IUserRequest,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.userService.update(id, updateUserDto)
+    return this.userService.update(request.user.sub, updateUserDto)
   }
 
   @Delete(':id')
