@@ -9,11 +9,13 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 import { GlobalLoggerInterceptor } from '@/model/common/interceptors/global-logger.interceptor'
 import { RolesGuard } from '@/controller/auth/rbac/roles.guard'
 import { GlobalExceptionFilter } from '@/model/common/filters/global-exception.filter'
+import { JwtService } from '@nestjs/jwt'
 
 @Module({
   imports: [AuthModule, ConfigModule.forRoot({ isGlobal: true }), UserModule],
   controllers: [AppController],
   providers: [
+    JwtService,
     {
       provide: APP_FILTER,
       useClass: GlobalExceptionFilter,

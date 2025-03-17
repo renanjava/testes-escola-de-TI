@@ -11,6 +11,7 @@ import { Password } from '@/model/common/utils/password'
 type UserPayload = {
   id: string
   username: string
+  role: string
 }
 
 export type TokenProps = {
@@ -43,6 +44,7 @@ export class AuthService {
     return this.generateToken({
       id: userExists.id,
       username: userExists.username,
+      role: userExists.role,
     })
   }
 
@@ -71,7 +73,7 @@ export class AuthService {
   }
 
   generateToken(user: UserPayload): TokenProps {
-    const payload = { username: user.username, sub: user.id }
+    const payload = { username: user.username, sub: user.id, role: user.role }
     return {
       access_token: this.jwtService.sign(payload),
     }

@@ -29,10 +29,6 @@ jobs:
         run: |
           docker compose build
 
-      - name: Verificar imagem Docker
-        run: |
-          docker images
-
       - name: Criar diretório de artefatos
         run: |
           mkdir -p artefatos
