@@ -1,4 +1,5 @@
 import { JwtStrategy } from '@/controller/auth/jwt/jwt.strategy'
+import { UserRole } from '@prisma/client'
 
 describe('JwtStrategy unit tests', () => {
   it('should extract and validate JWT token from Authorization header', () => {
@@ -9,15 +10,17 @@ describe('JwtStrategy unit tests', () => {
     const strategy = new JwtStrategy(mockConfigService as any)
 
     const payload = {
-      sub: 123,
+      sub: '1642d170-4163-4403-bd3c-d66df9dc8218',
       username: 'testuser',
+      role: UserRole.ADMIN,
     }
 
     const result = strategy.validate(payload)
 
     expect(result).toEqual({
-      userId: 123,
+      sub: '1642d170-4163-4403-bd3c-d66df9dc8218',
       username: 'testuser',
+      role: UserRole.ADMIN,
     })
 
     expect(mockConfigService.get).toHaveBeenCalledWith('JWT_SECRET')
@@ -52,8 +55,9 @@ describe('JwtStrategy unit tests', () => {
     const strategy = new JwtStrategy(mockConfigService as any)
 
     const expiredPayload = {
-      sub: 123,
+      sub: '1642d170-4163-4403-bd3c-d66df9dc8218',
       username: 'testuser',
+      role: UserRole.ADMIN,
       exp: Math.floor(Date.now() / 1000) - 10,
     }
 
