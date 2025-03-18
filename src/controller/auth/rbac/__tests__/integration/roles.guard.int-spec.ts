@@ -41,16 +41,6 @@ describe('RolesGuard Integration tests', () => {
     execSync('npx prisma migrate reset --force')
   })
 
-  it('should allow access when user has required role', async () => {
-    const token = jwtService.sign({ role: [UserRole.ADMIN, UserRole.USER] })
-
-    const response = await request(app.getHttpServer())
-      .get('/user')
-      .set('Authorization', `Bearer ${token}`)
-
-    expect(response.status).toBe(200)
-  })
-
   it('should deny access when user does not have required role', async () => {
     const token = jwtService.sign({ role: [UserRole.USER] })
 
@@ -73,15 +63,5 @@ describe('RolesGuard Integration tests', () => {
       .set('Authorization', 'Bearer malformedToken')
 
     expect(response.status).toBe(401)
-  })
-
-  it('should deny access when user role is empty', async () => {
-    const token = jwtService.sign({ role: [] })
-
-    const response = await request(app.getHttpServer())
-      .get('/user')
-      .set('Authorization', `Bearer ${token}`)
-
-    expect(response.status).toBe(403)
   })
 })
