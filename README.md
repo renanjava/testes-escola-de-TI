@@ -3,7 +3,18 @@
 <h1>Sistema de Delivery para Padarias</h1>
 
 <h2>📌 Visão Geral</h2>
-<p>Este é o back-end de um sistema de delivery para padarias, desenvolvido em TypeScript utilizando o framework NestJS. O projeto inclui funcionalidades de autenticação, hash de senhas, validação de dados, manipulação de banco de dados, testes automatizados, e uma interface de usuário desenvolvida com React e Vite.</p>
+<p>Este é o back-end de um sistema de delivery para padarias, desenvolvido em TypeScript utilizando o framework NestJS. O projeto inclui diversas funcionalidades essenciais para um sistema de delivery moderno, tais como:</p>
+<ul>
+    <li><strong>Autenticação com JWT Tokens:</strong> Utiliza JSON Web Tokens para autenticação segura e eficiente.</li>
+    <li><strong>Controle de Acesso Baseado em Papéis:</strong> Implementa controle de acesso granular com base em papéis de usuário, permitindo a criação de rotas específicas para administradores e usuários comuns.</li>
+    <li><strong>Rotas Privadas e Públicas:</strong> Diferencia rotas que requerem autenticação de rotas acessíveis publicamente.</li>
+    <li><strong>Rotas de Administrador:</strong> Inclui rotas específicas para administradores, como gerenciamento de usuários.</li>
+    <li><strong>Rotas de Usuário:</strong> Inclui rotas específicas para usuários autenticados, como visualização e atualização de perfil.</li>
+    <li><strong>Funcionalidades de Login e Registro:</strong> Permite que novos usuários se registrem e usuários existentes façam login para acessar funcionalidades protegidas.</li>
+    <li><strong>Integração com Docker:</strong> A aplicação está disponível no DockerHub, facilitando a implantação e execução em ambientes de produção.</li>
+    <li><strong>Manipulação de Banco de Dados com Prisma:</strong> Utiliza Prisma como ORM para interações eficientes e seguras com o banco de dados PostgreSQL.</li>
+    <li><strong>Testes Automatizados:</strong> Inclui testes unitários e de integração para garantir a qualidade e a estabilidade do código.</li>
+</ul>
 
 <h2>🔥 Stack Utilizada</h2>
 <ul>
@@ -12,13 +23,16 @@
     <li><strong>JWT</strong>: @nestjs/jwt v11.0.0 - Gerenciamento e autenticação via tokens JWT.</li>
     <li><strong>Bcrypt</strong>: v5.1.1 - Hash e verificação segura de senhas.</li>
     <li><strong>Class Transformer</strong>: v0.5.1 - Conversão automática entre objetos e DTOs.</li>
-    <li><strong>Class Validator</strong>: v0.14.1 - Validação automática de dados recebidos.</li>
+    <li><strong>Class Validator</strong>: v0.14.1 - Validação automática de dados de entrada.</li>
     <li><strong>Jest</strong>: v29.7.0 - Framework de testes unitários e de integração.</li>
     <li><strong>Prettier</strong>: v3.4.2 - Formatação automática e padronização do código.</li>
     <li><strong>Prisma</strong>: v6.4.0 - ORM moderno para facilitar manipulação do banco.</li>
     <li><strong>ESLint</strong>: v9.20.1 - Análise estática para garantir qualidade e boas práticas.</li>
-    <li><strong>Faker.js</strong>: @faker-js/faker v9.5.0 - Geração de dados fictícios para testes e mocks.</li>
+    <li><strong>Faker.js</strong>: v9.5.0 - Geração de dados fictícios para testes e mocks.</li>
     <li><strong>Supertest</strong>: v6.3.3 - Biblioteca para testes de integração de APIs.</li>
+    <li><strong>React</strong>: v18.2.0 - Biblioteca para construção de interfaces de usuário.</li>
+    <li><strong>Vite</strong>: v3.2.3 - Ferramenta de build rápida para desenvolvimento de front-end.</li>
+    <li><strong>UUID</strong>: v9.0.0 - Geração de valores válidos de UUID para testes.</li>
 </ul>
 
 <h2>🚀 Tecnologias Utilizadas</h2>
@@ -30,7 +44,7 @@
     </li>
     <li><strong>Framework: NestJS</strong> 
         <ul>
-            <li><small>Framework modular baseado em Node.js, inspirado em arquitetura Angular, ideal para aplicações escaláveis.</small></li>
+            <li><small>Framework modular baseado em Node.js, ideal para aplicações escaláveis.</small></li>
         </ul>
     </li>
     <li><strong>Autenticação: JWT e Bcrypt</strong> 
@@ -74,6 +88,36 @@
             <li><small>Geração de artefatos Docker e push para Docker Hub.</small></li>
         </ul>
     </li>
+    <li><strong>Documentação: Swagger</strong> 
+        <ul>
+            <li><small>Gera documentação interativa da API automaticamente.</small></li>
+        </ul>
+    </li>
+    <li><strong>Containerização: Docker e DockerHub</strong> 
+        <ul>
+            <li><small>Docker para criar contêineres e DockerHub para armazenar e distribuir imagens Docker.</small></li>
+        </ul>
+    </li>
+    <li><strong>Controle de Versão: Git e GitHub</strong> 
+        <ul>
+            <li><small>Git para controle de versão e GitHub para hospedagem de repositórios e integração contínua.</small></li>
+        </ul>
+    </li>
+    <li><strong>Controle de Acesso: RBAC</strong> 
+        <ul>
+            <li><small>Implementa controle de acesso baseado em papéis (Role-Based Access Control).</small></li>
+        </ul>
+    </li>
+    <li><strong>Front-end: React e Vite</strong> 
+        <ul>
+            <li><small>React para construção de interfaces de usuário e Vite para build rápida e eficiente.</small></li>
+        </ul>
+    </li>
+    <li><strong>UUID</strong> 
+        <ul>
+            <li><small>Usado para gerar e armazenar UUIDs, garantindo que não haverá repetição e que não serão fáceis de descobrir.</small></li>
+        </ul>
+    </li>
 </ul>
 
 <h2>📂 Estrutura do Projeto</h2>
@@ -83,7 +127,8 @@
   |   |-- modules/        # Módulos de configuração
   |-- controller/         # Intermediário entre view e model
   |   |-- controllers/    # Controladores das rotas
-  |   |-- auth/           # Controladores de autenticação
+  |   |-- auth/           # Gerenciador de Autenticação JWT
+  |   |-- rbac/           # Gerenciador do Role-Based Acess Control
   |-- model/              # Modelos, serviços, repositórios e DTOs
   |   |-- common/         # Utilitários, pipes, interceptors
   |   |-- entities/       # Modelagem das entidades e DTOs
@@ -100,6 +145,8 @@
     <li>Cada desenvolvedor deve criar sua branch no formato:<br><code>dev/nome</code></li>
     <li>Após finalizar a implementação, deve abrir um Pull Request para <code>main</code>.</li>
     <li>O PR <strong>só será aceito se passar na pipeline de CI/CD</strong></li>
+    <li>Cada PR deve ter um título com as principais alterações e uma descrição listando todas as alterações feitas.</li>
+    <li>O autor da PR deve solicitar a revisão de pelo menos um outro desenvolvedor.</li>
 </ul>
 
 <h2>🚀 Workflows e Jobs de CI/CD</h2>
@@ -125,10 +172,10 @@
 </ul>
 
 <h3>🚀 Push para o Docker Hub</h3>
-<p>Este workflow é acionado em pushs para a branch <code>main</code> e é responsável por baixar o artefato gerado e fazer o push da imagem Docker para o Docker Hub.</p>
+<p>Este workflow é acionado em pull requests para a <code>main</code> e é responsável por baixar o artefato gerado e fazer o push da imagem Docker para o Docker Hub.</p>
 <ul>
     <li><strong>Nome:</strong> Push para o Docker Hub</li>
-    <li><strong>Evento:</strong> push (branch: main)</li>
+    <li><strong>Evento:</strong> pull_request (branch: main)</li>
     <li><strong>Jobs:</strong></li>
     <ul>
         <li><strong>dockerhub:</strong>
@@ -146,7 +193,7 @@
 </ul>
 
 <h3>✅ Check</h3>
-<p>Este workflow é acionado em pull requests para a branch <code>main</code> e é responsável por verificar a qualidade do código e rodar os testes.</p>
+<p>Este workflow é acionado em pushes para as branches e é responsável por verificar a qualidade do código e rodar os testes unitários e de integração.</p>
 <ul>
     <li><strong>Nome:</strong> Check</li>
     <li><strong>Evento:</strong> push (branch: todas, exceto main)</li>
@@ -176,6 +223,7 @@
 <h2>🖥️ Como rodar a API</h2>
 <h3>Ambiente de Desenvolvimento</h3>
 <ol>
+    <li>Inicie o serviço PostgreSQL do <code>docker-compose.yml</code>:<br><code>docker-compose up -d postgres</code></li>
     <li>Execute as migrações do Prisma:<br><code>npx prisma migrate dev</code></li>
     <li>Inicie a aplicação em ambiente de desenvolvimento:<br><code>npm run start:dev</code></li>
     <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
@@ -195,6 +243,14 @@
 <ul>
     <li><code>POST /auth/login</code>: Autentica um usuário e retorna um token JWT.</li>
     <li><code>POST /auth/register</code>: Registra um novo usuário.</li>
+</ul>
+
+<h3>User Controller</h3>
+<ul>
+    <li><code>GET /user/admin</code>: Retorna todos os usuários (apenas para administradores).</li>
+    <li><code>GET /user</code>: Retorna o usuário autenticado.</li>
+    <li><code>PATCH /user</code>: Atualiza o usuário autenticado.</li>
+    <li><code>DELETE /user/admin/:id</code>: Remove um usuário (apenas para administradores).</li>
 </ul>
 
 <h2>⚙️ Testes</h2>
