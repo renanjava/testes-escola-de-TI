@@ -8,6 +8,7 @@ import { SenhaInvalidaException } from '@/model/exceptions/senha-invalida.except
 import { UsuarioNaoEncontradoException } from '@/model/exceptions/usuario-nao-encontrado.exception'
 import { Password } from '@/model/common/utils/password'
 import { IUserPayload } from '@/controller/payloads/user-payload.interface'
+import { NodemailerService } from './nodemailer.service'
 
 export type TokenProps = {
   access_token: string
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     private userRepository: UserRepository,
+    private nodemailerService: NodemailerService,
   ) {}
 
   async loginUser(loggedUser: AuthLoginDto): Promise<TokenProps> {
@@ -56,6 +58,7 @@ export class AuthService {
     }
 
     await this.userRepository.createUser(registeredUser)
+    this.nodemailerService.sendEmail(registeredUser.email)
     return { ...registeredUser }
   }
 
