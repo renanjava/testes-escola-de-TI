@@ -2,6 +2,10 @@
 /dist
 /node_modules
 /build
+**/node_modules/
+node_modules/
+src/view/login-app/node_modules/
+src/view/node_modules/
 
 # Logs
 logs
