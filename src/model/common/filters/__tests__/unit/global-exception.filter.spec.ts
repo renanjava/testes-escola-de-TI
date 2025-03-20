@@ -31,6 +31,7 @@ describe('GlobalExceptionFilter', () => {
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
         timestamp: expect.any(String),
         path: undefined,
+        message: 'Unknown error',
       },
       HttpStatus.INTERNAL_SERVER_ERROR,
     )

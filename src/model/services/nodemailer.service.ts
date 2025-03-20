@@ -26,9 +26,9 @@ export class NodemailerService {
 
     transporter.sendMail(mailOptions, (error: any, info: any) => {
       if (error) {
-        console.log('Erro ao enviar o e-mail:', error)
+        return error
       } else {
-        console.log('E-mail enviado com sucesso:', info.response)
+        return info.response
       }
     })
   }
