@@ -10,9 +10,15 @@ import { GlobalLoggerInterceptor } from '@/model/common/interceptors/global-logg
 import { RolesGuard } from '@/controller/auth/rbac/roles.guard'
 import { GlobalExceptionFilter } from '@/model/common/filters/global-exception.filter'
 import { JwtService } from '@nestjs/jwt'
+import { NodemailerModule } from './nodemailer.module'
 
 @Module({
-  imports: [AuthModule, ConfigModule.forRoot({ isGlobal: true }), UserModule],
+  imports: [
+    AuthModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    UserModule,
+    NodemailerModule,
+  ],
   controllers: [AppController],
   providers: [
     JwtService,

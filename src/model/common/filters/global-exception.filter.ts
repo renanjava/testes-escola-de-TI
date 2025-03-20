@@ -25,6 +25,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       statusCode: httpStatus,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
+      message: exception instanceof Error ? exception.message : exception,
     }
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus)

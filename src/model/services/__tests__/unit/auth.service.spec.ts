@@ -8,6 +8,7 @@ import { AuthLoginDataBuilder } from '@/model/common/helper/auth-login-data-buil
 import { AuthRegisterProps } from '@/model/entities/dto/auth-register.dto'
 import { AuthRegisterDataBuilder } from '@/model/common/helper/auth-register-data-builder'
 import { Password } from '@/model/common/utils/password'
+import { NodemailerService } from '../../nodemailer.service'
 
 describe('AuthService', () => {
   const mockUserRepository = {
@@ -17,6 +18,10 @@ describe('AuthService', () => {
 
   const mockJwtService = {
     sign: jest.fn(),
+  }
+
+  const mockNodemailerService = {
+    sendEmail: jest.fn,
   }
 
   let authService: AuthService
@@ -33,6 +38,7 @@ describe('AuthService', () => {
         AuthService,
         { provide: UserRepository, useValue: mockUserRepository },
         { provide: JwtService, useValue: mockJwtService },
+        { provide: NodemailerService, useValue: mockNodemailerService },
       ],
     }).compile()
 
