@@ -37,3 +37,9 @@ jobs:
 
       - name: Rodar os testes de integração
         run: npm run test:int
+
+      - name: Subir a aplicação
+        run: docker compose up -d
+
+      - name: Rodar os testes e2e
+        run: npm run test:e2e

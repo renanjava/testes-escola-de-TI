@@ -7,7 +7,7 @@ import { INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { Prisma, UserRole } from '@prisma/client'
 
-describe('DB Connection E2E Test', () => {
+describe('DB Connection E2E Tests', () => {
   let userProps: AuthRegisterProps
   let app: INestApplication
 
