@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as nodemailer from 'nodemailer'
 
-describe('Nodemailer Service E2E Tests', () => {
+describe('Nodemailer Service Integration Tests', () => {
   it('should validate email connection', async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],

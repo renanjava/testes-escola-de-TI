@@ -12,6 +12,9 @@ jobs:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       DATABASE_NAME: escola-ti_db
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NODEMAILER_TEST_HOST: ${{ secrets.NODEMAILER_TEST_HOST }}
+      NODEMAILER_TEST_EMAIL: ${{ secrets.NODEMAILER_TEST_EMAIL }}
+      NODEMAILER_TEST_PASS: ${{ secrets.NODEMAILER_TEST_PASS }}
     steps:
       - uses: actions/checkout@v4
 
@@ -38,8 +41,5 @@ jobs:
       - name: Rodar os testes de integração
         run: npm run test:int
 
-      - name: Subir a aplicação
-        run: docker compose up -d
-
-      - name: Rodar os testes e2e
-        run: npm run test:e2e
+      - name: Parar o Postgres
+        run: docker compose down postgres
