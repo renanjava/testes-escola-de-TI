@@ -1,4 +1,4 @@
-export type ICreateUserDto = {
+export interface ICreateUserDto {
   realname: string
   username: string
   email: string

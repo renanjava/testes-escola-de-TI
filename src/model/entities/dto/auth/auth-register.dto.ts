@@ -1,4 +1,4 @@
-import { ICreateUserDto } from '@/model/entities/dto/create-user.dto'
+import { ICreateUserDto } from '@/model/entities/dto/user/create-user.dto'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsEmail,

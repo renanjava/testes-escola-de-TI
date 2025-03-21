@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Post, Body } from '@nestjs/common'
 import { AuthService } from '@/model/services/auth.service'
-import { AuthLoginDto } from '@/model/entities/dto/auth-login.dto'
+import { AuthLoginDto } from '@/model/entities/dto/auth/auth-login.dto'
 import { HashPasswordPipe } from '@/model/common/pipes/hash-password.pipe'
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AuthRegisterDto } from '@/model/entities/dto/auth-register.dto'
+import { AuthRegisterDto } from '@/model/entities/dto/auth/auth-register.dto'
 
 @Controller('auth')
 @ApiTags('auth')

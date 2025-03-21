@@ -11,6 +11,7 @@ import { RolesGuard } from '@/controller/auth/rbac/roles.guard'
 import { GlobalExceptionFilter } from '@/model/common/filters/global-exception.filter'
 import { JwtService } from '@nestjs/jwt'
 import { NodemailerModule } from './nodemailer.module'
+import { BakeryModule } from './bakery.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { NodemailerModule } from './nodemailer.module'
     ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
     NodemailerModule,
+    BakeryModule,
   ],
   controllers: [AppController],
   providers: [

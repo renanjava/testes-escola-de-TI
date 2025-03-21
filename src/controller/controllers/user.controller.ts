@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common'
 import { User, UserRole } from '@prisma/client'
 import { UserService } from '@/model/services/user.service'
-import { UpdateUserDto } from '@/model/entities/dto/update-user.dto'
+import { UpdateUserDto } from '@/model/entities/dto/user/update-user.dto'
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard'
 import { Roles } from '../auth/rbac/roles.decorator'
 import { IUserRequest } from '../payloads/user-request.interface'

@@ -2,7 +2,7 @@ import { validate } from 'class-validator'
 import {
   AuthLoginFactory,
   AuthLoginProps,
-} from '@/model/entities/dto/auth-login.dto'
+} from '@/model/entities/dto/auth/auth-login.dto'
 import { AuthLoginDataBuilder } from '@/model/common/helper/auth-login-data-builder'
 
 let props: AuthLoginProps

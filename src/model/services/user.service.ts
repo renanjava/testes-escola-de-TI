@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { UserRepository } from '../repositories/user.repository'
 import { User } from '@prisma/client'
 import { UsuarioNaoEncontradoException } from '../exceptions/usuario-nao-encontrado.exception'
-import { UpdateUserDto } from '../entities/dto/update-user.dto'
+import { UpdateUserDto } from '../entities/dto/user/update-user.dto'
 
 @Injectable()
 export class UserService {

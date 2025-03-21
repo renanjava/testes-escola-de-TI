@@ -3,7 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common'
 import request from 'supertest'
 import { AppModule } from '@/config/modules/app.module'
 import { execSync } from 'child_process'
-import { AuthRegisterProps } from '@/model/entities/dto/auth-register.dto'
+import { AuthRegisterProps } from '@/model/entities/dto/auth/auth-register.dto'
 import { AuthRegisterDataBuilder } from '@/model/common/helper/auth-register-data-builder'
 import { ConfigService } from '@nestjs/config'
 
