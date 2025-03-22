@@ -1,12 +1,9 @@
 name: 'Push para o DockerHub'
 
 on:
-  workflow_run:
-    workflows: ['Buildar o artefato da imagem Docker']
+  push:
     branches:
       - main
-    types:
-      - completed
 
 jobs:
   dockerhub:

@@ -1,9 +1,12 @@
 name: 'Buildar o artefato da imagem Docker'
 
 on:
-  pull_request:
+  workflow_run:
+    workflows: ["Verificação avançada de código"]
     branches:
-      - main
+      - 'main'
+    types:
+      - completed
 
 jobs:
   artifact:
@@ -17,6 +20,8 @@ jobs:
       NODEMAILER_TEST_HOST: ${{ secrets.NODEMAILER_TEST_HOST }}
       NODEMAILER_TEST_EMAIL: ${{ secrets.NODEMAILER_TEST_EMAIL }}
       NODEMAILER_TEST_PASS: ${{ secrets.NODEMAILER_TEST_PASS }}
+      NODEMAILER_USER: ${{ secrets.NODEMAILER_USER }}
+      NODEMAILER_PASS: ${{ secrets.NODEMAILER_PASS }}
     steps:
       - uses: actions/checkout@v3
 

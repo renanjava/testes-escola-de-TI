@@ -6,7 +6,7 @@ on:
       - 'main'
 
 jobs:
-  check:
+  basic-check:
     runs-on: ubuntu-latest
     env:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}

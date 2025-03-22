@@ -4,9 +4,10 @@ on:
   pull_request:
     branches:
       - 'main'
+    
 
 jobs:
-  check:
+  advanced-check:
     runs-on: ubuntu-latest
     env:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -33,6 +34,9 @@ jobs:
 
       - name: Subir a aplicação
         run: docker compose up -d
+
+      - name: Deploy das migrações
+        run: npx prisma migrate deploy
 
       - name: Rodar os testes E2E
         run: npm run test:e2e
