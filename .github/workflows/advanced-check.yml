@@ -1,0 +1,41 @@
+name: 'Verificação avançada de código'
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      DATABASE_NAME: escola-ti_db
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NODEMAILER_TEST_HOST: ${{ secrets.NODEMAILER_TEST_HOST }}
+      NODEMAILER_TEST_EMAIL: ${{ secrets.NODEMAILER_TEST_EMAIL }}
+      NODEMAILER_TEST_PASS: ${{ secrets.NODEMAILER_TEST_PASS }}
+      NODEMAILER_USER: ${{ secrets.NODEMAILER_USER }}
+      NODEMAILER_PASS: ${{ secrets.NODEMAILER_PASS }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Subir o Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.12.2'
+
+      - name: Instalar as dependências
+        run: npm install
+
+      - name: Buildar a aplicação
+        run: docker compose build
+
+      - name: Subir a aplicação
+        run: docker compose up -d
+
+      - name: Rodar os testes E2E
+        run: npm run test:e2e
+
+      - name: Parar a aplicação
+        run: docker compose down
