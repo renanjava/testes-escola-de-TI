@@ -1,9 +1,10 @@
 name: 'Push para o DockerHub'
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ['Buildar o artefato da imagem Docker']
+    types:
+      - completed
 
 jobs:
   dockerhub:
@@ -18,6 +19,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: cafe-com-type
+          path: ./artefatos
 
       - name: Docker Login
         uses: docker/login-action@v2
@@ -27,7 +29,7 @@ jobs:
 
       - name: Load Docker image from artifact
         run: |
-          docker load -i cafe-com-type.tar
+          docker load -i ./artefatos/cafe-com-type.tar
 
       - name: Push Docker image with dynamic tag to Docker Hub
         run: |
