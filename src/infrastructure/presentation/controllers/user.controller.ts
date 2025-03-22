@@ -13,7 +13,7 @@ import { UserService } from '@/infrastructure/model/services/user.service'
 import { UpdateUserDto } from '@/infrastructure/model/entities/dto/user/update-user.dto'
 import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
 import { Roles } from '../../auth/rbac/roles.decorator'
-import { IUserRequest } from '../payloads/user-request.interface'
+import { IUserRequest } from './payloads/user-request.interface'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
 
 @Controller('user')
