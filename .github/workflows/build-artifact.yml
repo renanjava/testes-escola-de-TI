@@ -1,12 +1,9 @@
 name: 'Buildar o artefato da imagem Docker'
 
 on:
-  workflow_run:
-    workflows: ["Verificação avançada de código"]
+  pull_request:
     branches:
       - 'main'
-    types:
-      - completed
 
 jobs:
   artifact:
