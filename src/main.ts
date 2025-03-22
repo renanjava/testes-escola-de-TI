@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from '@/config/modules/app.module'
+import { AppModule } from './infrastructure/config/modules/app.module'
 import { ConfigService } from '@nestjs/config'
 import { Logger, ValidationPipe } from '@nestjs/common'
-import setupSwagger from './config/setup-swagger'
-import setupSecurity from './config/setup-security'
+import setupSwagger from '@/shared/setup-swagger'
+import setupSecurity from '@/shared/setup-security'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -30,7 +31,6 @@ async function bootstrap() {
     databaseUrl = databaseUrl?.replace('postgres:5432', 'localhost:5432')
   } else if (environment === 'production') {
     Logger.log('Aplicação rodando em produção')
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     databaseUrl = databaseUrl?.replace('localhost:5432', 'postgres:5432')
   }
   Logger.log(`🚀 Server running on http://localhost:${PORT}`)
