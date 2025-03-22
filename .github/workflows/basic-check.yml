@@ -6,7 +6,7 @@ on:
       - 'main'
 
 jobs:
-  check:
+  basic-check:
     runs-on: ubuntu-latest
     env:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -15,6 +15,8 @@ jobs:
       NODEMAILER_TEST_HOST: ${{ secrets.NODEMAILER_TEST_HOST }}
       NODEMAILER_TEST_EMAIL: ${{ secrets.NODEMAILER_TEST_EMAIL }}
       NODEMAILER_TEST_PASS: ${{ secrets.NODEMAILER_TEST_PASS }}
+      NODEMAILER_USER: ${{ secrets.NODEMAILER_USER }}
+      NODEMAILER_PASS: ${{ secrets.NODEMAILER_PASS }}
     steps:
       - uses: actions/checkout@v4
 
