@@ -1,15 +1,61 @@
-name: 'Push para o DockerHub'
+name: 'Gerar artefato e push para o DockerHub'
 
 on:
+  pull_request:
+    branches:
+      - 'main'
   push:
     branches:
       - 'main'
 
+env:
+  IMAGE_NAME: renancesu/cafe-com-type
+
 jobs:
-  dockerhub:
+  build-artifact:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    env:
+      NODE_ENV: production
+      PORT: 3000
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      DATABASE_NAME: escola-ti_db
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NODEMAILER_TEST_HOST: ${{ secrets.NODEMAILER_TEST_HOST }}
+      NODEMAILER_TEST_EMAIL: ${{ secrets.NODEMAILER_TEST_EMAIL }}
+      NODEMAILER_TEST_PASS: ${{ secrets.NODEMAILER_TEST_PASS }}
+      NODEMAILER_USER: ${{ secrets.NODEMAILER_USER }}
+      NODEMAILER_PASS: ${{ secrets.NODEMAILER_PASS }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: setup Docker Build
+        uses: docker/setup-buildx-action@v2
+
+      - name: Buildar imagem Docker
+        run: |
+          docker compose build
+
+      - name: Criar diretório de artefatos
+        run: |
+          mkdir -p artefatos
+
+      - name: Salvar imagem Docker como artefato
+        run: |
+          docker save -o artefatos/cafe-com-type.tar $IMAGE_NAME
+
+      - name: Upload do artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: cafe-com-type
+          path: ./artefatos
+
+  push-dockerhub:
+    runs-on: ubuntu-latest
+    needs: build-artifact
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
 
       - name: setup Docker Build
         uses: docker/setup-buildx-action@v2
@@ -32,10 +78,10 @@ jobs:
 
       - name: Push Docker image with dynamic tag to Docker Hub
         run: |
-          docker tag renancesu/cafe-com-type renancesu/cafe-com-type:${{ github.sha }}
-          docker push renancesu/cafe-com-type:${{ github.sha }}
+          docker tag $IMAGE_NAME $IMAGE_NAME:${{ github.sha }}
+          docker push $IMAGE_NAME:${{ github.sha }}
 
       - name: Push Docker image with latest tag to Docker Hub
         run: |
-          docker tag renancesu/cafe-com-type renancesu/cafe-com-type:latest
-          docker push renancesu/cafe-com-type:latest
+          docker tag $IMAGE_NAME $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:latest
