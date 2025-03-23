@@ -14,7 +14,7 @@ env:
 jobs:
   build-artifact:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     env:
       NODE_ENV: production
       PORT: 3000
@@ -34,7 +34,7 @@ jobs:
 
       - name: Buildar imagem Docker
         run: |
-          docker compose build
+          docker build -t $IMAGE_NAME .
 
       - name: Criar diretório de artefatos
         run: |
@@ -55,8 +55,6 @@ jobs:
     needs: build-artifact
     if: github.event_name == 'push'
     steps:
-      - uses: actions/checkout@v4
-
       - name: setup Docker Build
         uses: docker/setup-buildx-action@v2
 
