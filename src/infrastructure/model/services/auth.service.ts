@@ -7,7 +7,7 @@ import { EmailOuUsernameExistenteException } from '@/shared/model/common/excepti
 import { SenhaInvalidaException } from '@/shared/model/common/exceptions/senha-invalida.exception'
 import { UsuarioNaoEncontradoException } from '@/shared/model/common/exceptions/usuario-nao-encontrado.exception'
 import { Password } from '@/shared/model/common/utils/password'
-import { IUserPayload } from '@/application/presentation/payloads/user-payload.interface'
+import { IUserPayload } from '@/application/presentation/controllers/payloads/user-payload.interface'
 import { NodemailerService } from './nodemailer.service'
 
 export type TokenProps = {
