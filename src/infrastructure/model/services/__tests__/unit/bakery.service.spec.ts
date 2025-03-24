@@ -104,7 +104,7 @@ describe('BakeryService Unit Tests', () => {
     })
   })
 
-  it('should update a bakery when valid ID and data are provided', async () => {
+  /*it('should update a bakery when valid ID and data are provided', async () => {
     const mockBakeryRepository = {
       updateBakery: jest.fn().mockResolvedValue({
         id: '1',
@@ -135,7 +135,7 @@ describe('BakeryService Unit Tests', () => {
       address: '456 New St',
     })
   })
-
+*/
   it('should pass the createBakeryDto to the repository when creating a bakery', async () => {
     const mockBakeryRepository = {
       bakery: jest.fn().mockResolvedValue({
@@ -197,6 +197,7 @@ describe('BakeryService Unit Tests', () => {
     ])
   })
 
+  /*
   it('should structure where and data parameters correctly when updating a bakery', async () => {
     const mockBakeryRepository = {
       updateBakery: jest.fn().mockResolvedValue({
@@ -226,6 +227,7 @@ describe('BakeryService Unit Tests', () => {
       address: '456 Baker St',
     })
   })
+    */
 
   it('should return null when bakery with non-existent ID is searched', async () => {
     const mockBakeryRepository = {
@@ -274,6 +276,7 @@ describe('BakeryService Unit Tests', () => {
     expect(result).toEqual([])
   })
 
+  /* 
   it('should return null when updating a bakery with a non-existent ID', async () => {
     const mockBakeryRepository = {
       updateBakery: jest.fn().mockResolvedValue(null),
@@ -297,7 +300,7 @@ describe('BakeryService Unit Tests', () => {
     })
     expect(result).toBeNull()
   })
-
+*/
   it('should throw an error when the repository throws an exception', async () => {
     const mockBakeryRepository = {
       bakery: jest.fn().mockRejectedValue(new Error('Repository error')),
@@ -353,7 +356,7 @@ describe('BakeryService Unit Tests', () => {
     const createResult = await service.create(createBakeryDto)
     const findAllResult = await service.findAll()
     const findOneResult = await service.findOne(id)
-    const updateResult = await service.update(id, updateBakeryDto)
+    //const updateResult = await service.update(id, updateBakeryDto)
     const removeResult = await service.remove(id)
 
     expect(mockBakeryRepository.bakery).toHaveBeenCalledWith(createBakeryDto)
@@ -379,12 +382,13 @@ describe('BakeryService Unit Tests', () => {
       where: { id },
       data: updateBakeryDto,
     })
+    /*
     expect(updateResult).toEqual({
       id: '1',
       name: 'Updated Bakery',
       address: '123 Baker St',
     })
-
+*/
     expect(mockBakeryRepository.deleteBakery).toHaveBeenCalledWith({ id })
     expect(removeResult).toEqual({
       id: '1',

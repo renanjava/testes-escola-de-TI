@@ -5,8 +5,9 @@ export interface CreateBakeryProps extends BakeryEntity {
   name: string
   cnpj: string
   address: string
-  startedTime: Date
-  endTime: Date
+  openTime: Date
+  closeTime: Date
+  managers: string[]
 }
 
 export class CreateBakeryDto implements CreateBakeryProps {
@@ -20,23 +21,27 @@ export class CreateBakeryDto implements CreateBakeryProps {
   address: string
 
   @IsDate()
-  startedTime: Date
+  openTime: Date
 
   @IsDate()
-  endTime: Date
+  closeTime: Date
+
+  managers: string[]
 
   constructor(
     name: string,
     cnpj: string,
     address: string,
-    startedTime: Date,
-    endTime: Date,
+    openTime: Date,
+    closeTime: Date,
+    managers: string[],
   ) {
     this.name = name
     this.cnpj = cnpj
     this.address = address
-    this.startedTime = startedTime
-    this.endTime = endTime
+    this.openTime = openTime
+    this.closeTime = closeTime
+    this.managers = managers
   }
 }
 
@@ -45,9 +50,17 @@ export class CreateBakeryFactory {
     name: string,
     cnpj: string,
     address: string,
-    startedTime: Date,
-    endTime: Date,
+    openTime: Date,
+    closeTime: Date,
+    managers: string[],
   ): CreateBakeryDto {
-    return new CreateBakeryDto(name, cnpj, address, startedTime, endTime)
+    return new CreateBakeryDto(
+      name,
+      cnpj,
+      address,
+      openTime,
+      closeTime,
+      managers,
+    )
   }
 }

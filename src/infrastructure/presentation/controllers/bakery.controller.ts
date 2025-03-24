@@ -3,14 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseGuards,
 } from '@nestjs/common'
 import { BakeryService } from '@/infrastructure/model/services/bakery.service'
 import { CreateBakeryDto } from '@/infrastructure/model/entities/dto/bakery/create-bakery.dto'
-import { UpdateBakeryDto } from '@/infrastructure/model/entities/dto/bakery/update-bakery.dto'
 import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
 import { Roles } from '../../auth/rbac/roles.decorator'
 import { UserRole } from '@prisma/client'
@@ -37,13 +35,6 @@ export class BakeryController {
   @Roles(UserRole.ADMIN)
   findOne(@Param('id') id: string) {
     return this.bakeryService.findOne(id)
-  }
-
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
-  @Roles(UserRole.ADMIN)
-  update(@Param('id') id: string, @Body() updateBakeryDto: UpdateBakeryDto) {
-    return this.bakeryService.update(id, updateBakeryDto)
   }
 
   @Delete(':id')
