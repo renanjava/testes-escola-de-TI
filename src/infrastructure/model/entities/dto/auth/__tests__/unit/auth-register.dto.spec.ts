@@ -3,7 +3,7 @@ import {
   AuthRegisterFactory,
   AuthRegisterProps,
 } from '@/infrastructure/model/entities/dto/auth/auth-register.dto'
-import { AuthRegisterDataBuilder } from '@/infrastructure/common/helper/auth-register-data-builder'
+import { AuthRegisterDataBuilder } from '@/infrastructure/common/helper/auth/auth-register-data-builder'
 
 let props: AuthRegisterProps
 
