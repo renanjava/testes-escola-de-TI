@@ -4,13 +4,13 @@ import { UserRepository } from '@/infrastructure/model/repositories/user.reposit
 import { HttpException, HttpStatus } from '@nestjs/common'
 import { AuthLoginProps } from '@/infrastructure/model/entities/dto/auth/auth-login.dto'
 import { AuthService } from '@/infrastructure/model/services/auth.service'
-import { AuthLoginDataBuilder } from '@/infrastructure/common/helper/auth-login-data-builder'
+import { AuthLoginDataBuilder } from '@/infrastructure/common/helper/auth/auth-login-data-builder'
 import { AuthRegisterProps } from '@/infrastructure/model/entities/dto/auth/auth-register.dto'
-import { AuthRegisterDataBuilder } from '@/infrastructure/common/helper/auth-register-data-builder'
+import { AuthRegisterDataBuilder } from '@/infrastructure/common/helper/auth/auth-register-data-builder'
 import { Password } from '@/shared/model/common/utils/password'
 import { NodemailerService } from '../../nodemailer.service'
 
-describe('AuthService', () => {
+describe('AuthService Unit Tests', () => {
   const mockUserRepository = {
     user: jest.fn(),
     createUser: jest.fn(),

@@ -3,7 +3,7 @@ import {
   AuthLoginFactory,
   AuthLoginProps,
 } from '@/infrastructure/model/entities/dto/auth/auth-login.dto'
-import { AuthLoginDataBuilder } from '@/infrastructure/common/helper/auth-login-data-builder'
+import { AuthLoginDataBuilder } from '@/infrastructure/common/helper/auth/auth-login-data-builder'
 
 let props: AuthLoginProps
 
