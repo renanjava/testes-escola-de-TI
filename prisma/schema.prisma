@@ -25,6 +25,8 @@ model User {
 
 model Bakery {
   id String @id @default(uuid())
+  manager User @relation(fields: [managerId], references: [id])
+  managerId String
   name String
   cnpj String
   address String
