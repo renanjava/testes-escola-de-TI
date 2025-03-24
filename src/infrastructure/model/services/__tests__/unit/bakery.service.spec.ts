@@ -1,11 +1,11 @@
-import { BakeryDataBuilder } from '@/infrastructure/common/helper/bakery/bakery-data-builder'
+import { CreateBakeryDataBuilder } from '@/infrastructure/common/helper/bakery/create-bakery-data-builder'
 import { CreateBakeryProps } from '@/infrastructure/model/entities/dto/bakery/create-bakery.dto'
 import { BakeryService } from '@/infrastructure/model/services/bakery.service'
 
 describe('BakeryService Unit Tests', () => {
   let bakeryProps: CreateBakeryProps
   it('should create a new bakery when valid data is provided', async () => {
-    bakeryProps = BakeryDataBuilder({} as CreateBakeryProps)
+    bakeryProps = CreateBakeryDataBuilder({} as CreateBakeryProps)
 
     const bakeryRepositoryMock = {
       bakery: jest.fn().mockResolvedValue(bakeryProps),

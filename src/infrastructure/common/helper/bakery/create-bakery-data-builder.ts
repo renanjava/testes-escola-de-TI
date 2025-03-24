@@ -1,7 +1,9 @@
 import { CreateBakeryProps } from '@/infrastructure/model/entities/dto/bakery/create-bakery.dto'
 import { faker } from '@faker-js/faker'
 
-export function BakeryDataBuilder(props: CreateBakeryProps): CreateBakeryProps {
+export function CreateBakeryDataBuilder(
+  props: CreateBakeryProps,
+): CreateBakeryProps {
   return {
     name: props.name || faker.company.name(),
     cnpj: props.cnpj || faker.string.numeric(8),
