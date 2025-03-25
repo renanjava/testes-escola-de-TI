@@ -6,14 +6,7 @@ import { BakeryRepository } from '../repositories/bakery.repository'
 export class BakeryService {
   constructor(private readonly bakeryRepository: BakeryRepository) {}
   async create(createBakeryDto: CreateBakeryDto) {
-    return await this.bakeryRepository.createBakery({
-      ...createBakeryDto,
-      managers: {
-        create: createBakeryDto.managers.map(managerId => ({
-          manager: { connect: { id: managerId } },
-        })),
-      },
-    })
+    return await this.bakeryRepository.createBakery(createBakeryDto)
   }
 
   async findAll() {

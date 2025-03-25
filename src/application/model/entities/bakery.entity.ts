@@ -4,5 +4,4 @@ export default class BakeryEntity {
   address: string
   openTime: Date
   closeTime: Date
-  managers: string[]
 }

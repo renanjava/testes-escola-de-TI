@@ -10,6 +10,5 @@ export function CreateBakeryDataBuilder(
     address: props.address || faker.word.words(),
     openTime: props.openTime || faker.date.soon({ days: 10 }),
     closeTime: props.closeTime || Date.now(),
-    managers: props.managers,
   }
 }

@@ -12,4 +12,15 @@ export class CreateBakeryManagerDto implements CreateBakeryManagerProps {
 
   @IsUUID()
   bakeryId: string
+
+  constructor(managerId: string, bakeryId: string) {
+    this.managerId = managerId
+    this.bakeryId = bakeryId
+  }
+}
+
+export class CreateBakeryManagerFactory {
+  static create(managerId: string, bakeryId: string): CreateBakeryManagerDto {
+    return new CreateBakeryManagerDto(managerId, bakeryId)
+  }
 }

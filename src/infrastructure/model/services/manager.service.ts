@@ -6,14 +6,7 @@ import { ManagerRepository } from '../repositories/manager.repository'
 export class ManagerService {
   constructor(private managerRepository: ManagerRepository) {}
   async create(createManagerDto: CreateManagerDto) {
-    return await this.managerRepository.createManager({
-      ...createManagerDto,
-      bakeries: {
-        create: createManagerDto.bakeries.map(bakeryId => ({
-          bakery: { connect: { id: bakeryId } },
-        })),
-      },
-    })
+    return await this.managerRepository.createManager(createManagerDto)
   }
 
   async findAll() {

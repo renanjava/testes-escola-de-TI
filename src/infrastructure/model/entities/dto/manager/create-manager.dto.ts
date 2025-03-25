@@ -5,7 +5,6 @@ export interface CreateManagerProps extends ManagerEntity {
   name: string
   email: string
   password: string
-  bakeries: string[]
 }
 
 export class CreateManagerDto implements CreateManagerProps {
@@ -18,5 +17,19 @@ export class CreateManagerDto implements CreateManagerProps {
   @IsString()
   password: string
 
-  bakeries: string[]
+  constructor(name: string, email: string, password: string) {
+    this.name = name
+    this.email = email
+    this.password = password
+  }
+}
+
+export class CreateManagerFactory {
+  static create(
+    name: string,
+    email: string,
+    password: string,
+  ): CreateManagerDto {
+    return new CreateManagerDto(name, email, password)
+  }
 }
