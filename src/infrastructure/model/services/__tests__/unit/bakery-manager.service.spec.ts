@@ -2,9 +2,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common'
 import { BakeryManagerService } from '../../bakery-manager.service'
 
 describe('BakeryManagerService', () => {
-  // Successfully creates a bakery-manager relationship when valid IDs are provided
   it('should create a bakery-manager relationship when valid IDs are provided', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
     const bakery = { id: '1', name: 'Test Bakery' }
     const manager = { id: '2', name: 'Test Manager' }
@@ -29,10 +27,8 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act
     const result = await service.create(createBakeryManagerDto)
 
-    // Assert
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
     expect(managerRepositoryMock.manager).toHaveBeenCalledWith({ id: '2' })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
@@ -48,9 +44,7 @@ describe('BakeryManagerService', () => {
     expect(result).toEqual(expectedResult)
   })
 
-  // Throws NotFoundException when bakery ID doesn't exist
   it('should throw NotFoundException when bakery ID doesnt exist', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
 
     const bakeryManagerRepositoryMock = {
@@ -72,7 +66,6 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act & Assert
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       new NotFoundException('Padaria não encontrada'),
     )
@@ -84,9 +77,7 @@ describe('BakeryManagerService', () => {
     ).not.toHaveBeenCalled()
   })
 
-  // Successfully removes a bakery-manager relationship by ID
   it('should remove a bakery-manager relationship when a valid ID is provided', async () => {
-    // Arrange
     const bakeryManagerId = '3'
     const expectedResult = { id: '3', bakeryId: '1', managerId: '2' }
 
@@ -101,19 +92,15 @@ describe('BakeryManagerService', () => {
       {} as any,
     )
 
-    // Act
     const result = await service.remove(bakeryManagerId)
 
-    // Assert
     expect(
       bakeryManagerRepositoryMock.deleteBakeryManager,
     ).toHaveBeenCalledWith({ id: '3' })
     expect(result).toEqual(expectedResult)
   })
 
-  // Successfully retrieves all bakery-manager relationships
   it('should retrieve all bakery-manager relationships successfully', async () => {
-    // Arrange
     const expectedBakeryManagers = [
       { id: '1', bakeryId: '1', managerId: '2' },
       { id: '2', bakeryId: '2', managerId: '3' },
@@ -129,17 +116,13 @@ describe('BakeryManagerService', () => {
       {} as any,
     )
 
-    // Act
     const result = await service.findAll()
 
-    // Assert
     expect(bakeryManagerRepositoryMock.bakeryManagers).toHaveBeenCalledWith({})
     expect(result).toEqual(expectedBakeryManagers)
   })
 
-  // Successfully retrieves a specific bakery-manager relationship by ID
   it('should retrieve a bakery-manager relationship by ID when a valid ID is provided', async () => {
-    // Arrange
     const bakeryManagerId = '3'
     const expectedBakeryManager = { id: '3', bakeryId: '1', managerId: '2' }
 
@@ -153,19 +136,15 @@ describe('BakeryManagerService', () => {
       {} as any,
     )
 
-    // Act
     const result = await service.findOne(bakeryManagerId)
 
-    // Assert
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       id: '3',
     })
     expect(result).toEqual(expectedBakeryManager)
   })
 
-  // Handles empty result when finding a non-existent bakery-manager by ID
   it('should return null when a non-existent bakery-manager ID is provided', async () => {
-    // Arrange
     const nonExistentId = '999'
     const bakeryManagerRepositoryMock = {
       bakeryManager: jest.fn().mockResolvedValue(null),
@@ -179,19 +158,15 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act
     const result = await service.findOne(nonExistentId)
 
-    // Assert
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       id: nonExistentId,
     })
     expect(result).toBeNull()
   })
 
-  // Throws NotFoundException when manager ID doesn't exist
   it('should throw NotFoundException when manager ID does not exist', async () => {
-    // Arrange
     const createBakeryManagerDto = {
       bakeryId: '1',
       managerId: 'non-existent-id',
@@ -217,7 +192,6 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act & Assert
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       NotFoundException,
     )
@@ -227,9 +201,7 @@ describe('BakeryManagerService', () => {
     })
   })
 
-  // Handles removal of non-existent bakery-manager relationship
   it('should throw NotFoundException when trying to remove a non-existent bakery-manager relationship', async () => {
-    // Arrange
     const bakeryManagerRepositoryMock = {
       bakeryManager: jest.fn().mockResolvedValue(null),
       deleteBakeryManager: jest.fn(),
@@ -241,7 +213,6 @@ describe('BakeryManagerService', () => {
       {} as any,
     )
 
-    // Act & Assert
     await expect(service.remove('non-existent-id')).rejects.toThrow(
       NotFoundException,
     )
@@ -250,9 +221,7 @@ describe('BakeryManagerService', () => {
     ).not.toHaveBeenCalled()
   })
 
-  // Validates input data structure from CreateBakeryManagerDto
   it('should throw NotFoundException when bakeryId is invalid', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: 'invalid', managerId: '2' }
 
     const bakeryManagerRepositoryMock = {
@@ -274,16 +243,13 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act & Assert
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       NotFoundException,
     )
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: 'invalid' })
   })
 
-  // Throws BadRequestException when attempting to create a duplicate bakery-manager relationship
   it('should throw BadRequestException when creating a duplicate bakery-manager relationship', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
     const bakery = { id: '1', name: 'Test Bakery' }
     const manager = { id: '2', name: 'Test Manager' }
@@ -308,7 +274,6 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act & Assert
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       BadRequestException,
     )
@@ -320,9 +285,7 @@ describe('BakeryManagerService', () => {
     })
   })
 
-  // Properly connects bakery and manager entities in the repository
   it('should throw NotFoundException when bakery does not exist', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
 
     const bakeryManagerRepositoryMock = {
@@ -344,16 +307,13 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act & Assert
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       NotFoundException,
     )
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
   })
 
-  // Returns the created bakery-manager entity with correct structure
   it('should return the created bakery-manager entity with correct structure when valid IDs are provided', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
     const bakery = { id: '1', name: 'Test Bakery' }
     const manager = { id: '2', name: 'Test Manager' }
@@ -378,10 +338,8 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act
     const result = await service.create(createBakeryManagerDto)
 
-    // Assert
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
     expect(managerRepositoryMock.manager).toHaveBeenCalledWith({ id: '2' })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
@@ -397,9 +355,7 @@ describe('BakeryManagerService', () => {
     expect(result).toEqual(expectedResult)
   })
 
-  // Maintains referential integrity between bakeries and managers
   it('should throw NotFoundException when bakery does not exist', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
 
     const bakeryManagerRepositoryMock = {
@@ -421,16 +377,13 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act & Assert
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       NotFoundException,
     )
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
   })
 
-  // Properly formats error messages in Portuguese
   it('should throw NotFoundException with Portuguese message when bakery is not found', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
     const bakeryManagerRepositoryMock = {
       bakeryManager: jest.fn().mockResolvedValue(null),
@@ -448,15 +401,12 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act & Assert
     await expect(service.create(createBakeryManagerDto)).rejects.toThrowError(
       new NotFoundException('Padaria não encontrada'),
     )
   })
 
-  // Handles concurrent creation requests for the same bakery-manager relationship
   it('should throw BadRequestException when creating a duplicate bakery-manager relationship concurrently', async () => {
-    // Arrange
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
     const bakery = { id: '1', name: 'Test Bakery' }
     const manager = { id: '2', name: 'Test Manager' }
@@ -481,7 +431,6 @@ describe('BakeryManagerService', () => {
       managerRepositoryMock as any,
     )
 
-    // Act & Assert
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       BadRequestException,
     )
