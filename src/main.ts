@@ -10,6 +10,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
+<<<<<<< HEAD
+  app.useGlobalFilters(new GlobalExceptionFilter())
+=======
+>>>>>>> main
 
   setupSwagger(app)
   setupSecurity(app)
