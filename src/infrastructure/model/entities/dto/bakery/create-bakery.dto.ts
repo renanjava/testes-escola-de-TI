@@ -1,12 +1,12 @@
 import BakeryEntity from '@/application/model/entities/bakery.entity'
-import { IsDate, IsString } from 'class-validator'
+import { IsString } from 'class-validator'
 
 export interface CreateBakeryProps extends BakeryEntity {
   name: string
   cnpj: string
   address: string
-  startedTime: Date
-  endTime: Date
+  openTime: Date
+  closeTime: Date
 }
 
 export class CreateBakeryDto implements CreateBakeryProps {
@@ -19,24 +19,22 @@ export class CreateBakeryDto implements CreateBakeryProps {
   @IsString()
   address: string
 
-  @IsDate()
-  startedTime: Date
+  openTime: Date
 
-  @IsDate()
-  endTime: Date
+  closeTime: Date
 
   constructor(
     name: string,
     cnpj: string,
     address: string,
-    startedTime: Date,
-    endTime: Date,
+    openTime: Date,
+    closeTime: Date,
   ) {
     this.name = name
     this.cnpj = cnpj
     this.address = address
-    this.startedTime = startedTime
-    this.endTime = endTime
+    this.openTime = openTime
+    this.closeTime = closeTime
   }
 }
 
@@ -45,9 +43,9 @@ export class CreateBakeryFactory {
     name: string,
     cnpj: string,
     address: string,
-    startedTime: Date,
-    endTime: Date,
+    openTime: Date,
+    closeTime: Date,
   ): CreateBakeryDto {
-    return new CreateBakeryDto(name, cnpj, address, startedTime, endTime)
+    return new CreateBakeryDto(name, cnpj, address, openTime, closeTime)
   }
 }

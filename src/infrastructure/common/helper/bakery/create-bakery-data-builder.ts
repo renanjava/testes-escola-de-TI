@@ -8,7 +8,7 @@ export function CreateBakeryDataBuilder(
     name: props.name || faker.company.name(),
     cnpj: props.cnpj || faker.string.numeric(8),
     address: props.address || faker.word.words(),
-    startedTime: props.startedTime || faker.date.soon({ days: 10 }),
-    endTime: props.endTime || Date.now(),
+    openTime: props.openTime || faker.date.soon({ days: 10 }),
+    closeTime: props.closeTime || Date.now(),
   }
 }

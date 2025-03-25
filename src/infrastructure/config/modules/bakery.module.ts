@@ -7,5 +7,6 @@ import { PrismaService } from '@/infrastructure/model/services/prisma.service'
 @Module({
   controllers: [BakeryController],
   providers: [BakeryService, BakeryRepository, PrismaService],
+  exports: [BakeryRepository],
 })
 export class BakeryModule {}
