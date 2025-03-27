@@ -5,6 +5,7 @@ import { AuthLoginDto } from '@/infrastructure/dtos/user/auth-login.dto'
 import { HashPasswordPipe } from '@/infrastructure/common/pipes/hash-password.pipe'
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthRegisterDto } from '@/infrastructure/dtos/user/auth-register.dto'
+import { AuthRegisterAdapter } from '@/infrastructure/adapters/user/auth-register.adapter'
 
 @Controller('auth')
 @ApiTags('auth')
@@ -30,9 +31,11 @@ export class AuthController {
     @Body() { password, ...body }: AuthRegisterDto,
     @Body('password', HashPasswordPipe) hashedPassword: string,
   ) {
-    return await this.authService.registerUser({
-      ...body,
-      password: hashedPassword,
-    })
+    return await this.authService.registerUser(
+      AuthRegisterAdapter.toEntity({
+        ...body,
+        password: hashedPassword,
+      }),
+    )
   }
 }

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { JwtService } from '@nestjs/jwt'
-import { UserRepository } from '@/infrastructure/repositories/user/user.repository'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/user/user.repository'
 import { HttpException, HttpStatus } from '@nestjs/common'
 import { AuthLoginProps } from '@/infrastructure/dtos/user/auth-login.dto'
 import { AuthService } from '../../auth.service'
@@ -11,7 +11,7 @@ import { Password } from '@/shared/common/utils/password'
 import { NodemailerService } from '../../../email/nodemailer.service'
 
 describe('AuthService Unit Tests', () => {
-  const mockUserRepository = {
+  const mockUserRepositoryImpl = {
     user: jest.fn(),
     createUser: jest.fn(),
   }
@@ -26,7 +26,7 @@ describe('AuthService Unit Tests', () => {
 
   let authService: AuthService
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let userRepository: UserRepository
+  let userRepositoryImpl: UserRepositoryImpl
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let jwtService: JwtService
   let loginProps: AuthLoginProps
@@ -36,14 +36,14 @@ describe('AuthService Unit Tests', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        { provide: UserRepository, useValue: mockUserRepository },
+        { provide: UserRepositoryImpl, useValue: mockUserRepositoryImpl },
         { provide: JwtService, useValue: mockJwtService },
         { provide: NodemailerService, useValue: mockNodemailerService },
       ],
     }).compile()
 
     authService = module.get<AuthService>(AuthService)
-    userRepository = module.get<UserRepository>(UserRepository)
+    userRepositoryImpl = module.get<UserRepositoryImpl>(UserRepositoryImpl)
     jwtService = module.get<JwtService>(JwtService)
   })
 
@@ -55,7 +55,7 @@ describe('AuthService Unit Tests', () => {
     it('should return a token if login is successful', async () => {
       loginProps = AuthLoginDataBuilder({} as AuthLoginProps)
 
-      mockUserRepository.user.mockResolvedValue({
+      mockUserRepositoryImpl.user.mockResolvedValue({
         id: 1,
         username: loginProps.username,
         password: await Password.generateEncrypted(loginProps.password, 10),
@@ -65,7 +65,7 @@ describe('AuthService Unit Tests', () => {
       const result = await authService.loginUser(loginProps)
 
       expect(result.access_token).toEqual('mock_token')
-      expect(mockUserRepository.user).toHaveBeenCalledWith({
+      expect(mockUserRepositoryImpl.user).toHaveBeenCalledWith({
         username: loginProps.username,
       })
       expect(mockJwtService.sign).toHaveBeenCalled()
@@ -74,7 +74,7 @@ describe('AuthService Unit Tests', () => {
     it('should throw an error if user is not found', async () => {
       loginProps = AuthLoginDataBuilder({} as AuthLoginProps)
 
-      mockUserRepository.user.mockResolvedValue(null)
+      mockUserRepositoryImpl.user.mockResolvedValue(null)
 
       try {
         await authService.loginUser(loginProps)
@@ -91,7 +91,7 @@ describe('AuthService Unit Tests', () => {
       } as AuthLoginProps)
 
       const hashedPassword = await Password.generateEncrypted('password123', 10)
-      mockUserRepository.user.mockResolvedValue({
+      mockUserRepositoryImpl.user.mockResolvedValue({
         id: 1,
         username: loginProps.username,
         password: hashedPassword,
@@ -117,8 +117,8 @@ describe('AuthService Unit Tests', () => {
         10,
       )
 
-      mockUserRepository.user.mockResolvedValue(null)
-      mockUserRepository.createUser.mockResolvedValue({
+      mockUserRepositoryImpl.user.mockResolvedValue(null)
+      mockUserRepositoryImpl.createUser.mockResolvedValue({
         ...registerProps,
         password: hashedPassword,
       })
@@ -131,7 +131,7 @@ describe('AuthService Unit Tests', () => {
       expect(result.username).toEqual(registerProps.username)
       expect(result.email).toEqual(registerProps.email)
 
-      expect(mockUserRepository.createUser).toHaveBeenCalledWith({
+      expect(mockUserRepositoryImpl.createUser).toHaveBeenCalledWith({
         ...registerProps,
         password: hashedPassword,
       })
@@ -140,7 +140,7 @@ describe('AuthService Unit Tests', () => {
     it('should throw an error if user already exists', async () => {
       registerProps = AuthRegisterDataBuilder({} as AuthRegisterProps)
 
-      mockUserRepository.user.mockResolvedValue({ id: 1, ...registerProps })
+      mockUserRepositoryImpl.user.mockResolvedValue({ id: 1, ...registerProps })
 
       try {
         await authService.registerUser(registerProps)

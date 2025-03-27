@@ -1,4 +1,6 @@
 export default class BakeryManagerEntity {
-  managerId: string
-  bakeryId: string
+  constructor(
+    public managerId: string,
+    public bakeryId: string,
+  ) {}
 }

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { UserRepository } from '@/infrastructure/repositories/user/user.repository'
-import { ICreateUserDto } from '@/infrastructure/dtos/user/create-user.dto'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/user/user.repository'
 import { AuthLoginDto } from '../../dtos/user/auth-login.dto'
-import { EmailOuUsernameExistenteException } from '@/shared/common/exceptions/user/email-ou-username-existente.exception'
 import { SenhaInvalidaException } from '@/shared/common/exceptions/user/senha-invalida.exception'
 import { UsuarioNaoEncontradoException } from '@/shared/common/exceptions/user/usuario-nao-encontrado.exception'
 import { Password } from '@/shared/common/utils/password'
-import { IUserPayload } from '@/domain/user/interfaces/user-payload.interface'
+import { IUserPayload } from '@/application/user/interfaces/user-payload.interface'
 import { NodemailerService } from '../email/nodemailer.service'
+import UserEntity from '@/domain/user/entities/user.entity'
+import CreateUsersUseCase from '@/application/user/usecases/create-user.user-case'
 
 export type TokenProps = {
   access_token: string
@@ -18,7 +18,7 @@ export type TokenProps = {
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private userRepository: UserRepository,
+    private userRepository: UserRepositoryImpl,
     private nodemailerService: NodemailerService,
   ) {}
 
@@ -45,19 +45,9 @@ export class AuthService {
     })
   }
 
-  async registerUser(registeredUser: ICreateUserDto): Promise<ICreateUserDto> {
-    const userExists = await this.userRepository.user({
-      OR: [
-        { username: registeredUser.username },
-        { email: registeredUser.email },
-      ],
-    })
-
-    if (userExists) {
-      throw new EmailOuUsernameExistenteException()
-    }
-
-    await this.userRepository.createUser(registeredUser)
+  async registerUser(inputUser: UserEntity): Promise<UserEntity> {
+    const createUserUseCase = new CreateUsersUseCase(this.userRepository)
+    const registeredUser = await createUserUseCase.execute(inputUser)
     this.nodemailerService.sendEmail(registeredUser.email)
     return { ...registeredUser }
   }

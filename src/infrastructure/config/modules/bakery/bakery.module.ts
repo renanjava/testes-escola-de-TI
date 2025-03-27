@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { BakeryService } from '@/infrastructure/services/bakery/bakery.service'
-import { BakeryController } from '../../../presentation/controllers/bakery/bakery.controller'
+import { BakeryController } from '../../../controllers/bakery/bakery.controller'
 import { BakeryRepository } from '@/infrastructure/repositories/bakery/bakery.repository'
 import { PrismaService } from '@/infrastructure/services/orm/prisma.service'
 

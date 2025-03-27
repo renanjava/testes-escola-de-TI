@@ -11,8 +11,8 @@ import {
 import { User, UserRole } from '@prisma/client'
 import { UserService } from '@/infrastructure/services/user/user.service'
 import { UpdateUserDto } from '@/infrastructure/dtos/user/update-user.dto'
-import { JwtAuthGuard } from '../../../auth/jwt/jwt-auth.guard'
-import { Roles } from '../../../auth/rbac/roles.decorator'
+import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
+import { Roles } from '../../auth/rbac/roles.decorator'
 import { IUserRequest } from './interfaces/user-request.interface'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
 
