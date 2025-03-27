@@ -3,7 +3,7 @@ import UserEntity from '@/domain/user/entities/user.entity'
 import IUserRepository from '@/domain/user/interfaces/user-repository.interface'
 import { EmailOuUsernameExistenteException } from '@/shared/common/exceptions/user/email-ou-username-existente.exception'
 
-export default class CreateUsersUseCase implements IUseCases {
+export default class CreateUserUseCase implements IUseCases {
   constructor(private iUserRepository: IUserRepository<UserEntity>) {}
 
   async execute(userEntity: UserEntity): Promise<UserEntity> {

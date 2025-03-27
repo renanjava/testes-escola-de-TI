@@ -8,7 +8,7 @@ import { Password } from '@/shared/common/utils/password'
 import { IUserPayload } from '@/application/user/interfaces/user-payload.interface'
 import { NodemailerService } from '../email/nodemailer.service'
 import UserEntity from '@/domain/user/entities/user.entity'
-import CreateUsersUseCase from '@/application/user/usecases/create-user.user-case'
+import CreateUserUseCase from '@/application/user/usecases/create-user.use-case'
 
 export type TokenProps = {
   access_token: string
@@ -46,7 +46,7 @@ export class AuthService {
   }
 
   async registerUser(inputUser: UserEntity): Promise<UserEntity> {
-    const createUserUseCase = new CreateUsersUseCase(this.userRepository)
+    const createUserUseCase = new CreateUserUseCase(this.userRepository)
     const registeredUser = await createUserUseCase.execute(inputUser)
     this.nodemailerService.sendEmail(registeredUser.email)
     return { ...registeredUser }

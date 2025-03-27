@@ -1,3 +1,3 @@
 export default interface IUseCases {
-  execute(...arg: any): any
+  execute(...args: any): any
 }

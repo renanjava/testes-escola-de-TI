@@ -15,6 +15,7 @@ import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
 import { Roles } from '../../auth/rbac/roles.decorator'
 import { IUserRequest } from './interfaces/user-request.interface'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
+import { UserAdapter } from '@/infrastructure/adapters/user/user.adapter'
 
 @Controller('user')
 export class UserController {
@@ -46,7 +47,10 @@ export class UserController {
     @Req() request: IUserRequest,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.userService.update(request.user.sub, updateUserDto)
+    return this.userService.update(
+      request.user.sub,
+      UserAdapter.toUpdateEntity(updateUserDto),
+    )
   }
 
   @Delete('admin/:id')
