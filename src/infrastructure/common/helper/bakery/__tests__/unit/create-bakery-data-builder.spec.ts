@@ -1,5 +1,5 @@
 import { CreateBakeryDataBuilder } from '@/infrastructure/common/helper/bakery/create-bakery-data-builder'
-import { CreateBakeryProps } from '@/infrastructure/model/entities/dto/bakery/create-bakery.dto'
+import { CreateBakeryProps } from '@/infrastructure/dtos/bakery/create-bakery.dto'
 import { faker } from '@faker-js/faker'
 
 describe('CreateBakeryDataBuilder', () => {
@@ -50,7 +50,7 @@ describe('CreateBakeryDataBuilder', () => {
   })
 
   it('should return a valid CreateBakeryProps object with default values when properties are missing', () => {
-    const props: Partial<CreateBakeryProps> = {
+    const props: CreateBakeryProps = {
       name: faker.company.name(),
       cnpj: faker.string.numeric(8),
       address: faker.word.words(),
@@ -58,7 +58,7 @@ describe('CreateBakeryDataBuilder', () => {
       closeTime: Date.now() as any,
     }
 
-    const result = CreateBakeryDataBuilder(props as CreateBakeryProps)
+    const result = CreateBakeryDataBuilder(props)
 
     expect(result.name).toBe(props.name)
     expect(result.cnpj).toBe(props.cnpj)
