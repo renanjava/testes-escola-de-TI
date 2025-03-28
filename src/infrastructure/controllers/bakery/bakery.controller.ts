@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common'
 import { BakeryService } from '@/infrastructure/services/bakery/bakery.service'
 import { CreateBakeryDto } from '@/infrastructure/dtos/bakery/create-bakery.dto'
-import { JwtAuthGuard } from '../../../auth/jwt/jwt-auth.guard'
-import { Roles } from '../../../auth/rbac/roles.decorator'
+import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
+import { Roles } from '../../auth/rbac/roles.decorator'
 import { UserRole } from '@prisma/client'
 
 @Controller('bakery')

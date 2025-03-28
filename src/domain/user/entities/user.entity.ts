@@ -1,6 +1,8 @@
 export default class UserEntity {
-  realname: string
-  username: string
-  email: string
-  password: string
+  constructor(
+    public realname: string,
+    public username: string,
+    public email: string,
+    public password: string,
+  ) {}
 }

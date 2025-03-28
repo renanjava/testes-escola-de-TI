@@ -1,5 +1,5 @@
 import { UserService } from '../../user.service'
-import { UserRepository } from '@/infrastructure/repositories/user/user.repository'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/user/user.repository'
 import { UsuarioNaoEncontradoException } from '@/shared/common/exceptions/user/usuario-nao-encontrado.exception'
 import { UpdateUserDto } from '@/infrastructure/dtos/user/update-user.dto'
 
@@ -10,34 +10,34 @@ describe('UserService', () => {
       { id: '2', name: 'User 2' },
     ] as any[]
 
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       users: jest.fn().mockResolvedValue(mockUsers),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     const result = await userService.findAll()
 
-    expect(mockUserRepository.users).toHaveBeenCalledWith({})
+    expect(mockUserRepositoryImpl.users).toHaveBeenCalledWith({})
     expect(result).toEqual(mockUsers)
   })
 
   it("should throw UsuarioNaoEncontradoException when user doesn't exist", async () => {
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       user: jest.fn().mockResolvedValue(null),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     await expect(userService.findOne('non-existent-id')).rejects.toThrow(
       UsuarioNaoEncontradoException,
     )
 
-    expect(mockUserRepository.user).toHaveBeenCalledWith({
+    expect(mockUserRepositoryImpl.user).toHaveBeenCalledWith({
       id: 'non-existent-id',
     })
   })
@@ -45,52 +45,52 @@ describe('UserService', () => {
   it('should return a user when a valid ID is provided', async () => {
     const mockUser = { id: '1', name: 'User 1' } as any
 
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       user: jest.fn().mockResolvedValue(mockUser),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     const result = await userService.findOne('1')
 
-    expect(mockUserRepository.user).toHaveBeenCalledWith({ id: '1' })
+    expect(mockUserRepositoryImpl.user).toHaveBeenCalledWith({ id: '1' })
     expect(result).toEqual(mockUser)
   })
 
   it('should delete a user when a valid ID is provided', async () => {
     const mockUser = { id: '1', name: 'User 1' } as any
 
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       deleteUser: jest.fn().mockResolvedValue(mockUser),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     const result = await userService.remove('1')
 
-    expect(mockUserRepository.deleteUser).toHaveBeenCalledWith({ id: '1' })
+    expect(mockUserRepositoryImpl.deleteUser).toHaveBeenCalledWith({ id: '1' })
     expect(result).toEqual(mockUser)
   })
 
   it('should throw UsuarioNaoEncontradoException when removing a user with non-existent ID', async () => {
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       deleteUser: jest
         .fn()
         .mockRejectedValue(new UsuarioNaoEncontradoException()),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     await expect(userService.remove('non-existent-id')).rejects.toThrow(
       UsuarioNaoEncontradoException,
     )
-    expect(mockUserRepository.deleteUser).toHaveBeenCalledWith({
+    expect(mockUserRepositoryImpl.deleteUser).toHaveBeenCalledWith({
       id: 'non-existent-id',
     })
   })
@@ -99,17 +99,17 @@ describe('UserService', () => {
     const mockUser = { id: '1', name: 'Updated User' } as any
     const updateUserDto = { name: 'Updated User' } as UpdateUserDto
 
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       updateUser: jest.fn().mockResolvedValue(mockUser),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     const result = await userService.update('1', updateUserDto)
 
-    expect(mockUserRepository.updateUser).toHaveBeenCalledWith({
+    expect(mockUserRepositoryImpl.updateUser).toHaveBeenCalledWith({
       where: { id: '1' },
       data: updateUserDto,
     })
@@ -117,21 +117,21 @@ describe('UserService', () => {
   })
 
   it('should throw UsuarioNaoEncontradoException when updating a non-existent user', async () => {
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       updateUser: jest
         .fn()
         .mockRejectedValue(new UsuarioNaoEncontradoException()),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     await expect(
       userService.update('non-existent-id', {} as UpdateUserDto),
     ).rejects.toThrow(UsuarioNaoEncontradoException)
 
-    expect(mockUserRepository.updateUser).toHaveBeenCalledWith({
+    expect(mockUserRepositoryImpl.updateUser).toHaveBeenCalledWith({
       where: { id: 'non-existent-id' },
       data: {},
     })
@@ -139,19 +139,19 @@ describe('UserService', () => {
 
   it('should throw an error when UpdateUserDto is invalid', async () => {
     const invalidUpdateUserDto = {}
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       updateUser: jest.fn().mockRejectedValue(new Error('Invalid data')),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     await expect(
       userService.update('1', invalidUpdateUserDto as UpdateUserDto),
     ).rejects.toThrow('Invalid data')
 
-    expect(mockUserRepository.updateUser).toHaveBeenCalledWith({
+    expect(mockUserRepositoryImpl.updateUser).toHaveBeenCalledWith({
       where: { id: '1' },
       data: invalidUpdateUserDto,
     })
@@ -159,46 +159,46 @@ describe('UserService', () => {
 
   it('should throw UsuarioNaoEncontradoException when ID format is invalid', async () => {
     const invalidId = 'invalid-id-format'
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       user: jest.fn().mockResolvedValue(null),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     await expect(userService.findOne(invalidId)).rejects.toThrow(
       UsuarioNaoEncontradoException,
     )
-    expect(mockUserRepository.user).toHaveBeenCalledWith({ id: invalidId })
+    expect(mockUserRepositoryImpl.user).toHaveBeenCalledWith({ id: invalidId })
   })
 
   it('should return empty array when no users exist', async () => {
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       users: jest.fn().mockResolvedValue([]),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     const result = await userService.findAll()
 
-    expect(mockUserRepository.users).toHaveBeenCalledWith({})
+    expect(mockUserRepositoryImpl.users).toHaveBeenCalledWith({})
     expect(result).toEqual([])
   })
 
   it('should throw an error when repository connection fails during findOne', async () => {
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       user: jest.fn().mockRejectedValue(new Error('Connection error')),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     await expect(userService.findOne('1')).rejects.toThrow('Connection error')
-    expect(mockUserRepository.user).toHaveBeenCalledWith({ id: '1' })
+    expect(mockUserRepositoryImpl.user).toHaveBeenCalledWith({ id: '1' })
   })
 
   it('should preserve unchanged fields when partial data is provided', async () => {
@@ -214,18 +214,18 @@ describe('UserService', () => {
       email: 'user1@example.com',
     } as any
 
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       user: jest.fn().mockResolvedValue(existingUser),
       updateUser: jest.fn().mockResolvedValue(updatedUser),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     const result = await userService.update('1', updateUserDto)
 
-    expect(mockUserRepository.updateUser).toHaveBeenCalledWith({
+    expect(mockUserRepositoryImpl.updateUser).toHaveBeenCalledWith({
       where: { id: '1' },
       data: updateUserDto,
     })
@@ -238,17 +238,17 @@ describe('UserService', () => {
       name: `User ${i}`,
     })) as any[]
 
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       users: jest.fn().mockResolvedValue(largeNumberOfUsers),
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     const result = await userService.findAll()
 
-    expect(mockUserRepository.users).toHaveBeenCalledWith({})
+    expect(mockUserRepositoryImpl.users).toHaveBeenCalledWith({})
     expect(result).toEqual(largeNumberOfUsers)
   })
 
@@ -259,7 +259,7 @@ describe('UserService', () => {
     const updatedUser1 = { id: userId, name: 'Updated User 1' } as any
     const updatedUser2 = { id: userId, name: 'Updated User 2' } as any
 
-    const mockUserRepository = {
+    const mockUserRepositoryImpl = {
       updateUser: jest
         .fn()
         .mockResolvedValueOnce(updatedUser1)
@@ -267,17 +267,17 @@ describe('UserService', () => {
     }
 
     const userService = new UserService(
-      mockUserRepository as unknown as UserRepository,
+      mockUserRepositoryImpl as unknown as UserRepositoryImpl,
     )
 
     const result1 = await userService.update(userId, updateUserDto1)
     const result2 = await userService.update(userId, updateUserDto2)
 
-    expect(mockUserRepository.updateUser).toHaveBeenCalledWith({
+    expect(mockUserRepositoryImpl.updateUser).toHaveBeenCalledWith({
       where: { id: userId },
       data: updateUserDto1,
     })
-    expect(mockUserRepository.updateUser).toHaveBeenCalledWith({
+    expect(mockUserRepositoryImpl.updateUser).toHaveBeenCalledWith({
       where: { id: userId },
       data: updateUserDto2,
     })

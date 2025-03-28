@@ -1,7 +1,9 @@
 export default class BakeryEntity {
-  name: string
-  cnpj: string
-  address: string
-  openTime: Date
-  closeTime: Date
+  constructor(
+    public name: string,
+    public cnpj: string,
+    public address: string,
+    public openTime: Date,
+    public closeTime: Date,
+  ) {}
 }
