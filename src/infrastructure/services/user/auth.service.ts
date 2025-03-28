@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/user/user.repository'
-import { AuthLoginDto } from '../../dtos/user/auth-login.dto'
-import { SenhaInvalidaException } from '@/shared/common/exceptions/user/senha-invalida.exception'
-import { UsuarioNaoEncontradoException } from '@/shared/common/exceptions/user/usuario-nao-encontrado.exception'
 import { Password } from '@/shared/common/utils/password'
-import { IUserPayload } from '@/application/user/interfaces/user-payload.interface'
+import { IUserPayload } from '@/application/controllers/interfaces/user-payload.interface'
 import { NodemailerService } from '../email/nodemailer.service'
 import UserEntity from '@/domain/user/entities/user.entity'
 import CreateUserUseCase from '@/application/user/usecases/create-user.use-case'
-
-export type TokenProps = {
-  access_token: string
-}
+import FindByUsernameUseCase from '@/application/user/usecases/find-by-username.use-case'
+import { SenhaInvalidaException } from '@/shared/common/exceptions/user/senha-invalida.exception'
+import { TokenProps } from '@/application/controllers/interfaces/token-props.interface'
+import UserLoginEntity from '@/domain/user/entities/user-login.entity'
+import { User } from '@prisma/client'
 
 @Injectable()
 export class AuthService {
@@ -22,26 +20,21 @@ export class AuthService {
     private nodemailerService: NodemailerService,
   ) {}
 
-  async loginUser(loggedUser: AuthLoginDto): Promise<TokenProps> {
-    const userExists = await this.userRepository.user({
-      username: loggedUser.username,
-    })
-    if (!userExists) {
-      throw new UsuarioNaoEncontradoException()
-    }
-
+  async loginUser(inputUser: UserLoginEntity): Promise<TokenProps> {
+    const findByUsernameUseCase = new FindByUsernameUseCase(this.userRepository)
+    const userFounded = (await findByUsernameUseCase.execute(inputUser)) as User
     const validPassword = await this.comparePasswords(
-      loggedUser.password,
-      userExists.password,
+      inputUser.password,
+      userFounded.password,
     )
     if (!validPassword) {
       throw new SenhaInvalidaException()
     }
 
     return this.generateToken({
-      sub: userExists.id,
-      username: userExists.username,
-      role: userExists.role,
+      sub: userFounded.id,
+      username: userFounded.username,
+      role: userFounded.role,
     })
   }
 

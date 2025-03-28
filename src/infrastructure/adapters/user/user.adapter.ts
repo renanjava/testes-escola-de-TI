@@ -8,6 +8,7 @@ export class UserAdapter {
     if (dto.username !== undefined) updateData.username = dto.username
     if (dto.email !== undefined) updateData.email = dto.email
     if (dto.password !== undefined) updateData.password = dto.password
+    if (dto.role !== undefined) updateData.role = dto.role
     return updateData
   }
 }

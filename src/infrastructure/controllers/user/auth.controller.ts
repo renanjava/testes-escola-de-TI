@@ -6,6 +6,7 @@ import { HashPasswordPipe } from '@/infrastructure/common/pipes/hash-password.pi
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthRegisterDto } from '@/infrastructure/dtos/user/auth-register.dto'
 import { AuthRegisterAdapter } from '@/infrastructure/adapters/user/auth-register.adapter'
+import { AuthLoginAdapter } from '@/infrastructure/adapters/user/auth-login.adapter'
 
 @Controller('auth')
 @ApiTags('auth')
@@ -19,7 +20,7 @@ export class AuthController {
   @ApiResponse({ status: 404, description: 'Usuário não encontrado.' })
   @ApiResponse({ status: 401, description: 'Senha inválida.' })
   async login(@Body() body: AuthLoginDto) {
-    return await this.authService.loginUser(body)
+    return await this.authService.loginUser(AuthLoginAdapter.toEntity(body))
   }
 
   @Post('register')
