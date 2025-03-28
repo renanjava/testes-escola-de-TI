@@ -5,5 +5,5 @@ import { IsOptional, IsString } from 'class-validator'
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()
   @IsOptional()
-  role: string
+  role?: string
 }

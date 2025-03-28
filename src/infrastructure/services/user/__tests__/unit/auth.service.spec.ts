@@ -126,7 +126,7 @@ describe('AuthService Unit Tests', () => {
       const result = await authService.registerUser({
         ...registerProps,
         password: hashedPassword,
-      })
+      } as any)
 
       expect(result.username).toEqual(registerProps.username)
       expect(result.email).toEqual(registerProps.email)
@@ -143,7 +143,7 @@ describe('AuthService Unit Tests', () => {
       mockUserRepositoryImpl.user.mockResolvedValue({ id: 1, ...registerProps })
 
       try {
-        await authService.registerUser(registerProps)
+        await authService.registerUser(registerProps as any)
       } catch (e) {
         expect(e).toBeInstanceOf(HttpException)
         expect(e.response).toBe('Email ou Username já existe')
