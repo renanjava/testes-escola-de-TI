@@ -10,9 +10,9 @@ import RemoveBakeryUseCase from '@/application/bakery/usecases/remove-bakery.use
 @Injectable()
 export class BakeryService {
   constructor(private readonly bakeryRepository: BakeryRepository) {}
-  async create(inputUser: BakeryEntity) {
+  async create(inputBakery: BakeryEntity) {
     const createBakeryUseCase = new CreateBakeryUseCase(this.bakeryRepository)
-    const registeredBakery = await createBakeryUseCase.execute(inputUser)
+    const registeredBakery = await createBakeryUseCase.execute(inputBakery)
     return { ...registeredBakery }
   }
 
@@ -28,9 +28,9 @@ export class BakeryService {
     return await findOneBakeryUseCase.execute(id)
   }
 
-  async update(id: string, inputUser: Partial<BakeryEntity>) {
+  async update(id: string, inputBakery: Partial<BakeryEntity>) {
     const updateBakeryUseCase = new UpdateBakeryUseCase(this.bakeryRepository)
-    return await updateBakeryUseCase.execute(id, inputUser)
+    return await updateBakeryUseCase.execute(id, inputBakery)
   }
 
   async remove(id: string) {

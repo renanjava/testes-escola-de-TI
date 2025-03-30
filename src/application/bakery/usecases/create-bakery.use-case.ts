@@ -5,7 +5,7 @@ import IBakeryRepository from '@/domain/bakery/interfaces/bakery-repository.inte
 export default class CreateBakeryUseCase implements IUseCases {
   constructor(private iBakeryRepository: IBakeryRepository<BakeryEntity>) {}
 
-  async execute(bakeryEntity: BakeryEntity): Promise<BakeryEntity> {
-    return await this.iBakeryRepository.createBakery(bakeryEntity)
+  async execute(inputBakery: BakeryEntity): Promise<BakeryEntity> {
+    return await this.iBakeryRepository.createBakery(inputBakery)
   }
 }
