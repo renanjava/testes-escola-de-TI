@@ -1,6 +1,6 @@
 import UserEntity from '@/domain/user/entities/user.entity'
 
-export interface ICreateUserDto extends UserEntity {
+export interface ICreateUserDto extends Omit<UserEntity, 'role'> {
   realname: string
   username: string
   email: string

@@ -6,12 +6,15 @@ import {
   Param,
   Delete,
   UseGuards,
+  Patch,
 } from '@nestjs/common'
 import { BakeryService } from '@/infrastructure/services/bakery/bakery.service'
 import { CreateBakeryDto } from '@/infrastructure/dtos/bakery/create-bakery.dto'
 import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
 import { Roles } from '../../auth/rbac/roles.decorator'
 import { UserRole } from '@prisma/client'
+import { BakeryAdapter } from '@/infrastructure/adapters/bakery/bakery.adapter'
+import { UpdateBakeryDto } from '@/infrastructure/dtos/bakery/update-bakery.dto'
 
 @Controller('bakery')
 export class BakeryController {
@@ -21,7 +24,7 @@ export class BakeryController {
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
   create(@Body() createBakeryDto: CreateBakeryDto) {
-    return this.bakeryService.create(createBakeryDto)
+    return this.bakeryService.create(BakeryAdapter.toEntity(createBakeryDto))
   }
 
   @Get()
@@ -35,6 +38,16 @@ export class BakeryController {
   @Roles(UserRole.ADMIN)
   findOne(@Param('id') id: string) {
     return this.bakeryService.findOne(id)
+  }
+
+  @Patch()
+  @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN)
+  update(@Param() id: string, @Body() updateBakeryDto: UpdateBakeryDto) {
+    return this.bakeryService.update(
+      id,
+      BakeryAdapter.toUpdateEntity(updateBakeryDto),
+    )
   }
 
   @Delete(':id')
