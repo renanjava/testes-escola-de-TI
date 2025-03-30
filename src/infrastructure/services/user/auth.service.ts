@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { UserRepositoryImpl } from '@/infrastructure/repositories/user/user.repository'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 import { Password } from '@/shared/common/utils/password'
 import { IUserPayload } from '@/application/controllers/interfaces/user-payload.interface'
 import { NodemailerService } from '../email/nodemailer.service'

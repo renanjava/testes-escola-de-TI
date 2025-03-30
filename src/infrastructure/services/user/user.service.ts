@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { UserRepositoryImpl } from '../../repositories/user/user.repository'
+import { UserRepositoryImpl } from '../../repositories/user/impl-user.repository'
 import { User } from '@prisma/client'
 import FindOneUserUseCase from '@/application/user/usecases/find-one-user.use-case'
 import FindAllUsersUseCase from '@/application/user/usecases/find-all-users.use-case'
@@ -21,9 +21,9 @@ export class UserService {
     return (await findOneUserUseCase.execute(id)) as User
   }
 
-  async update(id: string, updateEntity: Partial<UserEntity>): Promise<User> {
+  async update(id: string, inputUser: Partial<UserEntity>): Promise<User> {
     const updateUserUseCase = new UpdateUserUseCase(this.userRepository)
-    return (await updateUserUseCase.execute(id, updateEntity)) as User
+    return (await updateUserUseCase.execute(id, inputUser)) as User
   }
 
   async remove(id: string): Promise<User> {

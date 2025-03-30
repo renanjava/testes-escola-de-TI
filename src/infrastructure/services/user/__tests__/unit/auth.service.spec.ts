@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { JwtService } from '@nestjs/jwt'
-import { UserRepositoryImpl } from '@/infrastructure/repositories/user/user.repository'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 import { HttpException, HttpStatus } from '@nestjs/common'
 import { AuthLoginProps } from '@/infrastructure/dtos/user/auth-login.dto'
 import { AuthService } from '../../auth.service'
