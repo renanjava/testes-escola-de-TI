@@ -7,11 +7,11 @@ export default class UpdateBakeryUseCase implements IUseCases {
 
   async execute(
     id: string,
-    inputUser: Partial<BakeryEntity>,
+    inputBakery: Partial<BakeryEntity>,
   ): Promise<BakeryEntity> {
     return await this.iBakeryRepository.updateBakery({
       where: { id },
-      data: inputUser,
+      data: inputBakery,
     })
   }
 }

@@ -66,9 +66,7 @@ describe('ManagerService', () => {
 
     const result = await managerService.findOne(managerId)
 
-    expect(mockManagerRepository.manager).toHaveBeenCalledWith({
-      id: managerId,
-    })
+    expect(mockManagerRepository.manager).toHaveBeenCalledWith(managerId)
     expect(result).toEqual({
       id: '1',
       name: 'John Doe',
@@ -109,9 +107,7 @@ describe('ManagerService', () => {
 
     const result = await managerService.remove(managerId)
 
-    expect(mockManagerRepository.deleteManager).toHaveBeenCalledWith({
-      id: managerId,
-    })
+    expect(mockManagerRepository.deleteManager).toHaveBeenCalledWith(managerId)
     expect(result).toEqual({
       id: '1',
       name: 'John Doe',
@@ -130,9 +126,9 @@ describe('ManagerService', () => {
 
     const result = await managerService.remove(nonExistentId)
 
-    expect(mockManagerRepository.deleteManager).toHaveBeenCalledWith({
-      id: nonExistentId,
-    })
+    expect(mockManagerRepository.deleteManager).toHaveBeenCalledWith(
+      nonExistentId,
+    )
     expect(result).toBeNull()
   })
 
@@ -147,9 +143,7 @@ describe('ManagerService', () => {
 
     const result = await managerService.findOne(nonExistentId)
 
-    expect(mockManagerRepository.manager).toHaveBeenCalledWith({
-      id: nonExistentId,
-    })
+    expect(mockManagerRepository.manager).toHaveBeenCalledWith(nonExistentId)
     expect(result).toBeNull()
   })
 
@@ -177,7 +171,7 @@ describe('ManagerService', () => {
 
     const result = await managerService.findOne(id)
 
-    expect(mockManagerRepository.manager).toHaveBeenCalledWith({ id })
+    expect(mockManagerRepository.manager).toHaveBeenCalledWith(id)
     expect(result).toBeNull()
   })
 

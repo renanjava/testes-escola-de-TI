@@ -138,9 +138,7 @@ describe('BakeryManagerService', () => {
 
     const result = await service.findOne(bakeryManagerId)
 
-    expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
-      id: '3',
-    })
+    expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith('3')
     expect(result).toEqual(expectedBakeryManager)
   })
 
@@ -160,9 +158,9 @@ describe('BakeryManagerService', () => {
 
     const result = await service.findOne(nonExistentId)
 
-    expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
-      id: nonExistentId,
-    })
+    expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith(
+      nonExistentId,
+    )
     expect(result).toBeNull()
   })
 

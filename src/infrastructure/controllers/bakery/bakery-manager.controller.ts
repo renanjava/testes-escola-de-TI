@@ -12,6 +12,7 @@ import { CreateBakeryManagerDto } from '@/infrastructure/dtos/bakery/create-bake
 import { Roles } from '@/infrastructure/auth/rbac/roles.decorator'
 import { UserRole } from '@prisma/client'
 import { JwtAuthGuard } from '@/infrastructure/auth/jwt/jwt-auth.guard'
+import { BakeryManagerAdapter } from '@/infrastructure/adapters/bakery/bakery-manager.adapter'
 
 @Controller('bakery-manager')
 export class BakeryManagerController {
@@ -21,7 +22,9 @@ export class BakeryManagerController {
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
   create(@Body() createBakeryManagerDto: CreateBakeryManagerDto) {
-    return this.bakeryManagerService.create(createBakeryManagerDto)
+    return this.bakeryManagerService.create(
+      BakeryManagerAdapter.toEntity(createBakeryManagerDto),
+    )
   }
 
   @Get()
