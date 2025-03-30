@@ -1,12 +1,12 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common'
-import { CreateBakeryManagerDto } from '@/infrastructure/dtos/bakery/create-bakery-manager.dto'
+import { Injectable } from '@nestjs/common'
 import { BakeryManagerRepository } from '@/infrastructure/repositories/bakery/bakery-manager.repository'
 import { BakeryRepository } from '@/infrastructure/repositories/bakery/bakery.repository'
 import { ManagerRepository } from '@/infrastructure/repositories/bakery/manager.repository'
+import BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
+import CreateBakeryManagerUseCase from '@/application/bakery/usecases/create-bakery-manager.use-case'
+import FindAllBakeryManagersUseCase from '@/application/bakery/usecases/find-all-bakery-managers.use-case'
+import FindOneBakeryManagerUseCase from '@/application/bakery/usecases/find-one-bakery-manager.use-case'
+import RemoveBakeryManagerUseCase from '@/application/bakery/usecases/remove-bakery-manager.use-case'
 
 @Injectable()
 export class BakeryManagerService {
@@ -15,56 +15,33 @@ export class BakeryManagerService {
     private bakeryRepository: BakeryRepository,
     private managerRepository: ManagerRepository,
   ) {}
-  async create(createBakeryManagerDto: CreateBakeryManagerDto) {
-    const bakeryFinded = await this.bakeryRepository.bakery({
-      id: createBakeryManagerDto.bakeryId,
-    })
-
-    if (!bakeryFinded) {
-      throw new NotFoundException('Padaria não encontrada')
-    }
-
-    const managerFinded = await this.managerRepository.manager({
-      id: createBakeryManagerDto.managerId,
-    })
-
-    if (!managerFinded) {
-      throw new NotFoundException('Gerente não encontrado')
-    }
-
-    const bakeryManagerFinded =
-      await this.bakeryManagerRepository.bakeryManager({
-        bakeryId: createBakeryManagerDto.bakeryId,
-        managerId: createBakeryManagerDto.managerId,
-      })
-
-    if (bakeryManagerFinded) {
-      throw new BadRequestException('Esta padaria já possui este gerente')
-    }
-
-    return await this.bakeryManagerRepository.createBakeryManager({
-      bakery: { connect: { id: createBakeryManagerDto.bakeryId } },
-      manager: { connect: { id: createBakeryManagerDto.managerId } },
-    })
+  async create(inputBakeryManager: BakeryManagerEntity) {
+    const createBakeryManagerUseCase = new CreateBakeryManagerUseCase(
+      this.bakeryManagerRepository,
+      this.bakeryRepository,
+      this.managerRepository,
+    )
+    return await createBakeryManagerUseCase.execute(inputBakeryManager)
   }
 
   async findAll() {
-    return await this.bakeryManagerRepository.bakeryManagers({})
+    const findAllBakeryManagers = new FindAllBakeryManagersUseCase(
+      this.bakeryManagerRepository,
+    )
+    return await findAllBakeryManagers.execute()
   }
 
   async findOne(id: string) {
-    return await this.bakeryManagerRepository.bakeryManager({ id })
+    const findOneBakeryManager = new FindOneBakeryManagerUseCase(
+      this.bakeryManagerRepository,
+    )
+    return await findOneBakeryManager.execute(id)
   }
 
   async remove(id: string) {
-    const bakeryManagerFinded =
-      await this.bakeryManagerRepository.bakeryManager({ id: id })
-
-    if (!bakeryManagerFinded) {
-      throw new NotFoundException(
-        'Relação entre gerente e padaria não encontrada',
-      )
-    }
-    return await this.bakeryManagerRepository.deleteBakeryManager({ id })
+    const removeBakeryManagerUseCase = new RemoveBakeryManagerUseCase(
+      this.bakeryManagerRepository,
+    )
+    return await removeBakeryManagerUseCase.execute(id)
   }
 }
