@@ -1,3 +1,5 @@
+/* eslint-disable no-empty */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import IUseCases from '@/application/interfaces/use-cases.interface'
 import BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
 import BakeryEntity from '@/domain/bakery/entities/bakery.entity'
@@ -27,7 +29,6 @@ export default class CreateBakeryManagerUseCase implements IUseCases {
 
     const managerFinded = await this.iUserRepository.user({
       id: inputBakeryManager.managerId,
-      role: 'MANAGER',
     })
 
     if (!managerFinded) {
@@ -43,6 +44,13 @@ export default class CreateBakeryManagerUseCase implements IUseCases {
     if (bakeryManagerFinded) {
       throw new BadRequestException('Esta padaria já possui este gerente')
     }
+
+    try {
+      await this.iUserRepository.updateUser({
+        where: { id: inputBakeryManager.managerId, role: 'USER' },
+        data: { role: 'MANAGER' },
+      })
+    } catch (err) {}
 
     return await this.iBakeryManagerRepository.createBakeryManager({
       bakery: { connect: { id: inputBakeryManager.bakeryId } },

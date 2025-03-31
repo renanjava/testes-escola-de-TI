@@ -44,6 +44,7 @@ export class BakeryManagerService {
   async remove(id: string) {
     const removeBakeryManagerUseCase = new RemoveBakeryManagerUseCase(
       this.bakeryManagerRepository,
+      this.userRepository,
     )
     return await removeBakeryManagerUseCase.execute(id)
   }
