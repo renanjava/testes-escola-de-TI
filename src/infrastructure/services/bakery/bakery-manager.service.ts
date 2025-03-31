@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common'
-import { BakeryManagerRepository } from '@/infrastructure/repositories/bakery/bakery-manager.repository'
-import { BakeryRepository } from '@/infrastructure/repositories/bakery/bakery.repository'
-import { ManagerRepository } from '@/infrastructure/repositories/bakery/manager.repository'
+import { BakeryManagerRepositoryImpl } from '@/infrastructure/repositories/bakery/impl-bakery-manager.repository'
+import { BakeryRepositoryImpl } from '@/infrastructure/repositories/bakery/impl-bakery.repository'
 import BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
 import CreateBakeryManagerUseCase from '@/application/bakery/usecases/create-bakery-manager.use-case'
 import FindAllBakeryManagersUseCase from '@/application/bakery/usecases/find-all-bakery-managers.use-case'
 import FindOneBakeryManagerUseCase from '@/application/bakery/usecases/find-one-bakery-manager.use-case'
 import RemoveBakeryManagerUseCase from '@/application/bakery/usecases/remove-bakery-manager.use-case'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 
 @Injectable()
 export class BakeryManagerService {
   constructor(
-    private bakeryManagerRepository: BakeryManagerRepository,
-    private bakeryRepository: BakeryRepository,
-    private managerRepository: ManagerRepository,
+    private bakeryManagerRepository: BakeryManagerRepositoryImpl,
+    private bakeryRepository: BakeryRepositoryImpl,
+    private userRepository: UserRepositoryImpl,
   ) {}
   async create(inputBakeryManager: BakeryManagerEntity) {
     const createBakeryManagerUseCase = new CreateBakeryManagerUseCase(
       this.bakeryManagerRepository,
       this.bakeryRepository,
-      this.managerRepository,
+      this.userRepository,
     )
     return await createBakeryManagerUseCase.execute(inputBakeryManager)
   }

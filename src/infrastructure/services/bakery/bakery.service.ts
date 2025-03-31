@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { BakeryRepository } from '@/infrastructure/repositories/bakery/bakery.repository'
+import { BakeryRepositoryImpl } from '@/infrastructure/repositories/bakery/impl-bakery.repository'
 import BakeryEntity from '@/domain/bakery/entities/bakery.entity'
 import CreateBakeryUseCase from '@/application/bakery/usecases/create-bakery.use-case'
 import FindAllBakeriesUseCase from '@/application/bakery/usecases/find-all-bakeries.use-case'
@@ -9,7 +9,7 @@ import RemoveBakeryUseCase from '@/application/bakery/usecases/remove-bakery.use
 
 @Injectable()
 export class BakeryService {
-  constructor(private readonly bakeryRepository: BakeryRepository) {}
+  constructor(private readonly bakeryRepository: BakeryRepositoryImpl) {}
   async create(inputBakery: BakeryEntity) {
     const createBakeryUseCase = new CreateBakeryUseCase(this.bakeryRepository)
     const registeredBakery = await createBakeryUseCase.execute(inputBakery)

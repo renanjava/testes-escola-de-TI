@@ -5,7 +5,7 @@ describe('BakeryManagerService', () => {
   it('should create a bakery-manager relationship when valid IDs are provided', async () => {
     const createBakeryManagerDto = { bakeryId: '1', managerId: '2' }
     const bakery = { id: '1', name: 'Test Bakery' }
-    const manager = { id: '2', name: 'Test Manager' }
+    const manager = { id: '2', username: 'Test Manager' }
     const expectedResult = { id: '3', bakeryId: '1', managerId: '2' }
 
     const bakeryManagerRepositoryMock = {
@@ -17,20 +17,23 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(bakery),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn().mockResolvedValue(manager),
+    const userRepositoryMock = {
+      user: jest.fn().mockResolvedValue(manager),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     const result = await service.create(createBakeryManagerDto)
 
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
-    expect(managerRepositoryMock.manager).toHaveBeenCalledWith({ id: '2' })
+    expect(userRepositoryMock.user).toHaveBeenCalledWith({
+      id: '2',
+      role: 'MANAGER',
+    })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       bakeryId: '1',
       managerId: '2',
@@ -56,21 +59,21 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(null),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn(),
+    const userRepositoryMock = {
+      user: jest.fn(),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       new NotFoundException('Padaria não encontrada'),
     )
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
-    expect(managerRepositoryMock.manager).not.toHaveBeenCalled()
+    expect(userRepositoryMock.user).not.toHaveBeenCalled()
     expect(bakeryManagerRepositoryMock.bakeryManager).not.toHaveBeenCalled()
     expect(
       bakeryManagerRepositoryMock.createBakeryManager,
@@ -148,12 +151,12 @@ describe('BakeryManagerService', () => {
       bakeryManager: jest.fn().mockResolvedValue(null),
     }
     const bakeryRepositoryMock = {}
-    const managerRepositoryMock = {}
+    const userRepositoryMock = {}
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     const result = await service.findOne(nonExistentId)
@@ -180,22 +183,23 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(bakery),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn().mockResolvedValue(null),
+    const userRepositoryMock = {
+      user: jest.fn().mockResolvedValue(null),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       NotFoundException,
     )
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
-    expect(managerRepositoryMock.manager).toHaveBeenCalledWith({
+    expect(userRepositoryMock.user).toHaveBeenCalledWith({
       id: 'non-existent-id',
+      role: 'MANAGER',
     })
   })
 
@@ -231,14 +235,14 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(null),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn(),
+    const userRepositoryMock = {
+      user: jest.fn(),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
@@ -262,21 +266,24 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(bakery),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn().mockResolvedValue(manager),
+    const userRepositoryMock = {
+      user: jest.fn().mockResolvedValue(manager),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       BadRequestException,
     )
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
-    expect(managerRepositoryMock.manager).toHaveBeenCalledWith({ id: '2' })
+    expect(userRepositoryMock.user).toHaveBeenCalledWith({
+      id: '2',
+      role: 'MANAGER',
+    })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       bakeryId: '1',
       managerId: '2',
@@ -295,14 +302,14 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(null),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn().mockResolvedValue({ id: '2', name: 'Test Manager' }),
+    const userRepositoryMock = {
+      user: jest.fn().mockResolvedValue({ id: '2', name: 'Test Manager' }),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
@@ -326,20 +333,23 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(bakery),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn().mockResolvedValue(manager),
+    const userRepositoryMock = {
+      user: jest.fn().mockResolvedValue(manager),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     const result = await service.create(createBakeryManagerDto)
 
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
-    expect(managerRepositoryMock.manager).toHaveBeenCalledWith({ id: '2' })
+    expect(userRepositoryMock.user).toHaveBeenCalledWith({
+      id: '2',
+      role: 'MANAGER',
+    })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       bakeryId: '1',
       managerId: '2',
@@ -348,7 +358,7 @@ describe('BakeryManagerService', () => {
       bakeryManagerRepositoryMock.createBakeryManager,
     ).toHaveBeenCalledWith({
       bakery: { connect: { id: '1' } },
-      manager: { connect: { id: '2' } },
+      user: { connect: { id: '2' } },
     })
     expect(result).toEqual(expectedResult)
   })
@@ -365,14 +375,14 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(null),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn(),
+    const userRepositoryMock = {
+      user: jest.fn(),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
@@ -390,13 +400,13 @@ describe('BakeryManagerService', () => {
     const bakeryRepositoryMock = {
       bakery: jest.fn().mockResolvedValue(null),
     }
-    const managerRepositoryMock = {
-      manager: jest.fn().mockResolvedValue({ id: '2', name: 'Test Manager' }),
+    const userRepositoryMock = {
+      user: jest.fn().mockResolvedValue({ id: '2', name: 'Test Manager' }),
     }
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     await expect(service.create(createBakeryManagerDto)).rejects.toThrowError(
@@ -419,21 +429,24 @@ describe('BakeryManagerService', () => {
       bakery: jest.fn().mockResolvedValue(bakery),
     }
 
-    const managerRepositoryMock = {
-      manager: jest.fn().mockResolvedValue(manager),
+    const userRepositoryMock = {
+      user: jest.fn().mockResolvedValue(manager),
     }
 
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       bakeryRepositoryMock as any,
-      managerRepositoryMock as any,
+      userRepositoryMock as any,
     )
 
     await expect(service.create(createBakeryManagerDto)).rejects.toThrow(
       BadRequestException,
     )
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
-    expect(managerRepositoryMock.manager).toHaveBeenCalledWith({ id: '2' })
+    expect(userRepositoryMock.user).toHaveBeenCalledWith({
+      id: '2',
+      role: 'MANAGER',
+    })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       bakeryId: '1',
       managerId: '2',

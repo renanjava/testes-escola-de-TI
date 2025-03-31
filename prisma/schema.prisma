@@ -1,6 +1,7 @@
 enum UserRole {
   USER
   ADMIN
+  MANAGER
 }
 
 generator client {
@@ -20,31 +21,23 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  role     UserRole @default(USER)
-}
-
-model Manager {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  role      UserRole @default(USER)
   bakeries  BakeryManager[]
 }
 
 model Bakery {
-  id          String   @id @default(uuid())
-  name        String
-  cnpj        String   @unique
-  address     String
-  openTime    DateTime
-  closeTime   DateTime
-  managers    BakeryManager[]
+  id        String          @id @default(uuid())
+  name      String
+  cnpj      String          @unique
+  address   String
+  openTime  DateTime
+  closeTime DateTime
+  managers  BakeryManager[]
 }
 
 model BakeryManager {
   id        String  @id @default(uuid())
-  manager   Manager @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  manager   User @relation(fields: [managerId], references: [id], onDelete: Cascade)
   managerId String
   bakery    Bakery  @relation(fields: [bakeryId], references: [id], onDelete: Cascade)
   bakeryId  String

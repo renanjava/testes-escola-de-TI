@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common'
 import { BakeryManagerService } from '@/infrastructure/services/bakery/bakery-manager.service'
 import { BakeryManagerController } from '../../../controllers/bakery/bakery-manager.controller'
-import { BakeryManagerRepository } from '@/infrastructure/repositories/bakery/bakery-manager.repository'
+import { BakeryManagerRepositoryImpl } from '@/infrastructure/repositories/bakery/impl-bakery-manager.repository'
 import { PrismaService } from '@/infrastructure/services/orm/prisma.service'
-import { BakeryRepository } from '@/infrastructure/repositories/bakery/bakery.repository'
-import { ManagerRepository } from '@/infrastructure/repositories/bakery/manager.repository'
+import { BakeryRepositoryImpl } from '@/infrastructure/repositories/bakery/impl-bakery.repository'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 
 @Module({
   controllers: [BakeryManagerController],
   providers: [
     BakeryManagerService,
-    BakeryManagerRepository,
+    BakeryManagerRepositoryImpl,
     PrismaService,
-    BakeryRepository,
-    ManagerRepository,
+    BakeryRepositoryImpl,
+    UserRepositoryImpl,
   ],
 })
 export class BakeryManagerModule {}
