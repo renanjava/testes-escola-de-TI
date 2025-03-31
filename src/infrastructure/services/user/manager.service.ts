@@ -18,7 +18,7 @@ export class ManagerService {
     const findAllManagersUseCase = new FindAllManagersUseCase(
       this.userRepository,
     )
-    return await findAllManagersUseCase.execute()
+    return (await findAllManagersUseCase.execute()) as User[]
   }
 
   async findOne(id: string) {

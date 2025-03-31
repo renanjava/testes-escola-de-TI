@@ -7,6 +7,7 @@ import FindAllBakeryManagersUseCase from '@/application/bakery/usecases/find-all
 import FindOneBakeryManagerUseCase from '@/application/bakery/usecases/find-one-bakery-manager.use-case'
 import RemoveBakeryManagerUseCase from '@/application/bakery/usecases/remove-bakery-manager.use-case'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
+import { BakeryManager } from '@prisma/client'
 
 @Injectable()
 export class BakeryManagerService {
@@ -21,7 +22,9 @@ export class BakeryManagerService {
       this.bakeryRepository,
       this.userRepository,
     )
-    return await createBakeryManagerUseCase.execute(inputBakeryManager)
+    return (await createBakeryManagerUseCase.execute(
+      inputBakeryManager,
+    )) as BakeryManager
   }
 
   async findAll() {

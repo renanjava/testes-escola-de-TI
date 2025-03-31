@@ -10,7 +10,6 @@ import { GlobalExceptionFilter } from '@/infrastructure/common/filters/global-ex
 import { JwtService } from '@nestjs/jwt'
 import { NodemailerModule } from './email/nodemailer.module'
 import { BakeryModule } from './bakery/bakery.module'
-import { BakeryManagerModule } from './bakery/bakery-manager.module'
 import { ManagerService } from '@/infrastructure/services/user/manager.service'
 import { AdminModule } from './user/admin.module'
 
@@ -21,7 +20,6 @@ import { AdminModule } from './user/admin.module'
     UserModule,
     NodemailerModule,
     BakeryModule,
-    BakeryManagerModule,
     AdminModule,
   ],
   providers: [
