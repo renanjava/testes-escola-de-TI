@@ -6,6 +6,9 @@ export default class CreateManagerUseCase implements IUseCases {
   constructor(private iUserRepository: IUserRepository<UserEntity>) {}
 
   async execute(id: string): Promise<UserEntity> {
-    return await this.iUserRepository.updateUser({ id: id, role: 'MANAGER' })
+    return await this.iUserRepository.updateUser({
+      where: { id: id },
+      data: { role: 'MANAGER' },
+    })
   }
 }

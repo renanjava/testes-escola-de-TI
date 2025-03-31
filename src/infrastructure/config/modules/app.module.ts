@@ -11,6 +11,8 @@ import { JwtService } from '@nestjs/jwt'
 import { NodemailerModule } from './email/nodemailer.module'
 import { BakeryModule } from './bakery/bakery.module'
 import { BakeryManagerModule } from './bakery/bakery-manager.module'
+import { ManagerService } from '@/infrastructure/services/user/manager.service'
+import { AdminModule } from './user/admin.module'
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { BakeryManagerModule } from './bakery/bakery-manager.module'
     NodemailerModule,
     BakeryModule,
     BakeryManagerModule,
+    AdminModule,
   ],
   providers: [
     JwtService,
@@ -37,6 +40,7 @@ import { BakeryManagerModule } from './bakery/bakery-manager.module'
     },
     PrismaService,
     ConsoleLogger,
+    ManagerService,
   ],
   exports: [PrismaService],
 })

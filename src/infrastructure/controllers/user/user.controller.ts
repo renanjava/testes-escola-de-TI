@@ -21,15 +21,6 @@ import { UserAdapter } from '@/infrastructure/adapters/user/user.adapter'
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('admin')
-  @UseGuards(JwtAuthGuard)
-  @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: 'Admin busca todos os usuários' })
-  @ApiResponse({ status: 200, description: 'Usuários listados.' })
-  async findAll(): Promise<User[]> {
-    return this.userService.findAll()
-  }
-
   @Get()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Usuário loga através do token JWT' })

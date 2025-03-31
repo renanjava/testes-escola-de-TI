@@ -358,7 +358,7 @@ describe('BakeryManagerService', () => {
       bakeryManagerRepositoryMock.createBakeryManager,
     ).toHaveBeenCalledWith({
       bakery: { connect: { id: '1' } },
-      user: { connect: { id: '2' } },
+      manager: { connect: { id: '2' } },
     })
     expect(result).toEqual(expectedResult)
   })
