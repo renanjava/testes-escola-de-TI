@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import IUseCases from '@/application/interfaces/use-cases.interface'
 import BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
 import IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
+import UserEntity from '@/domain/user/entities/user.entity'
+import IUserRepository from '@/domain/user/interfaces/user-repository.interface'
 import { NotFoundException } from '@nestjs/common'
 
 export default class RemoveBakeryManagerUseCase implements IUseCases {
   constructor(
     private iBakeryManagerRepository: IBakeryManagerRepository<BakeryManagerEntity>,
+    private iUserRepository: IUserRepository<UserEntity>,
   ) {}
 
   async execute(id: string): Promise<BakeryManagerEntity> {
@@ -17,6 +21,29 @@ export default class RemoveBakeryManagerUseCase implements IUseCases {
         'Relação entre gerente e padaria não encontrada',
       )
     }
-    return await this.iBakeryManagerRepository.deleteBakeryManager({ id })
+
+    const managerFinded = await this.iUserRepository.user({
+      id: bakeryManagerFinded.managerId,
+    })
+
+    if (!managerFinded) {
+      throw new NotFoundException('Gerente não encontrado')
+    }
+
+    const bakeryManagerDeleted =
+      await this.iBakeryManagerRepository.deleteBakeryManager({ id })
+
+    try {
+      await this.iBakeryManagerRepository.bakeryManager({
+        managerId: bakeryManagerFinded.managerId,
+      })
+    } catch (err) {
+      await this.iUserRepository.updateUser({
+        id: bakeryManagerFinded.managerId,
+        role: 'USER',
+      })
+    }
+
+    return bakeryManagerDeleted
   }
 }

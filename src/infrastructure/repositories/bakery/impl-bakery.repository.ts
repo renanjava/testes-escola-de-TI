@@ -3,7 +3,7 @@ import { PrismaService } from '@/infrastructure/services/orm/prisma.service'
 import { Bakery, Prisma } from '@prisma/client'
 
 @Injectable()
-export class BakeryRepository {
+export class BakeryRepositoryImpl {
   constructor(private prisma: PrismaService) {}
 
   async bakery(

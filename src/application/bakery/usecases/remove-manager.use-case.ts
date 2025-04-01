@@ -1,11 +1,14 @@
 import IUseCases from '@/application/interfaces/use-cases.interface'
-import ManagerEntity from '@/domain/bakery/entities/manager.entity'
-import IManagerRepository from '@/domain/bakery/interfaces/manager-repository.interface'
+import UserEntity from '@/domain/user/entities/user.entity'
+import IUserRepository from '@/domain/user/interfaces/user-repository.interface'
 
 export default class RemoveManagerUseCase implements IUseCases {
-  constructor(private iManagerRepository: IManagerRepository<ManagerEntity>) {}
+  constructor(private iUserRepository: IUserRepository<UserEntity>) {}
 
-  async execute(id: string): Promise<ManagerEntity> {
-    return await this.iManagerRepository.deleteManager(id)
+  async execute(id: string): Promise<UserEntity> {
+    return await this.iUserRepository.updateUser({
+      id: id,
+      role: 'USER',
+    })
   }
 }

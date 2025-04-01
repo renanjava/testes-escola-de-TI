@@ -1,11 +1,11 @@
 import IUseCases from '@/application/interfaces/use-cases.interface'
-import ManagerEntity from '@/domain/bakery/entities/manager.entity'
-import IManagerRepository from '@/domain/bakery/interfaces/manager-repository.interface'
+import UserEntity from '@/domain/user/entities/user.entity'
+import IUserRepository from '@/domain/user/interfaces/user-repository.interface'
 
 export default class FindOneManagerUseCase implements IUseCases {
-  constructor(private iManagerRepository: IManagerRepository<ManagerEntity>) {}
+  constructor(private iUserRepository: IUserRepository<UserEntity>) {}
 
-  async execute(id: string): Promise<ManagerEntity | null> {
-    return await this.iManagerRepository.manager(id)
+  async execute(id: string): Promise<UserEntity | null> {
+    return await this.iUserRepository.user({ id: id, role: 'MANAGER' })
   }
 }

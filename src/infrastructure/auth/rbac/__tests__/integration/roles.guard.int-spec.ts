@@ -45,7 +45,7 @@ describe('RolesGuard Integration tests', () => {
     const token = jwtService.sign({ role: [UserRole.USER] })
 
     const response = await request(app.getHttpServer())
-      .get('/user/admin')
+      .get('/admin/user')
       .set('Authorization', `Bearer ${token}`)
 
     expect(response.status).toBe(403)
