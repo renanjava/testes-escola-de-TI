@@ -12,6 +12,7 @@ import { NodemailerModule } from './email/nodemailer.module'
 import { BakeryModule } from './bakery/bakery.module'
 import { ManagerService } from '@/infrastructure/services/user/manager.service'
 import { AdminModule } from './user/admin.module'
+import { ProductModule } from './bakery/product.module'
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AdminModule } from './user/admin.module'
     NodemailerModule,
     BakeryModule,
     AdminModule,
+    ProductModule,
   ],
   providers: [
     JwtService,

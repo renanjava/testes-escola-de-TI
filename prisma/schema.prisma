@@ -58,6 +58,7 @@ model BakeryManager {
 
 model Product {
   id            String  @id @default(uuid())
+  name          String
   description   String
   image         String[]
   price         Float
