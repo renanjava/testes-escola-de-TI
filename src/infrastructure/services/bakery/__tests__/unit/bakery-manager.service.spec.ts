@@ -32,7 +32,6 @@ describe('BakeryManagerService', () => {
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
     expect(userRepositoryMock.user).toHaveBeenCalledWith({
       id: '2',
-      role: 'MANAGER',
     })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       bakeryId: '1',
@@ -89,10 +88,14 @@ describe('BakeryManagerService', () => {
       deleteBakeryManager: jest.fn().mockResolvedValue(expectedResult),
     }
 
+    const userRepositoryMock = {
+      user: jest.fn().mockResolvedValue(expectedResult),
+    }
+
     const service = new BakeryManagerService(
       bakeryManagerRepositoryMock as any,
       {} as any,
-      {} as any,
+      userRepositoryMock as any,
     )
 
     const result = await service.remove(bakeryManagerId)
@@ -199,7 +202,6 @@ describe('BakeryManagerService', () => {
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
     expect(userRepositoryMock.user).toHaveBeenCalledWith({
       id: 'non-existent-id',
-      role: 'MANAGER',
     })
   })
 
@@ -282,7 +284,6 @@ describe('BakeryManagerService', () => {
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
     expect(userRepositoryMock.user).toHaveBeenCalledWith({
       id: '2',
-      role: 'MANAGER',
     })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       bakeryId: '1',
@@ -348,7 +349,6 @@ describe('BakeryManagerService', () => {
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
     expect(userRepositoryMock.user).toHaveBeenCalledWith({
       id: '2',
-      role: 'MANAGER',
     })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       bakeryId: '1',
@@ -445,7 +445,6 @@ describe('BakeryManagerService', () => {
     expect(bakeryRepositoryMock.bakery).toHaveBeenCalledWith({ id: '1' })
     expect(userRepositoryMock.user).toHaveBeenCalledWith({
       id: '2',
-      role: 'MANAGER',
     })
     expect(bakeryManagerRepositoryMock.bakeryManager).toHaveBeenCalledWith({
       bakeryId: '1',
