@@ -4,6 +4,18 @@ enum UserRole {
   MANAGER
 }
 
+enum ProductCategory {
+  SWEET
+  BREAD
+  CAKE
+  ICE_CREAM
+  PIZZA
+  SNACK
+  COLD_CUTS
+  DRINK
+  SAVORY
+}
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -33,6 +45,7 @@ model Bakery {
   openTime  DateTime
   closeTime DateTime
   managers  BakeryManager[]
+  products  Product[]
 }
 
 model BakeryManager {
@@ -41,4 +54,16 @@ model BakeryManager {
   managerId String
   bakery    Bakery  @relation(fields: [bakeryId], references: [id], onDelete: Cascade)
   bakeryId  String
+}
+
+model Product {
+  id            String  @id @default(uuid())
+  description   String
+  image         String[]
+  price         Float
+  quantity      Int
+  disponibility Boolean
+  category      ProductCategory[]
+  bakery        Bakery  @relation(fields: [bakeryId], references: [id], onDelete: Cascade)
+  bakeryId      String
 }
