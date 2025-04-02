@@ -34,15 +34,20 @@ export class AdminController {
   @Post('bakery')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  createBakery(@Body() createBakeryDto: CreateBakeryDto) {
-    return this.bakeryService.create(BakeryAdapter.toEntity(createBakeryDto))
+  async createBakery(@Body() createBakeryDto: CreateBakeryDto) {
+    return await this.bakeryService.create(
+      BakeryAdapter.toEntity(createBakeryDto),
+    )
   }
 
   @Patch('bakery/:id')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  updateBakery(@Param() id: string, @Body() updateBakeryDto: UpdateBakeryDto) {
-    return this.bakeryService.update(
+  async updateBakery(
+    @Param() id: string,
+    @Body() updateBakeryDto: UpdateBakeryDto,
+  ) {
+    return await this.bakeryService.update(
       id,
       BakeryAdapter.toUpdateEntity(updateBakeryDto),
     )
@@ -51,15 +56,15 @@ export class AdminController {
   @Delete('bakery/:id')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  removeBakery(@Param('id') id: string) {
-    return this.bakeryService.remove(id)
+  async removeBakery(@Param('id') id: string) {
+    return await this.bakeryService.remove(id)
   }
 
   @Get('bakery/:id')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  findOneBakery(@Param('id') id: string) {
-    return this.bakeryService.findOne(id)
+  async findOneBakery(@Param('id') id: string) {
+    return await this.bakeryService.findOne(id)
   }
 
   @Post('bakery-manager')
@@ -76,22 +81,22 @@ export class AdminController {
   @Get('bakery-manager')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  findAllBakeryManagers() {
-    return this.bakeryManagerService.findAll()
+  async findAllBakeryManagers() {
+    return await this.bakeryManagerService.findAll()
   }
 
   @Delete('bakery-manager/:id')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  removeBakeryManager(@Param('id') id: string) {
-    return this.bakeryManagerService.remove(id)
+  async removeBakeryManager(@Param('id') id: string) {
+    return await this.bakeryManagerService.remove(id)
   }
 
   @Get('bakery-manager/:id')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  findOneBakeryManager(@Param('id') id: string) {
-    return this.bakeryManagerService.findOne(id)
+  async findOneBakeryManager(@Param('id') id: string) {
+    return await this.bakeryManagerService.findOne(id)
   }
 
   @Get('manager')

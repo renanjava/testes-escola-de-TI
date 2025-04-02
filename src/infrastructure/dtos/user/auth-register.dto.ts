@@ -1,4 +1,4 @@
-import { ICreateUserDto } from './create-user.dto'
+import UserEntity from '@/domain/user/entities/user.entity'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsEmail,
@@ -9,7 +9,7 @@ import {
   MinLength,
 } from 'class-validator'
 
-export interface AuthRegisterProps extends ICreateUserDto {
+export interface AuthRegisterProps extends Omit<UserEntity, 'role'> {
   realname: string
   username: string
   email: string

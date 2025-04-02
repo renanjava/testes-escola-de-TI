@@ -6,10 +6,10 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator'
-import { ICreateUserDto } from './create-user.dto'
+import { AuthRegisterDto } from './auth-register.dto'
 
 export interface AuthLoginProps
-  extends Pick<ICreateUserDto, 'username' | 'password'> {
+  extends Pick<AuthRegisterDto, 'username' | 'password'> {
   username: string
   password: string
 }
