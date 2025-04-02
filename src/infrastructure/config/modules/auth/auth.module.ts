@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
-import { AuthService } from '@/infrastructure/services/user/auth.service'
-import { AuthController } from '@/infrastructure/controllers/user/auth.controller'
+import { AuthService } from '@/infrastructure/services/auth/auth.service'
+import { AuthController } from '@/infrastructure/controllers/auth/auth.controller'
 import { JwtModule } from '@nestjs/jwt'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtStrategy } from '@/infrastructure/auth/jwt/jwt.strategy'
-import { UserModule } from './user.module'
+import { UserModule } from '../user/user.module'
 import { JwtAuthGuard } from '@/infrastructure/auth/jwt/jwt-auth.guard'
 import { NodemailerService } from '@/infrastructure/services/email/nodemailer.service'
 

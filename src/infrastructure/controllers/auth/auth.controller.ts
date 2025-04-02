@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Post, Body } from '@nestjs/common'
-import { AuthService } from '@/infrastructure/services/user/auth.service'
-import { AuthLoginDto } from '@/infrastructure/dtos/user/auth-login.dto'
+import { AuthService } from '@/infrastructure/services/auth/auth.service'
+import { AuthLoginDto } from '@/infrastructure/dtos/auth/auth-login.dto'
 import { HashPasswordPipe } from '@/infrastructure/common/pipes/hash-password.pipe'
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AuthRegisterDto } from '@/infrastructure/dtos/user/auth-register.dto'
-import { AuthRegisterAdapter } from '@/infrastructure/adapters/user/auth-register.adapter'
-import { AuthLoginAdapter } from '@/infrastructure/adapters/user/auth-login.adapter'
+import { AuthRegisterDto } from '@/infrastructure/dtos/auth/auth-register.dto'
+import { AuthRegisterAdapter } from '@/infrastructure/adapters/user/auth/auth-register.adapter'
+import { AuthLoginAdapter } from '@/infrastructure/adapters/user/auth/auth-login.adapter'
 
 @Controller('auth')
 @ApiTags('auth')

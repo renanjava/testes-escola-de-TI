@@ -1,5 +1,5 @@
 import UserEntity from '@/domain/user/entities/user.entity'
-import { AuthRegisterDto } from '@/infrastructure/dtos/user/auth-register.dto'
+import { AuthRegisterDto } from '@/infrastructure/dtos/auth/auth-register.dto'
 
 export class AuthRegisterAdapter {
   static toEntity(dto: AuthRegisterDto): UserEntity {

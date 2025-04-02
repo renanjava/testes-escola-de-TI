@@ -1,4 +1,4 @@
-import { UserService } from '../../user.service'
+import { UserService } from '@/infrastructure/services/user/user.service'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 import { UsuarioNaoEncontradoException } from '@/shared/common/exceptions/user/usuario-nao-encontrado.exception'
 import { UpdateUserDto } from '@/infrastructure/dtos/user/update-user.dto'
