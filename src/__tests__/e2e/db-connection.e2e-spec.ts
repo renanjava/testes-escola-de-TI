@@ -1,11 +1,13 @@
 import { AppModule } from '@/infrastructure/config/modules/app.module'
 import { AuthRegisterDataBuilder } from '@/infrastructure/common/helper/auth/auth-register-data-builder'
 import { Password } from '@/shared/common/utils/password'
-import { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
+import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
-import { INestApplication } from '@nestjs/common'
-import { Test, TestingModule } from '@nestjs/testing'
-import { Prisma, UserRole } from '@prisma/client'
+import type { INestApplication } from '@nestjs/common'
+import type { TestingModule } from '@nestjs/testing'
+import { Test } from '@nestjs/testing'
+import type { Prisma } from '@prisma/client'
+import { UserRole } from '@prisma/client'
 
 describe('DB Connection E2E Tests', () => {
   let userProps: AuthRegisterProps

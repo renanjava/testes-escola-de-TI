@@ -1,12 +1,12 @@
 /* eslint-disable no-empty */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import IUseCases from '@/application/interfaces/use-cases.interface'
-import BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
-import BakeryEntity from '@/domain/bakery/entities/bakery.entity'
-import IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
-import IBakeryRepository from '@/domain/bakery/interfaces/bakery-repository.interface'
-import UserEntity from '@/domain/user/entities/user.entity'
-import IUserRepository from '@/domain/user/interfaces/user-repository.interface'
+import type IUseCases from '@/application/interfaces/use-cases.interface'
+import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
+import type BakeryEntity from '@/domain/bakery/entities/bakery.entity'
+import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
+import type IBakeryRepository from '@/domain/bakery/interfaces/bakery-repository.interface'
+import type UserEntity from '@/domain/user/entities/user.entity'
+import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 
 export default class CreateBakeryManagerUseCase implements IUseCases {

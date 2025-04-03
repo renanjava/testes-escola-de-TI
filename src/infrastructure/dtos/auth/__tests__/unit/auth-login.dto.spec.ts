@@ -1,8 +1,6 @@
 import { validate } from 'class-validator'
-import {
-  AuthLoginFactory,
-  AuthLoginProps,
-} from '@/infrastructure/dtos/auth/auth-login.dto'
+import type { AuthLoginProps } from '@/infrastructure/dtos/auth/auth-login.dto'
+import { AuthLoginFactory } from '@/infrastructure/dtos/auth/auth-login.dto'
 import { AuthLoginDataBuilder } from '@/infrastructure/common/helper/auth/auth-login-data-builder'
 
 let props: AuthLoginProps

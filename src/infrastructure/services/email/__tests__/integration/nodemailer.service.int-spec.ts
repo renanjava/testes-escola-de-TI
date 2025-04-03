@@ -1,6 +1,7 @@
 import { AppModule } from '@/infrastructure/config/modules/app.module'
 import { ConfigService } from '@nestjs/config'
-import { Test, TestingModule } from '@nestjs/testing'
+import type { TestingModule } from '@nestjs/testing'
+import { Test } from '@nestjs/testing'
 import * as nodemailer from 'nodemailer'
 
 describe('Nodemailer Service Integration Tests', () => {

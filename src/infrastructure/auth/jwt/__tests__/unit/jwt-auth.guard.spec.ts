@@ -1,4 +1,5 @@
-import { ExecutionContext, UnauthorizedException } from '@nestjs/common'
+import type { ExecutionContext } from '@nestjs/common'
+import { UnauthorizedException } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { JwtAuthGuard } from '@/infrastructure/auth/jwt/jwt-auth.guard'
 

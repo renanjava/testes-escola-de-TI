@@ -30,8 +30,6 @@
     <li><strong>ESLint</strong>: v9.20.1 - Análise estática para garantir qualidade e boas práticas.</li>
     <li><strong>Faker.js</strong>: v9.5.0 - Geração de dados fictícios para testes e mocks.</li>
     <li><strong>Supertest</strong>: v6.3.3 - Biblioteca para testes de integração de APIs.</li>
-    <li><strong>React</strong>: v18.2.0 - Biblioteca para construção de interfaces de usuário.</li>
-    <li><strong>Vite</strong>: v3.2.3 - Ferramenta de build rápida para desenvolvimento de front-end.</li>
     <li><strong>UUID</strong>: v9.0.0 - Geração de valores válidos de UUID para testes.</li>
 </ul>
 
@@ -108,11 +106,6 @@
             <li><small>Implementa controle de acesso baseado em papéis (Role-Based Access Control).</small></li>
         </ul>
     </li>
-    <li><strong>Front-end: React e Vite</strong> 
-        <ul>
-            <li><small>React para construção de interfaces de usuário e Vite para build rápida e eficiente.</small></li>
-        </ul>
-    </li>
     <li><strong>UUID</strong> 
         <ul>
             <li><small>Usado para gerar e armazenar UUIDs, garantindo que não haverá repetição e que não serão fáceis de descobrir.</small></li>
@@ -146,7 +139,6 @@
     <li>Após finalizar a implementação, deve abrir um Pull Request para <code>main</code>.</li>
     <li>O PR <strong>só será aceito se passar na pipeline de CI/CD</strong></li>
     <li>Cada PR deve ter um título com as principais alterações e uma descrição listando todas as alterações feitas.</li>
-    <li>O autor da PR deve solicitar a revisão de pelo menos um outro desenvolvedor.</li>
 </ul>
 
 <h2>🚀 Workflows e Jobs de CI/CD</h2>

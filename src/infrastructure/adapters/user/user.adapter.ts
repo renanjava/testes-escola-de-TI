@@ -1,5 +1,5 @@
 import UserEntity from '@/domain/user/entities/user.entity'
-import { UpdateUserDto } from '@/infrastructure/dtos/user/update-user.dto'
+import type { UpdateUserDto } from '@/infrastructure/dtos/user/update-user.dto'
 
 export class UserAdapter {
   static toResponse(entity: UserEntity): UserEntity {

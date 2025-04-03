@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { AuthLoginProps } from '@/infrastructure/dtos/auth/auth-login.dto'
+import type { AuthLoginProps } from '@/infrastructure/dtos/auth/auth-login.dto'
 
 export function AuthLoginDataBuilder(props: AuthLoginProps): AuthLoginProps {
   return {
