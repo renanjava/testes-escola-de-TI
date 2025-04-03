@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './infrastructure/config/modules/app.module'
+import { AppModule } from './infrastructure/common/modules/app.module'
 import { ConfigService } from '@nestjs/config'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import setupSwagger from '@/shared/config/setup-swagger'

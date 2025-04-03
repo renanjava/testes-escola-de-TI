@@ -1,4 +1,4 @@
-import { AuthLoginDataBuilder } from '@/infrastructure/common/helper/auth/auth-login-data-builder'
+import { AuthLoginDataBuilder } from '@/infrastructure/helper/auth/auth-login-data-builder'
 
 describe('AuthLogin Data Builder unit tests', () => {
   it('should return object with provided username and password when both values are given', () => {

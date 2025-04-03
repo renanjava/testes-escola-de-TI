@@ -3,10 +3,10 @@ import { Test } from '@nestjs/testing'
 import type { INestApplication } from '@nestjs/common'
 import { ValidationPipe } from '@nestjs/common'
 import request from 'supertest'
-import { AppModule } from '@/infrastructure/config/modules/app.module'
+import { AppModule } from '@/infrastructure/common/modules/app.module'
 import { execSync } from 'child_process'
 import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
-import { AuthRegisterDataBuilder } from '@/infrastructure/common/helper/auth/auth-register-data-builder'
+import { AuthRegisterDataBuilder } from '@/infrastructure/helper/auth/auth-register-data-builder'
 import { ConfigService } from '@nestjs/config'
 
 describe('Auth Controller Integration Tests', () => {

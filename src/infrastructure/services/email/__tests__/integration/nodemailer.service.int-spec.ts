@@ -1,4 +1,4 @@
-import { AppModule } from '@/infrastructure/config/modules/app.module'
+import { AppModule } from '@/infrastructure/common/modules/app.module'
 import { ConfigService } from '@nestjs/config'
 import type { TestingModule } from '@nestjs/testing'
 import { Test } from '@nestjs/testing'

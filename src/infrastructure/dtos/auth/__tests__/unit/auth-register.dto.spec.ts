@@ -1,7 +1,7 @@
 import { validate } from 'class-validator'
 import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
 import { AuthRegisterFactory } from '@/infrastructure/dtos/auth/auth-register.dto'
-import { AuthRegisterDataBuilder } from '@/infrastructure/common/helper/auth/auth-register-data-builder'
+import { AuthRegisterDataBuilder } from '@/infrastructure/helper/auth/auth-register-data-builder'
 
 let props: AuthRegisterProps
 

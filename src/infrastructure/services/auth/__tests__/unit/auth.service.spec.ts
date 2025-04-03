@@ -5,9 +5,9 @@ import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user
 import { HttpException, HttpStatus } from '@nestjs/common'
 import type { AuthLoginProps } from '@/infrastructure/dtos/auth/auth-login.dto'
 import { AuthService } from '../../auth.service'
-import { AuthLoginDataBuilder } from '@/infrastructure/common/helper/auth/auth-login-data-builder'
+import { AuthLoginDataBuilder } from '@/infrastructure/helper/auth/auth-login-data-builder'
 import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
-import { AuthRegisterDataBuilder } from '@/infrastructure/common/helper/auth/auth-register-data-builder'
+import { AuthRegisterDataBuilder } from '@/infrastructure/helper/auth/auth-register-data-builder'
 import { Password } from '@/shared/common/utils/password'
 import { NodemailerService } from '../../../email/nodemailer.service'
 
