@@ -5,8 +5,8 @@ import { AuthLoginDto } from '@/infrastructure/dtos/auth/auth-login.dto'
 import { HashPasswordPipe } from '@/infrastructure/common/pipes/hash-password.pipe'
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthRegisterDto } from '@/infrastructure/dtos/auth/auth-register.dto'
-import { AuthRegisterAdapter } from '@/infrastructure/adapters/user/auth/auth-register.adapter'
-import { AuthLoginAdapter } from '@/infrastructure/adapters/user/auth/auth-login.adapter'
+import { AuthRegisterAdapter } from '@/infrastructure/adapters/auth/auth-register.adapter'
+import { AuthLoginAdapter } from '@/infrastructure/adapters/auth/auth-login.adapter'
 
 @Controller('auth')
 @ApiTags('auth')

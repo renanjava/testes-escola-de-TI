@@ -11,6 +11,8 @@ import { SenhaInvalidaException } from '@/shared/common/exceptions/user/senha-in
 import { TokenProps } from '@/application/controllers/interfaces/token-props.interface'
 import UserLoginEntity from '@/domain/user/entities/user-login.entity'
 import { User } from '@prisma/client'
+import { AuthRegisterAdapter } from '@/infrastructure/adapters/auth/auth-register.adapter'
+import { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
 
 @Injectable()
 export class AuthService {
@@ -38,11 +40,11 @@ export class AuthService {
     })
   }
 
-  async registerUser(inputUser: UserEntity): Promise<UserEntity> {
+  async registerUser(inputUser: UserEntity): Promise<AuthRegisterProps> {
     const createUserUseCase = new CreateUserUseCase(this.userRepository)
     const registeredUser = await createUserUseCase.execute(inputUser)
     this.nodemailerService.sendEmail(registeredUser.email)
-    return { ...registeredUser }
+    return AuthRegisterAdapter.toResponse(registeredUser)
   }
 
   async hashPassword(password: string): Promise<string> {
