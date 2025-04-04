@@ -1,8 +1,8 @@
-import IUseCases from '@/application/interfaces/use-cases.interface'
-import BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
-import ProductEntity from '@/domain/bakery/entities/product.entity'
-import IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
-import IProductRepository from '@/domain/bakery/interfaces/product.repository'
+import type IUseCases from '@/application/interfaces/use-cases.interface'
+import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
+import type ProductEntity from '@/domain/bakery/entities/product.entity'
+import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
+import type IProductRepository from '@/domain/bakery/interfaces/product.repository'
 import { ForbiddenException, NotFoundException } from '@nestjs/common'
 
 export default class UpdateProductUseCase implements IUseCases {

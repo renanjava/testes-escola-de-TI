@@ -1,9 +1,9 @@
-import IUseCases from '@/application/interfaces/use-cases.interface'
-import ProductEntity from '@/domain/bakery/entities/product.entity'
-import IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
-import IProductRepository from '@/domain/bakery/interfaces/product.repository'
+import type IUseCases from '@/application/interfaces/use-cases.interface'
+import type ProductEntity from '@/domain/bakery/entities/product.entity'
+import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
+import type IProductRepository from '@/domain/bakery/interfaces/product.repository'
 import { ForbiddenException } from '@nestjs/common'
-import { BakeryManager } from '@prisma/client'
+import type { BakeryManager } from '@prisma/client'
 
 export default class CreateProductUseCase implements IUseCases {
   constructor(

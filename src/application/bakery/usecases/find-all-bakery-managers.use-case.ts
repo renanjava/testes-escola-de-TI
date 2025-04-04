@@ -1,6 +1,6 @@
-import IUseCases from '@/application/interfaces/use-cases.interface'
-import BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
-import IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
+import type IUseCases from '@/application/interfaces/use-cases.interface'
+import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
+import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
 
 export default class FindAllBakeryManagersUseCase implements IUseCases {
   constructor(

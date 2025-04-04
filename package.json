@@ -24,9 +24,10 @@
     "test:int": "jest --runInBand --config ./jest.int.config.ts",
     "test:e2e": "jest --runInBand --config ./jest.e2e.config.ts",
     "docker:build": "docker compose build",
-    "docker:up": "docker compose up && npx prisma migrate deploy",
+    "docker:up": "docker compose up && npx prisma db seed",
     "docker:down": "docker compose down",
-    "docker:postgres": "docker compose up postgres"
+    "docker:postgres": "docker compose up postgres",
+    "prisma:seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.10",
@@ -63,7 +64,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.10.7",
+    "@types/node": "^22.14.0",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^8.24.1",

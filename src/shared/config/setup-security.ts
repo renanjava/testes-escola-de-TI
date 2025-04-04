@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common'
+import type { INestApplication } from '@nestjs/common'
 import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
 

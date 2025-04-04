@@ -7,7 +7,7 @@ import security from 'eslint-plugin-security';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs', 'node_modules', 'coverage', 'dist', 'build', '/*.js'],
+    ignores: ['eslint.config.mjs', 'node_modules', 'coverage', 'dist', 'build', '*.js'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -19,7 +19,7 @@ export default tseslint.config(
         ...globals.node,
         ...globals.jest,
       },
-      ecmaVersion: 5,
+      ecmaVersion: 2020,
       sourceType: 'module',
       parserOptions: {
         projectService: true,
@@ -29,18 +29,37 @@ export default tseslint.config(
   },
   {
     rules: {
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'off',
-      '@typescript-eslint/no-namespace': 'off',
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/security/detect-unsafe-regex': 'off',
-      'no-console': 'warn',
-      'security/detect-object-injection': 'warn',
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-return": "off"
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
+      '@typescript-eslint/no-unsafe-member-access': 'warn',
+      '@typescript-eslint/no-unsafe-call': 'warn',
+      '@typescript-eslint/no-unsafe-return': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/explicit-function-return-type': ['warn', { allowExpressions: true }],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: 'variable',
+          format: ['camelCase', 'UPPER_CASE'],
+          leadingUnderscore: 'allow',
+        },
+        {
+          selector: 'class',
+          format: ['PascalCase'],
+        },
+      ],
+
+      'security/detect-object-injection': 'error',
+      'security/detect-unsafe-regex': 'error',
+      'no-eval': 'error',
+      'no-console': ['warn', { allow: ['error'] }],
+
+      'prefer-const': 'error',
+      'eqeqeq': ['error', 'always'],
     },
-  },
+  }
 );

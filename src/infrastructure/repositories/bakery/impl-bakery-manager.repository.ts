@@ -7,10 +7,11 @@ export class BakeryManagerRepositoryImpl {
   constructor(private prisma: PrismaService) {}
 
   async bakeryManager(
-    BakeryManagerWhereInput: Prisma.BakeryManagerWhereInput,
+    bakeryManagerWhereInput: Prisma.BakeryManagerWhereInput,
   ): Promise<BakeryManager | null> {
     return this.prisma.bakeryManager.findFirst({
-      where: BakeryManagerWhereInput,
+      where: bakeryManagerWhereInput,
+      include: { manager: true, bakery: true },
     })
   }
 
@@ -27,6 +28,7 @@ export class BakeryManagerRepositoryImpl {
       take,
       cursor,
       where,
+      include: { manager: true, bakery: true },
       orderBy,
     })
   }

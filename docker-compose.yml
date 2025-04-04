@@ -28,6 +28,8 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       NODEMAILER_USER: ${NODEMAILER_USER}
       NODEMAILER_PASS: ${NODEMAILER_PASS}
+      SEED_USER_EMAIL: ${SEED_USER_EMAIL}
+      SEED_USER_PASSWORD: ${SEED_USER_PASSWORD}
     depends_on:
       - postgres
     networks:

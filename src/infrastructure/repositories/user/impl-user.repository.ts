@@ -11,6 +11,7 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
   async user(userWhereInput: Prisma.UserWhereInput): Promise<User | null> {
     return this.prisma.user.findFirst({
       where: userWhereInput,
+      include: { bakeries: true },
     })
   }
 
@@ -27,6 +28,7 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
       take,
       cursor,
       where,
+      include: { bakeries: true },
       orderBy,
     })
   }

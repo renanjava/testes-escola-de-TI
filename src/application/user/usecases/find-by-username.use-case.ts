@@ -1,7 +1,7 @@
-import IUseCases from '@/application/interfaces/use-cases.interface'
-import UserLoginEntity from '@/domain/user/entities/user-login.entity'
-import UserEntity from '@/domain/user/entities/user.entity'
-import IUserRepository from '@/domain/user/interfaces/user-repository.interface'
+import type IUseCases from '@/application/interfaces/use-cases.interface'
+import type UserLoginEntity from '@/domain/user/entities/user-login.entity'
+import type UserEntity from '@/domain/user/entities/user.entity'
+import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
 import { UsuarioNaoEncontradoException } from '@/shared/common/exceptions/user/usuario-nao-encontrado.exception'
 
 export default class FindByUsernameUseCase implements IUseCases {

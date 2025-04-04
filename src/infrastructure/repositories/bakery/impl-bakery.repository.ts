@@ -11,6 +11,7 @@ export class BakeryRepositoryImpl {
   ): Promise<Bakery | null> {
     return this.prisma.bakery.findFirst({
       where: bakeryWhereInput,
+      include: { managers: true, products: true },
     })
   }
 
@@ -27,6 +28,7 @@ export class BakeryRepositoryImpl {
       take,
       cursor,
       where,
+      include: { managers: true, products: true },
       orderBy,
     })
   }

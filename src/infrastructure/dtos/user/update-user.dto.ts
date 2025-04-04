@@ -1,8 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types'
-import { CreateUserDto } from './create-user.dto'
 import { IsOptional, IsString } from 'class-validator'
+import { AuthRegisterDto } from '../auth/auth-register.dto'
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {
+export class UpdateUserDto extends PartialType(AuthRegisterDto) {
   @IsString()
   @IsOptional()
   role?: string

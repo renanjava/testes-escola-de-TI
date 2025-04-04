@@ -61,6 +61,6 @@ export class ProductController {
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   remove(@Param('id') productId: string, @Req() request: IUserRequest) {
-    return this.productService.remove(productId, request.user.sub)
+    return this.productService.remove(request.user.sub, productId)
   }
 }

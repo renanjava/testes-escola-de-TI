@@ -14,4 +14,4 @@ COPY --from=build /build/dist ./dist
 COPY --from=build /build/tsconfig.json ./
 COPY --from=build /build/prisma ./prisma
 EXPOSE 3000
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma generate && npm run prisma:seed && npm run start:dev"]

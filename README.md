@@ -6,14 +6,17 @@
 <p>Este é o back-end de um sistema de delivery para padarias, desenvolvido em TypeScript utilizando o framework NestJS. O projeto inclui diversas funcionalidades essenciais para um sistema de delivery moderno, tais como:</p>
 <ul>
     <li><strong>Autenticação com JWT Tokens:</strong> Utiliza JSON Web Tokens para autenticação segura e eficiente.</li>
-    <li><strong>Controle de Acesso Baseado em Papéis:</strong> Implementa controle de acesso granular com base em papéis de usuário, permitindo a criação de rotas específicas para administradores e usuários comuns.</li>
+    <li><strong>Controle de Acesso Baseado em Papéis:</strong> Implementa controle de acesso granular com base em papéis de usuário, permitindo a criação de rotas específicas para administradores, gerentes e usuários comuns.</li>
     <li><strong>Rotas Privadas e Públicas:</strong> Diferencia rotas que requerem autenticação de rotas acessíveis publicamente.</li>
-    <li><strong>Rotas de Administrador:</strong> Inclui rotas específicas para administradores, como gerenciamento de usuários.</li>
-    <li><strong>Rotas de Usuário:</strong> Inclui rotas específicas para usuários autenticados, como visualização e atualização de perfil.</li>
+    <li><strong>Administração de Padarias:</strong> Administradores podem criar padarias e designar gerentes responsáveis.</li>
+    <li><strong>Gerenciamento de Produtos:</strong> Gerentes podem adicionar produtos apenas às padarias que possuem permissão.</li>
+    <li><strong>Relacionamentos entre Entidades:</strong> Relacionamentos bem definidos entre usuários, padarias e produtos.</li>
+    <li><strong>Envio de E-mails:</strong> Integração com serviços de envio de e-mails para notificações e recuperação de senha.</li>
+    <li><strong>Clean Architecture:</strong> Arquitetura desacoplada com princípios de Clean Architecture e Hexagonal Architecture (adapters).</li>
     <li><strong>Funcionalidades de Login e Registro:</strong> Permite que novos usuários se registrem e usuários existentes façam login para acessar funcionalidades protegidas.</li>
     <li><strong>Integração com Docker:</strong> A aplicação está disponível no DockerHub, facilitando a implantação e execução em ambientes de produção.</li>
     <li><strong>Manipulação de Banco de Dados com Prisma:</strong> Utiliza Prisma como ORM para interações eficientes e seguras com o banco de dados PostgreSQL.</li>
-    <li><strong>Testes Automatizados:</strong> Inclui testes unitários e de integração para garantir a qualidade e a estabilidade do código.</li>
+    <li><strong>Testes Automatizados:</strong> Inclui testes unitários, de integração e E2E para garantir a qualidade e a estabilidade do código.</li>
 </ul>
 
 <h2>🔥 Stack Utilizada</h2>
@@ -30,8 +33,6 @@
     <li><strong>ESLint</strong>: v9.20.1 - Análise estática para garantir qualidade e boas práticas.</li>
     <li><strong>Faker.js</strong>: v9.5.0 - Geração de dados fictícios para testes e mocks.</li>
     <li><strong>Supertest</strong>: v6.3.3 - Biblioteca para testes de integração de APIs.</li>
-    <li><strong>React</strong>: v18.2.0 - Biblioteca para construção de interfaces de usuário.</li>
-    <li><strong>Vite</strong>: v3.2.3 - Ferramenta de build rápida para desenvolvimento de front-end.</li>
     <li><strong>UUID</strong>: v9.0.0 - Geração de valores válidos de UUID para testes.</li>
 </ul>
 
@@ -108,11 +109,6 @@
             <li><small>Implementa controle de acesso baseado em papéis (Role-Based Access Control).</small></li>
         </ul>
     </li>
-    <li><strong>Front-end: React e Vite</strong> 
-        <ul>
-            <li><small>React para construção de interfaces de usuário e Vite para build rápida e eficiente.</small></li>
-        </ul>
-    </li>
     <li><strong>UUID</strong> 
         <ul>
             <li><small>Usado para gerar e armazenar UUIDs, garantindo que não haverá repetição e que não serão fáceis de descobrir.</small></li>
@@ -123,18 +119,20 @@
 <h2>📂 Estrutura do Projeto</h2>
 <pre>
   /src
-  |-- config/             # Arquivos de configuração
-  |   |-- modules/        # Módulos de configuração
-  |-- controller/         # Intermediário entre view e model
-  |   |-- controllers/    # Controladores das rotas
-  |   |-- auth/           # Gerenciador de Autenticação JWT
-  |   |-- rbac/           # Gerenciador do Role-Based Acess Control
-  |-- model/              # Modelos, serviços, repositórios e DTOs
-  |   |-- common/         # Utilitários, pipes, interceptors
-  |   |-- entities/       # Modelagem das entidades e DTOs
-  |   |-- repositories/   # Repositórios para acesso ao banco de dados
-  |   |-- services/       # Serviços e regras de negócio
-  |-- view/               # Interface de usuário desenvolvida com React e Vite
+  |-- __tests__/e2e/      # Testes de ponta-a-ponta da aplicação
+  |-- application/        # Casos de uso e regras de negócio
+  |   |-- usecases/       # Representam uma ação dentro do sistema
+  |-- domain/             # Entidades e interfaces de domínio
+  |   |-- entities/       # Representam uma tabela no banco de dados
+  |   |-- interfaces/     # Interfaces de entrada e saída (controllers, DTOs, etc.)
+  |-- infrastructure/     # Implementações de infraestrutura (banco, serviços, etc.)
+  |   |-- adapters/       # Adapters para integração com serviços externos
+  |   |-- auth/           # Regras de Autenticação e Autorização
+  |   |-- common/         # Recursos do framework
+  |   |-- helper/         # Recursos do bibliotecas externas
+  |   |-- repositories/   # Abstração de queries SQL em formato de funções (Prisma)
+  |   |-- services/       # Agrupamento de Use Cases e adição de mais lógicas
+  |-- shared/             # Compartilhamento de dados entre entidades
   |-- main.ts             # Arquivo principal
 </pre>
 
@@ -145,74 +143,16 @@
     <li>Cada desenvolvedor deve criar sua branch no formato:<br><code>dev/nome</code></li>
     <li>Após finalizar a implementação, deve abrir um Pull Request para <code>main</code>.</li>
     <li>O PR <strong>só será aceito se passar na pipeline de CI/CD</strong></li>
-    <li>Cada PR deve ter um título com as principais alterações e uma descrição listando todas as alterações feitas.</li>
-    <li>O autor da PR deve solicitar a revisão de pelo menos um outro desenvolvedor.</li>
 </ul>
 
 <h2>🚀 Workflows e Jobs de CI/CD</h2>
-<p>O projeto utiliza GitHub Actions para automação de CI/CD. Abaixo estão descritos os workflows e jobs configurados:</p>
-
-<h3>📦 Geração de Artefato</h3>
-<p>Este workflow é acionado em pull requests para a branch <code>main</code> e é responsável por construir a imagem Docker e salvar como um artefato.</p>
 <ul>
-    <li><strong>Nome:</strong> Geração de Artefato</li>
-    <li><strong>Evento:</strong> pull_request (branch: main)</li>
-    <li><strong>Jobs:</strong></li>
-    <ul>
-        <li><strong>artifact:</strong>
-            <ul>
-                <li>Configura o Docker Buildx</li>
-                <li>Instala o Docker Compose</li>
-                <li>Constrói a imagem Docker</li>
-                <li>Salva a imagem Docker como um artefato</li>
-                <li>Faz o upload do artefato</li>
-            </ul>
-        </li>
-    </ul>
+    <li><strong>basic-check:</strong> Verificação básica de código (testes unitários, linter e testes de integração). Acionado em todo push para qualquer branch, exceto <code>main</code>.</li>
+    <li><strong>advanced-check:</strong> Verificação avançada de código (testes E2E). Acionado em PRs para a branch <code>main</code>.</li>
+    <li><strong>push-dockerhub:</strong> Geração e push de imagens Docker. Acionado em PRs para <code>main</code> (gera artefato) e em push para <code>main</code> (push para DockerHub).</li>
 </ul>
 
-<h3>🚀 Push para o Docker Hub</h3>
-<p>Este workflow é acionado em pull requests para a <code>main</code> e é responsável por baixar o artefato gerado e fazer o push da imagem Docker para o Docker Hub.</p>
-<ul>
-    <li><strong>Nome:</strong> Push para o Docker Hub</li>
-    <li><strong>Evento:</strong> pull_request (branch: main)</li>
-    <li><strong>Jobs:</strong></li>
-    <ul>
-        <li><strong>dockerhub:</strong>
-            <ul>
-                <li>Faz o checkout do código</li>
-                <li>Configura o Docker Buildx</li>
-                <li>Baixa o artefato gerado</li>
-                <li>Faz login no Docker Hub</li>
-                <li>Constrói as imagem Docker</li>
-                <li>Dá um push da imagem Docker com tag dinâmica para o DockerHub</li>
-                <li>Dá um push da imagem Docker com tag latest para o DockerHub</li>
-            </ul>
-        </li>
-    </ul>
-</ul>
-
-<h3>✅ Check</h3>
-<p>Este workflow é acionado em pushes para as branches e é responsável por verificar a qualidade do código e rodar os testes unitários e de integração.</p>
-<ul>
-    <li><strong>Nome:</strong> Check</li>
-    <li><strong>Evento:</strong> push (branch: todas, exceto main)</li>
-    <li><strong>Jobs:</strong></li>
-    <ul>
-        <li><strong>check:</strong>
-            <ul>
-                <li>Faz o checkout do código</li>
-                <li>Instala as dependências</li>
-                <li>Roda o linter</li>
-                <li>Roda os testes unitários</li>
-                <li>Sobe um banco de dados</li>
-                <li>Roda os testes de integração</li>
-            </ul>
-        </li>
-    </ul>
-</ul>
-
-<h2>🛠️ Instalação do projeto</h2>
+<h2>🛠️ Instalação do Projeto</h2>
 <ol>
     <li>Clone o repositório:<br><code>git clone https://github.com/renanjava/testes-escola-de-ti</code></li>
     <li>Acesse o diretório do projeto:<br><code>cd testes-escola-de-ti</code></li>
@@ -220,10 +160,10 @@
     <li>Configure as variáveis de ambiente:<br><code>cp .env.example .env</code></li>
 </ol>
 
-<h2>🖥️ Como rodar a API</h2>
+<h2>🖥️ Como Rodar a API</h2>
 <h3>Ambiente de Desenvolvimento</h3>
 <ol>
-    <li>Inicie o serviço PostgreSQL do <code>docker-compose.yml</code>:<br><code>docker-compose up -d postgres</code></li>
+    <li>Inicie os serviços do <code>docker-compose.yml</code>:<br><code>docker-compose up -d</code></li>
     <li>Execute as migrações do Prisma:<br><code>npx prisma migrate dev</code></li>
     <li>Inicie a aplicação em ambiente de desenvolvimento:<br><code>npm run start:dev</code></li>
     <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
@@ -233,8 +173,7 @@
 <ol>
     <li>Certifique-se de ter o Docker instalado e em execução.</li>
     <li>Faça o pull da imagem Docker:<br><code>docker pull renancesu/cafe-com-type:latest</code></li>
-    <li>Suba o contêiner do PostgreSQL:<br><code>docker run --name postgres -e POSTGRES_DB=escola-ti_db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres</code></li>
-    <li>Execute o contêiner da aplicação:<br><code>docker run --name cafe-com-type --link postgres:postgres -e NODE_ENV=production -e PORT=3000 -e JWT_SECRET=your_jwt_secret -e DATABASE_NAME=escola-ti_db -e DATABASE_URL=postgres://postgres:postgres@postgres:5432/escola-ti_db -p 3000:3000 -d renancesu/cafe-com-type:latest</code></li>
+    <li>Suba os contêineres:<br><code>docker-compose -f docker-compose.prod.yml up -d</code></li>
     <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
 </ol>
 
@@ -245,12 +184,29 @@
     <li><code>POST /auth/register</code>: Registra um novo usuário.</li>
 </ul>
 
-<h3>User Controller</h3>
+<h3>Admin</h3>
 <ul>
-    <li><code>GET /user/admin</code>: Retorna todos os usuários (apenas para administradores).</li>
-    <li><code>GET /user</code>: Retorna o usuário autenticado.</li>
-    <li><code>PATCH /user</code>: Atualiza o usuário autenticado.</li>
-    <li><code>DELETE /user/admin/:id</code>: Remove um usuário (apenas para administradores).</li>
+    <li><code>POST /admin/bakery</code>: Cria uma nova padaria.</li>
+    <li><code>PATCH /admin/bakery/:id/manager</code>: Define um gerente para uma padaria.</li>
+    <li><code>GET /admin/users</code>: Lista todos os usuários.</li>
+</ul>
+
+<h3>Gerente</h3>
+<ul>
+    <li><code>POST /manager/product</code>: Adiciona um produto à padaria gerenciada.</li>
+    <li><code>GET /manager/products</code>: Lista produtos da padaria gerenciada.</li>
+</ul>
+
+<h3>Usuário</h3>
+<ul>
+    <li><code>GET /user</code>: Retorna o perfil do usuário autenticado.</li>
+    <li><code>PATCH /user</code>: Atualiza o perfil do usuário autenticado.</li>
+</ul>
+
+<h3>Produtos</h3>
+<ul>
+    <li><code>GET /products</code>: Lista todos os produtos disponíveis.</li>
+    <li><code>GET /products/:id</code>: Retorna detalhes de um produto específico.</li>
 </ul>
 
 <h2>⚙️ Testes</h2>
@@ -258,8 +214,7 @@
     <li>Para rodar os testes unitários:<br><code>npm run test:unit</code></li>
     <li>Para rodar os testes de integração:<br><code>npm run test:int</code></li>
     <li>Para rodar os testes de ponta a ponta (E2E):<br><code>npm run test:e2e</code></li>
-    <li>Para rodar os testes unitários com cobertura de código:<br><code>npm run test:cov</code></li>
-    <li>Para rodar os testes unitários em modo watch:<br><code>npm run test:watch</code></li>
+    <li>Para rodar os testes com cobertura de código:<br><code>npm run test:cov</code></li>
 </ul>
 
 <h2>📄 Licença</h2>

@@ -11,6 +11,7 @@ export class ProductRepositoryImpl {
   ): Promise<Product | null> {
     return this.prisma.product.findFirst({
       where: ProductWhereInput,
+      include: { bakery: true },
     })
   }
 
