@@ -1,14 +1,24 @@
 import { PrismaClient } from '@prisma/client'
+import * as bcrypt from 'bcrypt'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 const prisma = new PrismaClient()
+
 async function main() {
+  if (!process.env.SEED_USER_EMAIL || !process.env.SEED_USER_PASSWORD) {
+    throw new Error(
+      'As variáveis de ambiente SEED_USER_EMAIL e SEED_USER_PASSWORD devem estar definidas.',
+    )
+  }
   const admin = await prisma.user.upsert({
-    where: { email: 'renancvr777@gmail.com' },
+    where: { email: process.env.SEED_USER_EMAIL },
     update: {},
     create: {
       realname: 'Renan Geraldini Leão',
       username: 'renan123',
-      email: 'renancvr777@gmail.com',
-      password: process.env.SEED_USER_PASSWORD!,
+      email: process.env.SEED_USER_EMAIL,
+      password: await bcrypt.hash(process.env.SEED_USER_PASSWORD, 10),
       role: 'ADMIN',
     },
   })

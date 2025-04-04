@@ -6,7 +6,7 @@ import request from 'supertest'
 import { AppModule } from '@/infrastructure/common/modules/app.module'
 import { execSync } from 'child_process'
 import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
-import { AuthRegisterDataBuilder } from '@/infrastructure/helper/auth/auth-register-data-builder'
+import { AuthRegisterDataBuilder } from '@/infrastructure/helper/databuilders/auth/auth-register-data-builder'
 import { ConfigService } from '@nestjs/config'
 
 describe('Auth Controller Integration Tests', () => {

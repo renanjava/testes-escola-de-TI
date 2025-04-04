@@ -5,9 +5,6 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "prisma": {
-    "seed": "ts-node src/infrastructure/helper/seeds/seed.ts"
-  },
   "scripts": {
     "build": "nest build",
     "compile": "tsc -p tsconfig.build.json && npm run copy-prisma",
@@ -27,9 +24,10 @@
     "test:int": "jest --runInBand --config ./jest.int.config.ts",
     "test:e2e": "jest --runInBand --config ./jest.e2e.config.ts",
     "docker:build": "docker compose build",
-    "docker:up": "docker compose up && npx prisma migrate deploy",
+    "docker:up": "docker compose up && npx prisma db seed",
     "docker:down": "docker compose down",
-    "docker:postgres": "docker compose up postgres"
+    "docker:postgres": "docker compose up postgres",
+    "prisma:seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.10",

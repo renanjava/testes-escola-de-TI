@@ -1,4 +1,4 @@
-import { CreateBakeryDataBuilder } from '@/infrastructure/helper/bakery/create-bakery-data-builder'
+import { CreateBakeryDataBuilder } from '../../create-bakery-data-builder'
 import type { CreateBakeryProps } from '@/infrastructure/dtos/bakery/create-bakery.dto'
 import { faker } from '@faker-js/faker'
 

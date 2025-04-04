@@ -1,4 +1,4 @@
-import { AuthRegisterDataBuilder } from '@/infrastructure/helper/auth/auth-register-data-builder'
+import { AuthRegisterDataBuilder } from '@/infrastructure/helper/databuilders/auth/auth-register-data-builder'
 
 describe('AuthRegister Data Builder unit tests', () => {
   it('should return same values when all properties are provided', () => {

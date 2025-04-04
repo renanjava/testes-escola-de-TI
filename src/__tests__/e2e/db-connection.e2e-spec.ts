@@ -1,5 +1,5 @@
 import { AppModule } from '@/infrastructure/common/modules/app.module'
-import { AuthRegisterDataBuilder } from '@/infrastructure/helper/auth/auth-register-data-builder'
+import { AuthRegisterDataBuilder } from '@/infrastructure/helper/databuilders/auth/auth-register-data-builder'
 import { Password } from '@/shared/common/utils/password'
 import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
