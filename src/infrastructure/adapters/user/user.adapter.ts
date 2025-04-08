@@ -1,4 +1,5 @@
 import UserEntity from '@/domain/user/entities/user.entity'
+import type { AdminUpdateUserDto } from '@/infrastructure/dtos/admin/admin-update-user.dto'
 import type { UpdateUserDto } from '@/infrastructure/dtos/user/update-user.dto'
 
 export class UserAdapter {
@@ -11,6 +12,15 @@ export class UserAdapter {
     )
   }
   static toUpdateEntity(dto: UpdateUserDto): Partial<UserEntity> {
+    const updateData: Partial<UserEntity> = {}
+    if (dto.realname !== undefined) updateData.realname = dto.realname
+    if (dto.username !== undefined) updateData.username = dto.username
+    if (dto.email !== undefined) updateData.email = dto.email
+    if (dto.password !== undefined) updateData.password = dto.password
+    return updateData
+  }
+
+  static toAdminUpdateEntity(dto: AdminUpdateUserDto): Partial<UserEntity> {
     const updateData: Partial<UserEntity> = {}
     if (dto.realname !== undefined) updateData.realname = dto.realname
     if (dto.username !== undefined) updateData.username = dto.username

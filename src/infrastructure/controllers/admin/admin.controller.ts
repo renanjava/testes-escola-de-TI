@@ -21,6 +21,8 @@ import { BakeryManagerAdapter } from '@/infrastructure/adapters/bakery/bakery-ma
 import { CreateBakeryDto } from '@/infrastructure/dtos/bakery/create-bakery.dto'
 import { BakeryAdapter } from '@/infrastructure/adapters/bakery/bakery.adapter'
 import { UpdateBakeryDto } from '@/infrastructure/dtos/bakery/update-bakery.dto'
+import { AdminUpdateUserDto } from '@/infrastructure/dtos/admin/admin-update-user.dto'
+import { UserAdapter } from '@/infrastructure/adapters/user/user.adapter'
 
 @Controller('admin')
 export class AdminController {
@@ -122,5 +124,22 @@ export class AdminController {
   @ApiResponse({ status: 200, description: 'Usuário deletado.' })
   async removeUser(@Param('id') id: string): Promise<User> {
     return this.userService.remove(id)
+  }
+
+  @Patch('user/:id')
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'Admin atualiza usuário por id',
+  })
+  @ApiResponse({ status: 200, description: 'Usuário atualizado.' })
+  async update(
+    @Param('id') id: string,
+    @Body() adminUpdateUserDto: AdminUpdateUserDto,
+  ): Promise<User> {
+    return this.userService.update(
+      id,
+      UserAdapter.toAdminUpdateEntity(adminUpdateUserDto),
+    )
   }
 }

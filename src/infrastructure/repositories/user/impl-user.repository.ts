@@ -41,9 +41,12 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
     })
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async createUser(
+    data: Prisma.UserCreateInput,
+  ): Promise<Omit<User, 'password'>> {
     return this.prisma.user.create({
       data,
+      omit: { password: true },
     })
   }
 
@@ -55,6 +58,7 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
     return this.prisma.user.update({
       data,
       where,
+      omit: { password: true },
     })
   }
 
@@ -63,6 +67,7 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
   ): Promise<Omit<User, 'password'>> {
     return this.prisma.user.delete({
       where,
+      omit: { password: true },
     })
   }
 }
