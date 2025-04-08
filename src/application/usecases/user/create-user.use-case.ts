@@ -1,4 +1,4 @@
-import type IUseCases from '@/application/interfaces/use-cases.interface'
+import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
 import type UserEntity from '@/domain/user/entities/user.entity'
 import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
 import { EmailOuUsernameExistenteException } from '@/shared/common/exceptions/user/email-ou-username-existente.exception'

@@ -1,4 +1,4 @@
-import type IUseCases from '@/application/interfaces/use-cases.interface'
+import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
 import type ProductEntity from '@/domain/bakery/entities/product.entity'
 import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
 import type IProductRepository from '@/domain/bakery/interfaces/product.repository'

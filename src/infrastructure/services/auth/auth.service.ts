@@ -5,14 +5,14 @@ import { Password } from '@/shared/common/utils/password'
 import { IUserPayload } from '@/application/controllers/interfaces/user-payload.interface'
 import { NodemailerService } from '../email/nodemailer.service'
 import UserEntity from '@/domain/user/entities/user.entity'
-import CreateUserUseCase from '@/application/user/usecases/create-user.use-case'
-import FindByUsernameUseCase from '@/application/user/usecases/find-by-username.use-case'
+import CreateUserUseCase from '@/application/usecases/user/create-user.use-case'
 import { SenhaInvalidaException } from '@/shared/common/exceptions/user/senha-invalida.exception'
 import { TokenProps } from '@/application/controllers/interfaces/token-props.interface'
 import UserLoginEntity from '@/domain/user/entities/user-login.entity'
 import { User } from '@prisma/client'
 import { AuthRegisterAdapter } from '@/infrastructure/adapters/auth/auth-register.adapter'
 import { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
+import UserLoginUseCase from '@/application/usecases/auth/user-login.use-case'
 
 @Injectable()
 export class AuthService {
@@ -23,8 +23,8 @@ export class AuthService {
   ) {}
 
   async loginUser(inputUser: UserLoginEntity): Promise<TokenProps> {
-    const findByUsernameUseCase = new FindByUsernameUseCase(this.userRepository)
-    const userFounded = (await findByUsernameUseCase.execute(inputUser)) as User
+    const userLoginUseCase = new UserLoginUseCase(this.userRepository)
+    const userFounded = (await userLoginUseCase.execute(inputUser)) as User
     const validPassword = await this.comparePasswords(
       inputUser.password,
       userFounded.password,

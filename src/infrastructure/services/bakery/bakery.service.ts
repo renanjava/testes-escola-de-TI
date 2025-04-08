@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import { BakeryRepositoryImpl } from '@/infrastructure/repositories/bakery/impl-bakery.repository'
 import BakeryEntity from '@/domain/bakery/entities/bakery.entity'
-import CreateBakeryUseCase from '@/application/bakery/usecases/create-bakery.use-case'
-import FindAllBakeriesUseCase from '@/application/bakery/usecases/find-all-bakeries.use-case'
-import FindOneBakeryUseCase from '@/application/bakery/usecases/find-one-bakery.use-case'
-import UpdateBakeryUseCase from '@/application/bakery/usecases/update-bakery.use-case'
-import RemoveBakeryUseCase from '@/application/bakery/usecases/remove-bakery.use-case'
+import CreateBakeryUseCase from '@/application/usecases/bakery/create-bakery.use-case'
+import FindAllBakeriesUseCase from '@/application/usecases/bakery/find-all-bakeries.use-case'
+import FindOneBakeryUseCase from '@/application/usecases/bakery/find-one-bakery.use-case'
+import UpdateBakeryUseCase from '@/application/usecases/bakery/update-bakery.use-case'
+import RemoveBakeryUseCase from '@/application/usecases/bakery/remove-bakery.use-case'
 
 @Injectable()
 export class BakeryService {

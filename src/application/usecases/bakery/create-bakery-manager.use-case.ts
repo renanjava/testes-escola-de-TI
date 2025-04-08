@@ -1,6 +1,6 @@
 /* eslint-disable no-empty */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type IUseCases from '@/application/interfaces/use-cases.interface'
+import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
 import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
 import type BakeryEntity from '@/domain/bakery/entities/bakery.entity'
 import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'

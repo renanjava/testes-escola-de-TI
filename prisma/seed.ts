@@ -11,7 +11,7 @@ async function main() {
       'As variáveis de ambiente SEED_USER_EMAIL e SEED_USER_PASSWORD devem estar definidas.',
     )
   }
-  const admin = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { email: process.env.SEED_USER_EMAIL },
     update: {},
     create: {
@@ -23,7 +23,7 @@ async function main() {
     },
   })
 
-  console.log({ admin })
+  console.log({ message: 'Admin criado com sucesso!' })
 }
 main()
   .then(async () => {
