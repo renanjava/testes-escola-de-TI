@@ -9,7 +9,6 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { BakeryManager, User, UserRole } from '@prisma/client'
-import { UserService } from '@/infrastructure/services/user/user.service'
 import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
 import { Roles } from '../../auth/rbac/roles.decorator'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
@@ -23,11 +22,12 @@ import { BakeryAdapter } from '@/infrastructure/adapters/bakery/bakery.adapter'
 import { UpdateBakeryDto } from '@/infrastructure/dtos/bakery/update-bakery.dto'
 import { AdminUpdateUserDto } from '@/infrastructure/dtos/admin/admin-update-user.dto'
 import { UserAdapter } from '@/infrastructure/adapters/user/user.adapter'
+import { UserUseCasesFactory } from '@/infrastructure/factories/user/user-use-cases.factory'
 
 @Controller('admin')
 export class AdminController {
   constructor(
-    private readonly userService: UserService,
+    private readonly userUseCasesFactory: UserUseCasesFactory,
     private readonly managerService: ManagerService,
     private readonly bakeryManagerService: BakeryManagerService,
     private readonly bakeryService: BakeryService,
@@ -114,7 +114,9 @@ export class AdminController {
   @ApiOperation({ summary: 'Admin busca todos os usuários' })
   @ApiResponse({ status: 200, description: 'Usuários listados.' })
   async findAllUsers(): Promise<User[]> {
-    return this.userService.findAll()
+    const findAllUsersUseCase =
+      this.userUseCasesFactory.getFindAllUsersUseCaseInstance()
+    return (await findAllUsersUseCase.execute()) as User[]
   }
 
   @Delete('user/:id')
@@ -123,7 +125,9 @@ export class AdminController {
   @ApiOperation({ summary: 'Admin delete um usuário por id' })
   @ApiResponse({ status: 200, description: 'Usuário deletado.' })
   async removeUser(@Param('id') id: string): Promise<User> {
-    return this.userService.remove(id)
+    const removeUserUseCase =
+      this.userUseCasesFactory.getRemoveUserUseCaseInstance()
+    return (await removeUserUseCase.execute(id)) as User
   }
 
   @Patch('user/:id')
@@ -137,9 +141,11 @@ export class AdminController {
     @Param('id') id: string,
     @Body() adminUpdateUserDto: AdminUpdateUserDto,
   ): Promise<User> {
-    return this.userService.update(
+    const updateUserUseCase =
+      this.userUseCasesFactory.getUpdateUserUseCaseInstance()
+    return (await updateUserUseCase.execute(
       id,
       UserAdapter.toAdminUpdateEntity(adminUpdateUserDto),
-    )
+    )) as User
   }
 }

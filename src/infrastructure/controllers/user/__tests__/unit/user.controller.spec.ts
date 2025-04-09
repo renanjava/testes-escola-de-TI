@@ -27,7 +27,7 @@ describe('UserController', () => {
     expect(
       mockUserUseCasesFactory.getFindOneUserUseCaseInstance,
     ).toHaveBeenCalled()
-    expect(mockFindOneUserUseCase.execute).toHaveBeenCalledWith(1)
+    expect(mockFindOneUserUseCase.execute).toHaveBeenCalledWith('1')
     expect(result).toEqual(mockUser)
   })
 
@@ -53,6 +53,6 @@ describe('UserController', () => {
     expect(
       mockUserUseCasesFactory.getFindOneUserUseCaseInstance,
     ).toHaveBeenCalled()
-    expect(mockFindOneUserUseCase.execute).toHaveBeenCalledWith(999)
+    expect(mockFindOneUserUseCase.execute).toHaveBeenCalledWith('999')
   })
 })
