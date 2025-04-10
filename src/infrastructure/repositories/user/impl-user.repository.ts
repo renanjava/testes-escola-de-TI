@@ -8,10 +8,18 @@ import UserEntity from '@/domain/user/entities/user.entity'
 export class UserRepositoryImpl implements IUserRepository<UserEntity> {
   constructor(private prisma: PrismaService) {}
 
-  async user(userWhereInput: Prisma.UserWhereInput): Promise<User | null> {
+  async user(
+    userWhereInput: Prisma.UserWhereInput,
+  ): Promise<Omit<User, 'password'> | null> {
     return this.prisma.user.findFirst({
       where: userWhereInput,
-      include: { bakeries: true },
+      omit: { password: true },
+    })
+  }
+
+  async userLogin(userWhereInput: Prisma.UserWhereInput): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: userWhereInput,
     })
   }
 
@@ -21,38 +29,45 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
     cursor?: Prisma.UserWhereUniqueInput
     where?: Prisma.UserWhereInput
     orderBy?: Prisma.UserOrderByWithRelationInput
-  }): Promise<User[]> {
+  }): Promise<Omit<User, 'password'>[]> {
     const { skip, take, cursor, where, orderBy } = params
     return this.prisma.user.findMany({
       skip,
       take,
       cursor,
       where,
-      include: { bakeries: true },
       orderBy,
+      omit: { password: true },
     })
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async createUser(
+    data: Prisma.UserCreateInput,
+  ): Promise<Omit<User, 'password'>> {
     return this.prisma.user.create({
       data,
+      omit: { password: true },
     })
   }
 
   async updateUser(params: {
     where: Prisma.UserWhereUniqueInput
     data: Prisma.UserUpdateInput
-  }): Promise<User> {
+  }): Promise<Omit<User, 'password'>> {
     const { where, data } = params
     return this.prisma.user.update({
       data,
       where,
+      omit: { password: true },
     })
   }
 
-  async deleteUser(where: Prisma.UserWhereUniqueInput): Promise<User> {
+  async deleteUser(
+    where: Prisma.UserWhereUniqueInput,
+  ): Promise<Omit<User, 'password'>> {
     return this.prisma.user.delete({
       where,
+      omit: { password: true },
     })
   }
 }

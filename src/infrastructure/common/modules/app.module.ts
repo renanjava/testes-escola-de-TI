@@ -2,7 +2,6 @@ import { ConsoleLogger, Module } from '@nestjs/common'
 import { AuthModule } from './auth/auth.module'
 import { ConfigModule } from '@nestjs/config'
 import { UserModule } from './user/user.module'
-import { PrismaService } from '@/infrastructure/services/orm/prisma.service'
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 import { GlobalLoggerInterceptor } from '@/infrastructure/common/interceptors/global-logger.interceptor'
 import { RolesGuard } from '@/infrastructure/auth/rbac/roles.guard'
@@ -13,6 +12,7 @@ import { BakeryModule } from './bakery/bakery.module'
 import { ManagerService } from '@/infrastructure/services/user/manager.service'
 import { AdminModule } from './user/admin.module'
 import { ProductModule } from './bakery/product.module'
+import { PrismaModule } from './orm/prisma.module'
 
 @Module({
   imports: [
@@ -23,6 +23,7 @@ import { ProductModule } from './bakery/product.module'
     BakeryModule,
     AdminModule,
     ProductModule,
+    PrismaModule,
   ],
   providers: [
     JwtService,
@@ -38,10 +39,8 @@ import { ProductModule } from './bakery/product.module'
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
-    PrismaService,
     ConsoleLogger,
     ManagerService,
   ],
-  exports: [PrismaService],
 })
 export class AppModule {}

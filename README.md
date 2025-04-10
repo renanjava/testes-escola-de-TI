@@ -136,6 +136,11 @@
   |-- main.ts             # Arquivo principal
 </pre>
 
+<h2>🌀 Design Patterns</h2>
+<ul>
+    <li><strong>Singleton:</strong> Usando a injeção de dependências do Nest.js, por padrão, ele já aplica o Singleton, as dependências que ele gerencia são únicas. Tenho o PrismaService localizado em <code>src/infrastructure/services/orm/prisma.service.ts</code> onde eu passo a responsabilidade para o framework instanciar e através dos módulos (o núcleo da aplicação), eu uso a mesma instância gerenciada pelo Nest.js, portanto, tenho apenas uma conexão com o banco de dados, a função <code>onModuleInit()</code></li>
+</ul>
+
 <h2>🔀 Git Flow</h2>
 <ul>
     <li>Apenas a branch <code>main</code> representa o ambiente de produção.</li>

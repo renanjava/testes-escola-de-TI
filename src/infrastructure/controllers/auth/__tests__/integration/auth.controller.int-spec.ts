@@ -39,6 +39,7 @@ describe('Auth Controller Integration Tests', () => {
   })
 
   afterAll(async () => {
+    jest.resetAllMocks()
     await app.close()
     execSync('npx prisma migrate reset --force')
   })

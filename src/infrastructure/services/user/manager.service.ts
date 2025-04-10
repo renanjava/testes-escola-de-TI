@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import CreateManagerUseCase from '@/application/bakery/usecases/create-manager.use-case'
-import FindAllManagersUseCase from '@/application/bakery/usecases/find-all-managers.use-case'
-import FindOneManagerUseCase from '@/application/bakery/usecases/find-one-manager.use-case'
-import RemoveManagerUseCase from '@/application/bakery/usecases/remove-manager.use-case'
+import CreateManagerUseCase from '@/application/usecases/bakery/create-manager.use-case'
+import FindAllManagersUseCase from '@/application/usecases/bakery/find-all-managers.use-case'
+import FindOneManagerUseCase from '@/application/usecases/bakery/find-one-manager.use-case'
+import RemoveManagerUseCase from '@/application/usecases/bakery/remove-manager.use-case'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 import { User } from '@prisma/client'
 

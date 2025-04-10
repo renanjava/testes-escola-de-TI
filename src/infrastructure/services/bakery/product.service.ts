@@ -2,14 +2,14 @@
 import { Injectable } from '@nestjs/common'
 import { CreateProductDto } from '@/infrastructure/dtos/bakery/create-product.dto'
 import { UpdateProductDto } from '@/infrastructure/dtos/bakery/update-product.dto'
-import CreateProductUseCase from '@/application/bakery/usecases/create-product.use-case'
+import CreateProductUseCase from '@/application/usecases/bakery/create-product.use-case'
 import { BakeryManagerRepositoryImpl } from '@/infrastructure/repositories/bakery/impl-bakery-manager.repository'
 import { ProductRepositoryImpl } from '@/infrastructure/repositories/bakery/impl-product.repository'
 import ProductEntity from '@/domain/bakery/entities/product.entity'
-import FindAllProductsUseCase from '@/application/bakery/usecases/find-all-products.use-case'
-import FindOneProductUseCase from '@/application/bakery/usecases/find-one-product.use-case'
-import UpdateProductUseCase from '@/application/bakery/usecases/update-product.use-case'
-import RemoveProductUseCase from '@/application/bakery/usecases/remove-product.use-case'
+import FindAllProductsUseCase from '@/application/usecases/bakery/find-all-products.use-case'
+import FindOneProductUseCase from '@/application/usecases/bakery/find-one-product.use-case'
+import UpdateProductUseCase from '@/application/usecases/bakery/update-product.use-case'
+import RemoveProductUseCase from '@/application/usecases/bakery/remove-product.use-case'
 
 @Injectable()
 export class ProductService {
