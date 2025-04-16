@@ -23,11 +23,12 @@
     "test:unit": "jest --runInBand --config ./jest.unit.config.ts",
     "test:int": "jest --runInBand --config ./jest.int.config.ts",
     "test:e2e": "jest --runInBand --config ./jest.e2e.config.ts",
-    "docker:build": "docker compose build",
-    "docker:up": "docker compose up && npx prisma db seed",
-    "docker:down": "docker compose down",
-    "docker:postgres": "docker compose up postgres",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "docker:build": "cross-env NODE_ENV=production docker compose build",
+    "docker:up": "cross-env NODE_ENV=production docker compose up && npx prisma db seed",
+    "docker:build-up": "cross-env NODE_ENV=production docker compose up --build",
+    "docker:down": "cross-env NODE_ENV=production docker compose down",
+    "docker:postgres": "cross-env NODE_ENV=production docker compose up postgres",
+    "prisma:seed": "cross-env NODE_ENV=production ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.10",

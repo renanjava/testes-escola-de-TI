@@ -17,7 +17,13 @@ import { PrismaModule } from './orm/prisma.module'
 @Module({
   imports: [
     AuthModule,
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      envFilePath:
+        process.env.NODE_ENV === 'development'
+          ? path.resolve(__dirname, '../../../../.env.development')
+          : path.resolve(__dirname, '../../../../.env.production'),
+      isGlobal: true,
+    }),
     UserModule,
     NodemailerModule,
     BakeryModule,
