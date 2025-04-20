@@ -18,10 +18,7 @@ import { PrismaModule } from './orm/prisma.module'
   imports: [
     AuthModule,
     ConfigModule.forRoot({
-      envFilePath:
-        process.env.NODE_ENV === 'development'
-          ? path.resolve(__dirname, '../../../../.env.development')
-          : path.resolve(__dirname, '../../../../.env.production'),
+      envFilePath: '.env.development',
       isGlobal: true,
     }),
     UserModule,
