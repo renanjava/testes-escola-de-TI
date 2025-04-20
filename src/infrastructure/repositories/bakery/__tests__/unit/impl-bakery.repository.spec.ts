@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 
-import type { PrismaService } from '@/infrastructure/services/orm/prisma.service'
+import type { PrismaService } from '@/infrastructure/services/prisma/prisma.service'
 import { BakeryRepositoryImpl } from '../../impl-bakery.repository'
 import type { Prisma } from '@prisma/client'
 

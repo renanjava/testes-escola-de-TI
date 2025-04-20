@@ -12,7 +12,6 @@ import { BakeryManager, User, UserRole } from '@prisma/client'
 import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
 import { Roles } from '../../auth/rbac/roles.decorator'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { ManagerService } from '@/infrastructure/services/user/manager.service'
 import { CreateBakeryManagerDto } from '@/infrastructure/dtos/bakery/create-bakery-manager.dto'
 import { BakeryManagerService } from '@/infrastructure/services/bakery/bakery-manager.service'
 import { BakeryService } from '@/infrastructure/services/bakery/bakery.service'
@@ -23,12 +22,13 @@ import { UpdateBakeryDto } from '@/infrastructure/dtos/bakery/update-bakery.dto'
 import { AdminUpdateUserDto } from '@/infrastructure/dtos/admin/admin-update-user.dto'
 import { UserAdapter } from '@/infrastructure/adapters/user/user.adapter'
 import { UserUseCasesFactory } from '@/infrastructure/factories/user/user-use-cases.factory'
+import { ManagerUseCasesFactory } from '@/infrastructure/factories/user/manager-use-cases.factory'
 
 @Controller('admin')
 export class AdminController {
   constructor(
     private readonly userUseCasesFactory: UserUseCasesFactory,
-    private readonly managerService: ManagerService,
+    private readonly managerUseCasesFactory: ManagerUseCasesFactory,
     private readonly bakeryManagerService: BakeryManagerService,
     private readonly bakeryService: BakeryService,
   ) {}
@@ -105,7 +105,9 @@ export class AdminController {
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard)
   async getManagers(): Promise<User[]> {
-    return await this.managerService.findAll()
+    const findAllManagersUseCase =
+      this.managerUseCasesFactory.getFindAllManagersUseCaseInstance()
+    return (await findAllManagersUseCase.execute()) as User[]
   }
 
   @Get('user')

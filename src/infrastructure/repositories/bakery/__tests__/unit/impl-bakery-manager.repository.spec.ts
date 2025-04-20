@@ -1,4 +1,4 @@
-import type { PrismaService } from '@/infrastructure/services/orm/prisma.service'
+import type { PrismaService } from '@/infrastructure/services/prisma/prisma.service'
 import { BakeryManagerRepositoryImpl } from '../../impl-bakery-manager.repository'
 
 describe('BakeryManagerRepositoryImpl', () => {
