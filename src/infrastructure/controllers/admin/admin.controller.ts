@@ -8,12 +8,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common'
-import { BakeryManager, User, UserRole } from '@prisma/client'
+import { Bakery, BakeryManager, User, UserRole } from '@prisma/client'
 import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
 import { Roles } from '../../auth/rbac/roles.decorator'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { CreateBakeryManagerDto } from '@/infrastructure/dtos/bakery/create-bakery-manager.dto'
-import { BakeryService } from '@/infrastructure/services/bakery/bakery.service'
 import { BakeryManagerAdapter } from '@/infrastructure/adapters/bakery/bakery-manager.adapter'
 import { CreateBakeryDto } from '@/infrastructure/dtos/bakery/create-bakery.dto'
 import { BakeryAdapter } from '@/infrastructure/adapters/bakery/bakery.adapter'
@@ -23,6 +22,7 @@ import { UserAdapter } from '@/infrastructure/adapters/user/user.adapter'
 import { UserUseCasesFactory } from '@/infrastructure/factories/user/user-use-cases.factory'
 import { ManagerUseCasesFactory } from '@/infrastructure/factories/user/manager-use-cases.factory'
 import { BakeryManagerUseCasesFactory } from '@/infrastructure/factories/bakery/bakery-manager/bakery-manager-use-cases.factory'
+import { BakeryUseCasesFactory } from '@/infrastructure/factories/bakery/bakery-use-cases.factory'
 
 @Controller('admin')
 export class AdminController {
@@ -30,16 +30,20 @@ export class AdminController {
     private readonly userUseCasesFactory: UserUseCasesFactory,
     private readonly managerUseCasesFactory: ManagerUseCasesFactory,
     private readonly bakeryManagerUseCasesFactory: BakeryManagerUseCasesFactory,
-    private readonly bakeryService: BakeryService,
+    private readonly bakeryUseCasesFactory: BakeryUseCasesFactory,
   ) {}
 
   @Post('bakery')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  async createBakery(@Body() createBakeryDto: CreateBakeryDto) {
-    return await this.bakeryService.create(
+  async createBakery(
+    @Body() createBakeryDto: CreateBakeryDto,
+  ): Promise<Bakery> {
+    const createBakeryUseCase =
+      this.bakeryUseCasesFactory.getCreateBakeryUseCaseInstance()
+    return (await createBakeryUseCase.execute(
       BakeryAdapter.toEntity(createBakeryDto),
-    )
+    )) as Bakery
   }
 
   @Patch('bakery/:id')
@@ -48,25 +52,31 @@ export class AdminController {
   async updateBakery(
     @Param() id: string,
     @Body() updateBakeryDto: UpdateBakeryDto,
-  ) {
-    return await this.bakeryService.update(
+  ): Promise<Bakery> {
+    const updateBakeryUseCase =
+      this.bakeryUseCasesFactory.getUpdateBakeryUseCaseInstance()
+    return (await updateBakeryUseCase.execute(
       id,
       BakeryAdapter.toUpdateEntity(updateBakeryDto),
-    )
+    )) as Bakery
   }
 
   @Delete('bakery/:id')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  async removeBakery(@Param('id') id: string) {
-    return await this.bakeryService.remove(id)
+  async removeBakery(@Param('id') id: string): Promise<Bakery> {
+    const removeBakeryUseCase =
+      this.bakeryUseCasesFactory.getRemoveBakeryUseCaseInstance()
+    return (await removeBakeryUseCase.execute(id)) as Bakery
   }
 
   @Get('bakery/:id')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  async findOneBakery(@Param('id') id: string) {
-    return await this.bakeryService.findOne(id)
+  async findOneBakery(@Param('id') id: string): Promise<Bakery> {
+    const findOneBakeryUseCase =
+      this.bakeryUseCasesFactory.getFindOneBakeryUseCaseInstance()
+    return (await findOneBakeryUseCase.execute(id)) as Bakery
   }
 
   @Post('bakery-manager')
