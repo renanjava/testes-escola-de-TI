@@ -23,7 +23,7 @@ describe('AuthService Unit Tests', () => {
   }
 
   const mockNodemailerService = {
-    sendEmail: jest.fn,
+    send: jest.fn,
   }
 
   let authService: AuthService
