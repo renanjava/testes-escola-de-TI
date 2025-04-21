@@ -3,7 +3,7 @@ import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.en
 import type ProductEntity from '@/domain/bakery/entities/product.entity'
 import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
 import type IProductRepository from '@/domain/bakery/interfaces/product.repository'
-import { UsuarioNaoEGerenteException } from '@/shared/common/exceptions/bakery/product/usuario-nao-gerente.exception'
+import { UsuarioNaoEGerenteException } from '@/infrastructure/exceptions/bakery/product/usuario-nao-gerente.exception'
 
 export default class CreateProductUseCase implements IUseCases {
   constructor(

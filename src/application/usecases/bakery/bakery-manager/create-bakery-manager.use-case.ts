@@ -7,9 +7,9 @@ import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-man
 import type IBakeryRepository from '@/domain/bakery/interfaces/bakery-repository.interface'
 import type UserEntity from '@/domain/user/entities/user.entity'
 import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
-import { PadariaJaPossuiEsteGerenteException } from '@/shared/common/exceptions/bakery/bakery-manager/padaria-ja-possui-este-gerente.exception'
-import { PadariaNaoEncontradaException } from '@/shared/common/exceptions/bakery/padaria-nao-encontrada.exception'
-import { GerenteNaoEncontradaException } from '@/shared/common/exceptions/user/gerente-nao-encontrado.exception'
+import { PadariaJaPossuiEsteGerenteException } from '@/infrastructure/exceptions/bakery/bakery-manager/padaria-ja-possui-este-gerente.exception'
+import { PadariaNaoEncontradaException } from '@/infrastructure/exceptions/bakery/padaria-nao-encontrada.exception'
+import { GerenteNaoEncontradoException } from '@/infrastructure/exceptions/user/gerente-nao-encontrado.exception'
 import { BadRequestException, NotFoundException } from '@nestjs/common'
 
 export default class CreateBakeryManagerUseCase implements IUseCases {
@@ -35,7 +35,7 @@ export default class CreateBakeryManagerUseCase implements IUseCases {
     })
 
     if (!managerFinded) {
-      throw new GerenteNaoEncontradaException()
+      throw new GerenteNaoEncontradoException()
     }
 
     const bakeryManagerFinded =

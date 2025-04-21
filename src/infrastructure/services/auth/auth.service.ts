@@ -6,7 +6,7 @@ import { IUserPayload } from '@/application/controllers/interfaces/user-payload.
 import { NodemailerService } from '../email/nodemailer.service'
 import UserEntity from '@/domain/user/entities/user.entity'
 import CreateUserUseCase from '@/application/usecases/user/create-user.use-case'
-import { SenhaInvalidaException } from '@/shared/common/exceptions/user/senha-invalida.exception'
+import { SenhaInvalidaException } from '@/infrastructure/exceptions/user/senha-invalida.exception'
 import { TokenProps } from '@/application/controllers/interfaces/token-props.interface'
 import UserLoginEntity from '@/domain/user/entities/user-login.entity'
 import { User } from '@prisma/client'

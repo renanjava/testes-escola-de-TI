@@ -4,8 +4,8 @@ import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.en
 import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
 import type UserEntity from '@/domain/user/entities/user.entity'
 import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
-import { RelacaoEntreGerenteEPadariaNaoEncontrada } from '@/shared/common/exceptions/bakery/bakery-manager/relacao-entre-padaria-e-gerente-nao-encontrada.exception'
-import { GerenteNaoEncontradoException } from '@/shared/common/exceptions/user/gerente-nao-encontrado.exception'
+import { RelacaoEntreGerenteEPadariaNaoEncontrada } from '@/infrastructure/exceptions/bakery/bakery-manager/relacao-entre-padaria-e-gerente-nao-encontrada.exception'
+import { GerenteNaoEncontradoException } from '@/infrastructure/exceptions/user/gerente-nao-encontrado.exception'
 import { NotFoundException } from '@nestjs/common'
 
 export default class RemoveBakeryManagerUseCase implements IUseCases {
