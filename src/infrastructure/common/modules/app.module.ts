@@ -9,15 +9,19 @@ import { GlobalExceptionFilter } from '@/infrastructure/common/filters/global-ex
 import { JwtService } from '@nestjs/jwt'
 import { NodemailerModule } from './email/nodemailer.module'
 import { BakeryModule } from './bakery/bakery.module'
-import { ManagerService } from '@/infrastructure/services/user/manager.service'
 import { AdminModule } from './user/admin.module'
-import { ProductModule } from './bakery/product.module'
-import { PrismaModule } from './orm/prisma.module'
+import { ProductModule } from './bakery/product/product.module'
+import { PrismaModule } from './prisma/prisma.module'
+import { ManagerUseCasesFactory } from '@/infrastructure/factories/user/manager-use-cases.factory'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 
 @Module({
   imports: [
     AuthModule,
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      envFilePath: '.env.development',
+      isGlobal: true,
+    }),
     UserModule,
     NodemailerModule,
     BakeryModule,
@@ -40,7 +44,8 @@ import { PrismaModule } from './orm/prisma.module'
       useClass: RolesGuard,
     },
     ConsoleLogger,
-    ManagerService,
+    ManagerUseCasesFactory,
+    { provide: 'UserRepository', useClass: UserRepositoryImpl },
   ],
 })
 export class AppModule {}

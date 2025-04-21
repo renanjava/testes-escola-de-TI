@@ -1,4 +1,4 @@
-import { AutenticacaoNaoEfetuadaException } from '@/shared/common/exceptions/user/autenticacao-nao-efetuada.exception'
+import { AutenticacaoNaoEfetuadaException } from '@/infrastructure/exceptions/user/autenticacao-nao-efetuada.exception'
 import { Injectable, ExecutionContext } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 

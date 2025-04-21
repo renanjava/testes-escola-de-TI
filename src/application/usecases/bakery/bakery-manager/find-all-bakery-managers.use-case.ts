@@ -1,6 +1,7 @@
 import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
 import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
 import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
+import { NenhumGerenteEncontradoException } from '@/infrastructure/exceptions/user/nenhum-gerente-encontrado.exception'
 
 export default class FindAllBakeryManagersUseCase implements IUseCases {
   constructor(
@@ -8,6 +9,13 @@ export default class FindAllBakeryManagersUseCase implements IUseCases {
   ) {}
 
   async execute(): Promise<BakeryManagerEntity[]> {
-    return await this.iBakeryManagerRepository.bakeryManagers({})
+    const bakeryManagers = await this.iBakeryManagerRepository.bakeryManagers(
+      {},
+    )
+
+    if (!bakeryManagers) {
+      throw new NenhumGerenteEncontradoException()
+    }
+    return bakeryManagers
   }
 }

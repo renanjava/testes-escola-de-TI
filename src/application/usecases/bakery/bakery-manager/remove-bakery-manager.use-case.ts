@@ -4,6 +4,8 @@ import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.en
 import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
 import type UserEntity from '@/domain/user/entities/user.entity'
 import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
+import { RelacaoEntreGerenteEPadariaNaoEncontrada } from '@/infrastructure/exceptions/bakery/bakery-manager/relacao-entre-padaria-e-gerente-nao-encontrada.exception'
+import { GerenteNaoEncontradoException } from '@/infrastructure/exceptions/user/gerente-nao-encontrado.exception'
 import { NotFoundException } from '@nestjs/common'
 
 export default class RemoveBakeryManagerUseCase implements IUseCases {
@@ -17,9 +19,7 @@ export default class RemoveBakeryManagerUseCase implements IUseCases {
       await this.iBakeryManagerRepository.bakeryManager({ id: id })
 
     if (!bakeryManagerFinded) {
-      throw new NotFoundException(
-        'Relação entre gerente e padaria não encontrada',
-      )
+      throw new RelacaoEntreGerenteEPadariaNaoEncontrada()
     }
 
     const managerFinded = await this.iUserRepository.user({
@@ -27,7 +27,7 @@ export default class RemoveBakeryManagerUseCase implements IUseCases {
     })
 
     if (!managerFinded) {
-      throw new NotFoundException('Gerente não encontrado')
+      throw new GerenteNaoEncontradoException()
     }
 
     const bakeryManagerDeleted =

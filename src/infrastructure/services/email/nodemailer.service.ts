@@ -1,12 +1,13 @@
+import { IEmailMessage } from '@/application/email/interfaces/email-message.interface'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import * as nodemailer from 'nodemailer'
 
 @Injectable()
-export class NodemailerService {
+export class NodemailerService implements IEmailMessage {
   constructor(private readonly configService: ConfigService) {}
 
-  sendEmail(destinatario: string) {
+  send(destinatario: string): void {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

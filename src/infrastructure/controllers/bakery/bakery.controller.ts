@@ -1,14 +1,17 @@
 import { Controller, Get, UseGuards } from '@nestjs/common'
-import { BakeryService } from '@/infrastructure/services/bakery/bakery.service'
 import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard'
+import { BakeryUseCasesFactory } from '@/infrastructure/factories/bakery/bakery-use-cases.factory'
+import { Bakery } from '@prisma/client'
 
 @Controller('bakery')
 export class BakeryController {
-  constructor(private readonly bakeryService: BakeryService) {}
+  constructor(private readonly bakeryUseCasesFactory: BakeryUseCasesFactory) {}
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  findAll() {
-    return this.bakeryService.findAll()
+  async findAll(): Promise<Bakery[]> {
+    const bakeryFindAllUseCase =
+      this.bakeryUseCasesFactory.getFindAllBakeriesUseCaseInstance()
+    return (await bakeryFindAllUseCase.execute()) as Bakery[]
   }
 }

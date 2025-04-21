@@ -139,6 +139,10 @@
 <h2>🌀 Design Patterns</h2>
 <ul>
     <li><strong>Singleton:</strong> Usando a injeção de dependências do Nest.js, por padrão, ele já aplica o Singleton, as dependências que ele gerencia são únicas. Tenho o PrismaService localizado em <code>src/infrastructure/services/orm/prisma.service.ts</code> onde eu passo a responsabilidade para o framework instanciar e através dos módulos (o núcleo da aplicação), eu uso a mesma instância gerenciada pelo Nest.js, portanto, tenho apenas uma conexão com o banco de dados, a função <code>onModuleInit()</code></li>
+    <li><strong>Factory Method:</strong>
+    Na classe UserService localizada em <code>src/infrastructure/services/user/user.service.ts</code>, eu instanciava os UseCases diretamente em cada método. No entanto, apliquei o padrão de design Factory para centralizar a criação das instâncias. Agora, todos os UseCases são instanciados na própria classe, e um único método é responsável por retornar as instâncias já criadas. Portanto, a Controller deixa de utilizar uma service e usa apenas uma Factory, a UserService foi deletada.
+    </li>
+    <li><strong>Strategy:</strong> Na rota de login, a AuthService localizada em <code>src/infrastructure/services/auth/auth.service.ts</code> utiliza o padrão Strategy para encapsular a lógica de autenticação. Definimos uma interface <code>AuthStrategy</code> com um método abstrato <code>authenticate</code>. Duas implementações foram criadas: <code>BasicAuth</code>, que executa o caso de uso para buscar o usuário, valida a senha e gera um token JWT; e <code>GoogleAuth</code>, que implementa a autenticação via Google e retorna um token. A AuthService depende apenas da interface <code>AuthStrategy</code>, permitindo a utilização de <code>BasicAuth</code>, <code>GoogleAuth</code> ou outras estratégias sem modificar o código.</li>
 </ul>
 
 <h2>🔀 Git Flow</h2>

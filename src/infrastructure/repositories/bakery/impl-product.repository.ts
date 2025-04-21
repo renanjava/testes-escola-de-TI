@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '@/infrastructure/services/orm/prisma.service'
+import { DatabaseConnection } from '@/infrastructure/database/database.connection'
 import { Product, Prisma } from '@prisma/client'
+import IProductRepository from '@/domain/bakery/interfaces/product.repository'
+import ProductEntity from '@/domain/bakery/entities/product.entity'
 
 @Injectable()
-export class ProductRepositoryImpl {
-  constructor(private prisma: PrismaService) {}
+export class ProductRepositoryImpl
+  implements IProductRepository<ProductEntity>
+{
+  constructor(private prisma: DatabaseConnection) {}
 
   async product(
     ProductWhereInput: Prisma.ProductWhereInput,

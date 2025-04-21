@@ -1,14 +1,14 @@
 import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
+import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
 import type ProductEntity from '@/domain/bakery/entities/product.entity'
 import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
 import type IProductRepository from '@/domain/bakery/interfaces/product.repository'
-import { ForbiddenException } from '@nestjs/common'
-import type { BakeryManager } from '@prisma/client'
+import { UsuarioNaoEGerenteException } from '@/infrastructure/exceptions/bakery/product/usuario-nao-gerente.exception'
 
 export default class CreateProductUseCase implements IUseCases {
   constructor(
     private iProductRepository: IProductRepository<ProductEntity>,
-    private iBakeryManagerRepository: IBakeryManagerRepository<BakeryManager>,
+    private iBakeryManagerRepository: IBakeryManagerRepository<BakeryManagerEntity>,
   ) {}
 
   async execute(
@@ -22,7 +22,7 @@ export default class CreateProductUseCase implements IUseCases {
       })
 
     if (!bakeryManagerFinded) {
-      throw new ForbiddenException('O usuário não é gerente dessa padaria')
+      throw new UsuarioNaoEGerenteException()
     }
 
     return await this.iProductRepository.createProduct(inputProduct)
