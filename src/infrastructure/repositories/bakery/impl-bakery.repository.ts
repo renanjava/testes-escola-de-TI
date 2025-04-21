@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '@/infrastructure/services/prisma/prisma.service'
+import { DatabaseConnection } from '@/infrastructure/database/database.connection'
 import { Bakery, Prisma } from '@prisma/client'
 
 @Injectable()
 export class BakeryRepositoryImpl {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: DatabaseConnection) {}
 
   async bakery(
     bakeryWhereInput: Prisma.BakeryWhereInput,

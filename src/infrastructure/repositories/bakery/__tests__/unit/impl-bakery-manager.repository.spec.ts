@@ -1,4 +1,4 @@
-import type { PrismaService } from '@/infrastructure/services/prisma/prisma.service'
+import type { DatabaseConnection } from '@/infrastructure/database/database.connection'
 import { BakeryManagerRepositoryImpl } from '../../impl-bakery-manager.repository'
 
 describe('BakeryManagerRepositoryImpl', () => {
@@ -10,7 +10,7 @@ describe('BakeryManagerRepositoryImpl', () => {
     }
 
     const repository = new BakeryManagerRepositoryImpl(
-      mockPrismaService as unknown as PrismaService,
+      mockPrismaService as unknown as DatabaseConnection,
     )
 
     const mockBakeryManager = {
@@ -47,7 +47,7 @@ describe('BakeryManagerRepositoryImpl', () => {
     }
 
     const repository = new BakeryManagerRepositoryImpl(
-      mockPrismaService as unknown as PrismaService,
+      mockPrismaService as unknown as DatabaseConnection,
     )
 
     mockPrismaService.bakeryManager.findFirst.mockResolvedValue(null)

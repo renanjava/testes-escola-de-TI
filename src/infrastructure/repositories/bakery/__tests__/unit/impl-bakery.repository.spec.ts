@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-
-import type { PrismaService } from '@/infrastructure/services/prisma/prisma.service'
+import type { DatabaseConnection } from '@/infrastructure/database/database.connection'
 import { BakeryRepositoryImpl } from '../../impl-bakery.repository'
 import type { Prisma } from '@prisma/client'
 
@@ -17,7 +16,7 @@ describe('BakeryRepositoryImpl', () => {
       bakery: {
         findFirst: jest.fn().mockResolvedValue(mockBakery),
       },
-    } as unknown as PrismaService
+    } as unknown as DatabaseConnection
 
     const repository = new BakeryRepositoryImpl(prismaServiceMock)
 
@@ -40,7 +39,7 @@ describe('BakeryRepositoryImpl', () => {
       bakery: {
         findFirst: jest.fn().mockResolvedValue(null),
       },
-    } as unknown as PrismaService
+    } as unknown as DatabaseConnection
 
     const repository = new BakeryRepositoryImpl(prismaServiceMock)
 

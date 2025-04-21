@@ -1,4 +1,4 @@
-import type { PrismaService } from '@/infrastructure/services/prisma/prisma.service'
+import type { DatabaseConnection } from '@/infrastructure/database/database.connection'
 import { UserRepositoryImpl } from '../../impl-user.repository'
 
 describe('UserRepositoryImpl', () => {
@@ -29,7 +29,7 @@ describe('UserRepositoryImpl', () => {
     }
 
     const userRepository = new UserRepositoryImpl(
-      mockPrismaService as unknown as PrismaService,
+      mockPrismaService as unknown as DatabaseConnection,
     )
 
     const userWhereInput = { email: 'john@example.com' }
@@ -54,7 +54,7 @@ describe('UserRepositoryImpl', () => {
     }
 
     const userRepository = new UserRepositoryImpl(
-      mockPrismaService as unknown as PrismaService,
+      mockPrismaService as unknown as DatabaseConnection,
     )
 
     const userWhereInput = { email: 'nonexistent@example.com' }
