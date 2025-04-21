@@ -3,7 +3,8 @@ import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.en
 import type ProductEntity from '@/domain/bakery/entities/product.entity'
 import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
 import type IProductRepository from '@/domain/bakery/interfaces/product.repository'
-import { ForbiddenException, NotFoundException } from '@nestjs/common'
+import { ProdutoNaoEncontradoException } from '@/shared/common/exceptions/bakery/product/produto-nao-encontrado.exception'
+import { UsuarioNaoEGerenteException } from '@/shared/common/exceptions/bakery/product/usuario-nao-gerente.exception'
 
 export default class RemoveProductUseCase implements IUseCases {
   constructor(
@@ -17,7 +18,7 @@ export default class RemoveProductUseCase implements IUseCases {
     })
 
     if (!productFinded) {
-      throw new NotFoundException('Produto não encontrado')
+      throw new ProdutoNaoEncontradoException()
     }
 
     const bakeryManagerFinded =
@@ -27,7 +28,7 @@ export default class RemoveProductUseCase implements IUseCases {
       })
 
     if (!bakeryManagerFinded) {
-      throw new ForbiddenException('O usuário não é gerente dessa padaria')
+      throw new UsuarioNaoEGerenteException()
     }
 
     return await this.iProductRepository.deleteProduct(productFinded)
