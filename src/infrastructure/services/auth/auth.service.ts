@@ -13,6 +13,7 @@ import { User } from '@prisma/client'
 import { AuthRegisterAdapter } from '@/infrastructure/adapters/auth/auth-register.adapter'
 import { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
 import UserLoginUseCase from '@/application/usecases/auth/user-login.use-case'
+import { SendEmailUseCase } from '@/application/usecases/email/send-email.use-case'
 
 @Injectable()
 export class AuthService {
@@ -43,7 +44,8 @@ export class AuthService {
   async registerUser(inputUser: UserEntity): Promise<AuthRegisterProps> {
     const createUserUseCase = new CreateUserUseCase(this.userRepository)
     const registeredUser = await createUserUseCase.execute(inputUser)
-    this.nodemailerService.sendEmail(registeredUser.email)
+    const sendEmailUseCase = new SendEmailUseCase(this.nodemailerService)
+    sendEmailUseCase.execute(registeredUser.email)
     return AuthRegisterAdapter.toResponse(registeredUser)
   }
 
