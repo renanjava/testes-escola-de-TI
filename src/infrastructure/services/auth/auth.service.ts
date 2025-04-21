@@ -25,7 +25,7 @@ export class AuthService {
   async loginUser(inputUser: UserLoginEntity): Promise<TokenProps> {
     const userLoginUseCase = new UserLoginUseCase(this.userRepository)
     const userFounded = (await userLoginUseCase.execute(inputUser)) as User
-    const validPassword = await this.comparePasswords(
+    const validPassword = await Password.verify(
       inputUser.password,
       userFounded.password,
     )
@@ -45,14 +45,6 @@ export class AuthService {
     const registeredUser = await createUserUseCase.execute(inputUser)
     this.nodemailerService.sendEmail(registeredUser.email)
     return AuthRegisterAdapter.toResponse(registeredUser)
-  }
-
-  async hashPassword(password: string): Promise<string> {
-    return await Password.generateEncrypted(password, 10)
-  }
-
-  async comparePasswords(password: string, hash: string): Promise<boolean> {
-    return await Password.verify(password, hash)
   }
 
   generateToken(user: IUserPayload): TokenProps {

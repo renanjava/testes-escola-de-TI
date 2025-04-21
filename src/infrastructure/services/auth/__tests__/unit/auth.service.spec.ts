@@ -160,7 +160,7 @@ describe('AuthService Unit Tests', () => {
   describe('hashPassword', () => {
     it('should hash the password correctly', async () => {
       const password = 'password123'
-      const hashedPassword = await authService.hashPassword(password)
+      const hashedPassword = await Password.generateEncrypted(password, 10)
 
       expect(hashedPassword).not.toEqual(password)
       expect(await Password.verify(password, hashedPassword)).toBe(true)
@@ -172,19 +172,13 @@ describe('AuthService Unit Tests', () => {
       const password = 'password123'
       const hashedPassword = await Password.generateEncrypted(password, 10)
 
-      const result = await authService.comparePasswords(
-        password,
-        hashedPassword,
-      )
+      const result = await Password.verify(password, hashedPassword)
 
       expect(result).toBe(true)
     })
 
     it('should return false if passwords do not match', async () => {
-      const result = await authService.comparePasswords(
-        'wrongpassword',
-        'hashedpassword',
-      )
+      const result = await Password.verify('wrongpassword', 'hashedpassword')
 
       expect(result).toBe(false)
     })
