@@ -1,3 +1,4 @@
+import { AuthLoginProps } from '@/application/props/auth/auth-login.props'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsNotEmpty,
@@ -6,13 +7,6 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator'
-import { AuthRegisterDto } from './auth-register.dto'
-
-export interface AuthLoginProps
-  extends Pick<AuthRegisterDto, 'username' | 'password'> {
-  username: string
-  password: string
-}
 
 export class AuthLoginDto implements AuthLoginProps {
   @ApiProperty({

@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
+import type { AuthRegisterProps } from '@/application/props/auth/auth-register.props'
 
 export function AuthRegisterDataBuilder(
   props: AuthRegisterProps,

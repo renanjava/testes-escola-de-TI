@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Post, Body } from '@nestjs/common'
-import { AuthService } from '@/infrastructure/services/auth/auth.service'
 import { AuthLoginDto } from '@/infrastructure/dtos/auth/auth-login.dto'
 import { HashPasswordPipe } from '@/infrastructure/common/pipes/hash-password.pipe'
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthRegisterDto } from '@/infrastructure/dtos/auth/auth-register.dto'
 import { AuthRegisterAdapter } from '@/infrastructure/adapters/auth/auth-register.adapter'
 import { AuthLoginAdapter } from '@/infrastructure/adapters/auth/auth-login.adapter'
+import { UserRegisterUseCase } from '@/application/usecases/auth/user-register.use-case'
+import { AuthUseCasesFactory } from '@/infrastructure/factories/auth/auth-use-cases.factory'
+import { User } from '@prisma/client'
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authUseCasesFactory: AuthUseCasesFactory) {}
 
   @Post('login')
   @ApiOperation({ summary: 'Logar-se na aplicação' })
@@ -20,7 +22,19 @@ export class AuthController {
   @ApiResponse({ status: 404, description: 'Usuário não encontrado.' })
   @ApiResponse({ status: 401, description: 'Senha inválida.' })
   async login(@Body() body: AuthLoginDto) {
-    return await this.authService.loginUser(AuthLoginAdapter.toEntity(body))
+    const userLoginUseCase =
+      this.authUseCasesFactory.getUserLoginUseCaseInstance()
+    const userLogged = (await userLoginUseCase.execute(
+      AuthLoginAdapter.toEntity(body),
+    )) as User
+
+    const gerarTokenUseCase =
+      this.authUseCasesFactory.getGerarTokenUseCaseInstance()
+    return gerarTokenUseCase.execute({
+      sub: userLogged.id,
+      username: userLogged.username,
+      role: userLogged.role,
+    })
   }
 
   @Post('register')
@@ -32,11 +46,15 @@ export class AuthController {
     @Body() { password, ...body }: AuthRegisterDto,
     @Body('password', HashPasswordPipe) hashedPassword: string,
   ) {
-    return await this.authService.registerUser(
-      AuthRegisterAdapter.toEntity({
-        ...body,
-        password: hashedPassword,
-      }),
+    const userRegisterUseCase =
+      this.authUseCasesFactory.getUserRegisterUseCaseInstance()
+    return AuthRegisterAdapter.toResponse(
+      await userRegisterUseCase.execute(
+        AuthRegisterAdapter.toEntity({
+          ...body,
+          password: hashedPassword,
+        }),
+      ),
     )
   }
 }

@@ -1,8 +1,10 @@
+import type { UserResponseProps } from '@/application/props/user/user-response.props'
+
 export default interface IUserRepository<TEntity> {
   userLogin(where: any): Promise<TEntity | null>
-  user(where: any): Promise<Omit<TEntity, 'password'> | null>
-  users(params: any): Promise<Omit<TEntity, 'password'>[]>
-  createUser(data: any): Promise<Omit<TEntity, 'password'>>
-  updateUser(params: any): Promise<Omit<TEntity, 'password'>>
-  deleteUser(where: any): Promise<Omit<TEntity, 'password'>>
+  user(where: any): Promise<UserResponseProps | null>
+  users(params: any): Promise<UserResponseProps[]>
+  createUser(data: any): Promise<UserResponseProps>
+  updateUser(params: any): Promise<UserResponseProps>
+  deleteUser(where: any): Promise<UserResponseProps>
 }

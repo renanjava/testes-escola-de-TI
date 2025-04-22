@@ -1,5 +1,5 @@
 import { validate } from 'class-validator'
-import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
+import type { AuthRegisterProps } from '@/application/props/auth/auth-register.props'
 import { AuthRegisterFactory } from '@/infrastructure/dtos/auth/auth-register.dto'
 import { AuthRegisterDataBuilder } from '@/infrastructure/helper/databuilders/auth/auth-register-data-builder'
 
