@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common'
 import request from 'supertest'
 import { AppModule } from '@/infrastructure/common/modules/app.module'
 import { execSync } from 'child_process'
-import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
+import type { AuthRegisterProps } from '@/application/props/auth/auth-register.props'
 import { AuthRegisterDataBuilder } from '@/infrastructure/helper/databuilders/auth/auth-register-data-builder'
 
 describe('Auth Controller Integration Tests', () => {

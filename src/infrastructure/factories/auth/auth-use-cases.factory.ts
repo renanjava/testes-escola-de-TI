@@ -5,7 +5,7 @@ import { SendEmailUseCase } from '@/application/usecases/email/send-email.use-ca
 import CreateUserUseCase from '@/application/usecases/user/create-user.use-case'
 import type UserEntity from '@/domain/user/entities/user.entity'
 import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
-import type { NodemailerService } from '@/infrastructure/services/email/nodemailer.service'
+import type { EmailMessageImpl } from '@/infrastructure/email/email-message.impl'
 import { Inject, Injectable } from '@nestjs/common'
 import type { JwtService } from '@nestjs/jwt'
 
@@ -17,7 +17,7 @@ export class AuthUseCasesFactory {
     @Inject('IAccessToken')
     private readonly jwtService: JwtService,
     @Inject('IEmailMessage')
-    private readonly nodemailerService: NodemailerService,
+    private readonly emailMessageImpl: EmailMessageImpl,
   ) {}
 
   getUserLoginUseCaseInstance() {
@@ -27,7 +27,7 @@ export class AuthUseCasesFactory {
   getUserRegisterUseCaseInstance() {
     return new UserRegisterUseCase(
       new CreateUserUseCase(this.iUserRepository),
-      new SendEmailUseCase(this.nodemailerService),
+      new SendEmailUseCase(this.emailMessageImpl),
     )
   }
 

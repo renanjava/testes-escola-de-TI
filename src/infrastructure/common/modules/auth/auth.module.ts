@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtStrategy } from '@/infrastructure/auth/jwt/jwt.strategy'
 import { UserModule } from '../user/user.module'
 import { JwtAuthGuard } from '@/infrastructure/auth/jwt/jwt-auth.guard'
-import { NodemailerService } from '@/infrastructure/services/email/nodemailer.service'
+import { EmailMessageImpl } from '@/infrastructure/email/email-message.impl'
 import { AuthUseCasesFactory } from '@/infrastructure/factories/auth/auth-use-cases.factory'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 import { PrismaModule } from '../prisma/prisma.module'
@@ -27,12 +27,12 @@ import { PrismaModule } from '../prisma/prisma.module'
   providers: [
     JwtStrategy,
     JwtAuthGuard,
-    NodemailerService,
+    EmailMessageImpl,
     AuthUseCasesFactory,
     { provide: 'UserRepository', useClass: UserRepositoryImpl },
     {
       provide: 'IEmailMessage',
-      useClass: NodemailerService,
+      useClass: EmailMessageImpl,
     },
     { provide: 'IAccessToken', useExisting: JwtService },
   ],

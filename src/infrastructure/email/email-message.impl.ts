@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config'
 import * as nodemailer from 'nodemailer'
 
 @Injectable()
-export class NodemailerService implements IEmailMessage {
+export class EmailMessageImpl implements IEmailMessage {
   constructor(private readonly configService: ConfigService) {}
 
   send(destinatario: string): void {

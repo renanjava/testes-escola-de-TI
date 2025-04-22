@@ -4,7 +4,7 @@ import type { TestingModule } from '@nestjs/testing'
 import { Test } from '@nestjs/testing'
 import * as nodemailer from 'nodemailer'
 
-describe('Nodemailer Service Integration Tests', () => {
+describe('EmailMessageImpl Integration Tests', () => {
   it('should validate email connection', async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
