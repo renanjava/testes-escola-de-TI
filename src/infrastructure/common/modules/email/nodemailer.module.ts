@@ -1,9 +1,9 @@
-import { NodemailerService } from '@/infrastructure/services/email/nodemailer.service'
+import { EmailMessageImpl } from '@/infrastructure/email/email-message.impl'
 import { Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
 @Module({
-  providers: [ConfigService, NodemailerService],
-  exports: [NodemailerService],
+  providers: [ConfigService, EmailMessageImpl],
+  exports: [EmailMessageImpl],
 })
 export class NodemailerModule {}

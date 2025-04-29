@@ -1,12 +1,12 @@
 import { AppModule } from '@/infrastructure/common/modules/app.module'
 import { AuthRegisterDataBuilder } from '@/infrastructure/helper/databuilders/auth/auth-register-data-builder'
 import { Password } from '@/shared/common/utils/password'
-import type { AuthRegisterProps } from '@/infrastructure/dtos/auth/auth-register.dto'
+import type { AuthRegisterProps } from '@/application/props/auth/auth-register.props'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
 import type { INestApplication } from '@nestjs/common'
 import type { TestingModule } from '@nestjs/testing'
 import { Test } from '@nestjs/testing'
-import type { Prisma } from '@prisma/client'
+import type { Prisma, User } from '@prisma/client'
 import { UserRole } from '@prisma/client'
 
 describe('DB Connection E2E Tests', () => {
@@ -35,7 +35,7 @@ describe('DB Connection E2E Tests', () => {
     } as Prisma.UserCreateInput
 
     const userRepository = app.get(UserRepositoryImpl)
-    const userCreated = await userRepository.createUser(userMock)
+    const userCreated = (await userRepository.createUser(userMock)) as User
 
     const deletedUser = await userRepository.deleteUser({ id: userCreated.id })
 

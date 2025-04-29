@@ -2,7 +2,9 @@ import type IUseCases from '@/application/usecases/interfaces/use-cases.interfac
 import type UserLoginEntity from '@/domain/user/entities/user-login.entity'
 import type UserEntity from '@/domain/user/entities/user.entity'
 import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
+import { SenhaInvalidaException } from '@/infrastructure/exceptions/user/senha-invalida.exception'
 import { UsuarioNaoEncontradoException } from '@/infrastructure/exceptions/user/usuario-nao-encontrado.exception'
+import { Password } from '@/shared/common/utils/password'
 
 export default class UserLoginUseCase implements IUseCases {
   constructor(private iUserRepository: IUserRepository<UserEntity>) {}
@@ -14,6 +16,15 @@ export default class UserLoginUseCase implements IUseCases {
     if (!userExists) {
       throw new UsuarioNaoEncontradoException()
     }
+
+    const validPassword = await Password.verify(
+      userEntity.password,
+      userExists.password,
+    )
+    if (!validPassword) {
+      throw new SenhaInvalidaException()
+    }
+
     return userExists
   }
 }
