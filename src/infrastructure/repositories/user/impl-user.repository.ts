@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '@/infrastructure/services/orm/prisma.service'
+import { DatabaseConnection } from '@/infrastructure/database/database.connection'
 import { User, Prisma } from '@prisma/client'
 import IUserRepository from '@/domain/user/interfaces/user-repository.interface'
 import UserEntity from '@/domain/user/entities/user.entity'
+import { UserResponseProps } from '@/application/props/user/user-response.props'
 
 @Injectable()
 export class UserRepositoryImpl implements IUserRepository<UserEntity> {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: DatabaseConnection) {}
 
   async user(
     userWhereInput: Prisma.UserWhereInput,
-  ): Promise<Omit<User, 'password'> | null> {
+  ): Promise<UserResponseProps | null> {
     return this.prisma.user.findFirst({
       where: userWhereInput,
       omit: { password: true },
@@ -29,7 +30,7 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
     cursor?: Prisma.UserWhereUniqueInput
     where?: Prisma.UserWhereInput
     orderBy?: Prisma.UserOrderByWithRelationInput
-  }): Promise<Omit<User, 'password'>[]> {
+  }): Promise<UserResponseProps[]> {
     const { skip, take, cursor, where, orderBy } = params
     return this.prisma.user.findMany({
       skip,
@@ -41,9 +42,7 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
     })
   }
 
-  async createUser(
-    data: Prisma.UserCreateInput,
-  ): Promise<Omit<User, 'password'>> {
+  async createUser(data: Prisma.UserCreateInput): Promise<UserResponseProps> {
     return this.prisma.user.create({
       data,
       omit: { password: true },
@@ -53,7 +52,7 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
   async updateUser(params: {
     where: Prisma.UserWhereUniqueInput
     data: Prisma.UserUpdateInput
-  }): Promise<Omit<User, 'password'>> {
+  }): Promise<UserResponseProps> {
     const { where, data } = params
     return this.prisma.user.update({
       data,
@@ -64,7 +63,7 @@ export class UserRepositoryImpl implements IUserRepository<UserEntity> {
 
   async deleteUser(
     where: Prisma.UserWhereUniqueInput,
-  ): Promise<Omit<User, 'password'>> {
+  ): Promise<UserResponseProps> {
     return this.prisma.user.delete({
       where,
       omit: { password: true },

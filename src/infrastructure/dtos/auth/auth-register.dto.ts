@@ -1,4 +1,4 @@
-import UserEntity from '@/domain/user/entities/user.entity'
+import { AuthRegisterProps } from '@/application/props/auth/auth-register.props'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsEmail,
@@ -8,13 +8,6 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator'
-
-export interface AuthRegisterProps extends Omit<UserEntity, 'role'> {
-  realname: string
-  username: string
-  email: string
-  password: string
-}
 
 export class AuthRegisterDto implements AuthRegisterProps {
   @ApiProperty({

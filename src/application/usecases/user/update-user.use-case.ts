@@ -1,3 +1,4 @@
+import type { UserResponseProps } from '@/application/props/user/user-response.props'
 import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
 import type UserEntity from '@/domain/user/entities/user.entity'
 import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
@@ -8,7 +9,7 @@ export default class UpdateUserUseCase implements IUseCases {
   async execute(
     id: string,
     updateEntity: Partial<UserEntity>,
-  ): Promise<Omit<UserEntity, 'password'>> {
+  ): Promise<UserResponseProps> {
     return this.iUserRepository.updateUser({
       where: { id },
       data: updateEntity,

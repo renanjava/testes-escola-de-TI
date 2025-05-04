@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core'
 import { UserRole } from '@prisma/client'
 import { ROLES_KEY } from './roles.decorator'
 import { JwtService } from '@nestjs/jwt'
-import { UserRoleVaziaException } from '@/shared/common/exceptions/user/user-role-vazia.exception'
+import { UserRoleVaziaException } from '@/infrastructure/exceptions/user/user-role-vazia.exception'
 
 @Injectable()
 export class RolesGuard implements CanActivate {

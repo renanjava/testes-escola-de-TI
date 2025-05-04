@@ -1,4 +1,4 @@
-import type { PrismaService } from '@/infrastructure/services/orm/prisma.service'
+import type { DatabaseConnection } from '@/infrastructure/database/database.connection'
 import { ProductRepositoryImpl } from '../../impl-product.repository'
 
 describe('ProductRepositoryImpl', () => {
@@ -21,7 +21,7 @@ describe('ProductRepositoryImpl', () => {
     }
 
     const productRepository = new ProductRepositoryImpl(
-      mockPrismaService as unknown as PrismaService,
+      mockPrismaService as unknown as DatabaseConnection,
     )
 
     const whereInput = { id: '1' }
@@ -44,7 +44,7 @@ describe('ProductRepositoryImpl', () => {
     }
 
     const productRepository = new ProductRepositoryImpl(
-      mockPrismaService as unknown as PrismaService,
+      mockPrismaService as unknown as DatabaseConnection,
     )
 
     const whereInput = { id: '999' }
