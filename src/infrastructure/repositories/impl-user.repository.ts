@@ -3,7 +3,7 @@ import { DatabaseConnection } from '@/infrastructure/database/database.connectio
 import { User, Prisma } from '@prisma/client'
 import IUserRepository from '@/domain/interfaces/user-repository.interface'
 import UserEntity from '@/domain/entities/user.entity'
-import { UserResponseProps } from '@/application/props/user-response.props'
+import { UserResponseProps } from '@/application/dtos/interfaces/user-response.props'
 
 @Injectable()
 export class UserRepositoryImpl implements IUserRepository<UserEntity> {

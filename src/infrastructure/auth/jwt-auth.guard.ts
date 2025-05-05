@@ -1,4 +1,4 @@
-import { AutenticacaoNaoEfetuadaException } from '@/infrastructure/exceptions/user/autenticacao-nao-efetuada.exception'
+import { AutenticacaoNaoEfetuadaError } from '@/application/errors/autenticacao-nao-efetuada.error'
 import { Injectable, ExecutionContext } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 
@@ -10,7 +10,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   handleRequest(err: any, user: any) {
     if (err || !user) {
-      throw new AutenticacaoNaoEfetuadaException()
+      throw new AutenticacaoNaoEfetuadaError()
     }
     return user
   }

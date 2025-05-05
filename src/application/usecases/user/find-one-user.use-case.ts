@@ -1,8 +1,8 @@
-import type { UserResponseProps } from '@/application/props/user-response.props'
+import type { UserResponseProps } from '@/application/dtos/interfaces/user-response.props'
 import type IUseCases from '@/application/usecases/use-cases.interface'
 import type UserEntity from '@/domain/entities/user.entity'
 import type IUserRepository from '@/domain/interfaces/user-repository.interface'
-import { UsuarioNaoEncontradoException } from '@/infrastructure/exceptions/user/usuario-nao-encontrado.exception'
+import { UsuarioNaoEncontradoError } from '@/application/errors/usuario-nao-encontrado.error'
 
 export default class FindOneUserUseCase implements IUseCases {
   constructor(private iUserRepository: IUserRepository<UserEntity>) {}
@@ -10,7 +10,7 @@ export default class FindOneUserUseCase implements IUseCases {
   async execute(id: string): Promise<UserResponseProps> {
     const user = await this.iUserRepository.user({ id: id })
     if (!user) {
-      throw new UsuarioNaoEncontradoException()
+      throw new UsuarioNaoEncontradoError()
     }
     return user
   }

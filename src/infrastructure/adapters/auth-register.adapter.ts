@@ -1,6 +1,6 @@
 import UserEntity from '@/domain/entities/user.entity'
-import type { AuthRegisterProps } from '@/application/props/auth-register.props'
-import { AuthRegisterDto } from '@/infrastructure/dtos/auth/auth-register.dto'
+import type { AuthRegisterProps } from '@/application/dtos/interfaces/auth-register.props'
+import { AuthRegisterDto } from '@/infrastructure/dtos/auth-register.dto'
 
 export class AuthRegisterAdapter {
   static toEntity(dto: AuthRegisterDto): UserEntity {

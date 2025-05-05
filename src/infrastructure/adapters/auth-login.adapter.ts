@@ -1,5 +1,5 @@
-import UserLoginEntity from '@/domain/entities/user-login.entity'
-import { AuthLoginDto } from '@/infrastructure/dtos/auth/auth-login.dto'
+import UserLoginEntity from '@/application/dtos/user-login.input'
+import { AuthLoginDto } from '@/infrastructure/dtos/auth-login.dto'
 
 export class AuthLoginAdapter {
   static toEntity(dto: AuthLoginDto): UserLoginEntity {

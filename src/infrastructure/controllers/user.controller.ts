@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common'
 import { User } from '@prisma/client'
-import { UpdateUserDto } from '@/infrastructure/dtos/user/update-user.dto'
+import { UpdateUserDto } from '@/infrastructure/dtos/update-user.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { IUserRequest } from './interfaces/user-request.interface'
 import { UserAdapter } from '@/infrastructure/adapters/user.adapter'

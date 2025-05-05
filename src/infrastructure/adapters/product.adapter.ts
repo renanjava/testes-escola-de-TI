@@ -1,6 +1,6 @@
 import ProductEntity from '@/domain/entities/product.entity'
-import { CreateProductDto } from '@/infrastructure/dtos/bakery/create-product.dto'
-import type { UpdateProductDto } from '@/infrastructure/dtos/bakery/update-product.dto'
+import { CreateProductDto } from '@/infrastructure/dtos/create-product.dto'
+import type { UpdateProductDto } from '@/infrastructure/dtos/update-product.dto'
 
 export class ProductAdapter {
   static toEntity(dto: CreateProductDto): ProductEntity {

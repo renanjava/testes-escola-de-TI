@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common'
 import request from 'supertest'
 import { AppModule } from '@/infrastructure/common/modules/app.module'
 import { execSync } from 'child_process'
-import type { AuthRegisterProps } from '@/application/props/auth-register.props'
+import type { AuthRegisterProps } from '@/application/dtos/interfaces/auth-register.props'
 import { AuthRegisterDataBuilder } from '@/infrastructure/helper/databuilders/auth-register-data-builder'
 import { JwtModule } from '@nestjs/jwt'
 
@@ -66,7 +66,7 @@ describe('Auth Controller Integration Tests', () => {
         email: registerProps.email,
         password: registerProps.password,
       })
-    expect(response.status).toBe(400)
+    expect(response.status).toBe(409)
   })
 
   it('should login an existing user', async () => {

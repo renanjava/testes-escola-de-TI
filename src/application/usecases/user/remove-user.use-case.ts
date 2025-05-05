@@ -1,4 +1,4 @@
-import type { UserResponseProps } from '@/application/props/user-response.props'
+import type { UserResponseProps } from '@/application/dtos/interfaces/user-response.props'
 import type IUseCases from '@/application/usecases/use-cases.interface'
 import type UserEntity from '@/domain/entities/user.entity'
 import type IUserRepository from '@/domain/interfaces/user-repository.interface'

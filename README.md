@@ -154,20 +154,10 @@
 </ol>
 
 <h2>🖥️ Como Rodar a API</h2>
-<h3>Ambiente de Desenvolvimento</h3>
-<ol>
-    <li>Inicie os serviços do <code>docker-compose.yml</code>:<br><code>docker-compose up -d</code></li>
-    <li>Execute as migrações do Prisma:<br><code>npx prisma migrate dev</code></li>
-    <li>Inicie a aplicação em ambiente de desenvolvimento:<br><code>npm run start:dev</code></li>
-    <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
-</ol>
-
-<h3>Ambiente de Produção (com Docker)</h3>
 <ol>
     <li>Certifique-se de ter o Docker instalado e em execução.</li>
     <li>Faça o pull da imagem Docker:<br><code>docker pull renancesu/cafe-com-type:latest</code></li>
-    <li>Suba os contêineres:<br><code>docker-compose -f docker-compose.prod.yml up -d</code></li>
-    <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
+    <li>Suba os contêineres:<br><code>npm run docker:up</code></li>
 </ol>
 
 <h2>📚 Rotas da API</h2>

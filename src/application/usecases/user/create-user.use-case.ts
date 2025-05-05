@@ -1,7 +1,7 @@
 import type IUseCases from '@/application/usecases/use-cases.interface'
 import type UserEntity from '@/domain/entities/user.entity'
 import type IUserRepository from '@/domain/interfaces/user-repository.interface'
-import { EmailOuUsernameExistenteException } from '@/infrastructure/exceptions/user/email-ou-username-existente.exception'
+import { EmailOuUsernameExistenteError } from '@/application/errors/email-ou-username-existente.error'
 
 export default class CreateUserUseCase implements IUseCases {
   constructor(private iUserRepository: IUserRepository<UserEntity>) {}
@@ -12,7 +12,7 @@ export default class CreateUserUseCase implements IUseCases {
     })
 
     if (userExists) {
-      throw new EmailOuUsernameExistenteException()
+      throw new EmailOuUsernameExistenteError()
     }
 
     await this.iUserRepository.createUser(userEntity)

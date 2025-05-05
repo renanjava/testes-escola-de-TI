@@ -1,7 +1,7 @@
 import { AppModule } from '@/infrastructure/common/modules/app.module'
 import { AuthRegisterDataBuilder } from '@/infrastructure/helper/databuilders/auth-register-data-builder'
 import { Password } from '@/infrastructure/common/utils/password'
-import type { AuthRegisterProps } from '@/application/props/auth-register.props'
+import type { AuthRegisterProps } from '@/application/dtos/interfaces/auth-register.props'
 import { UserRepositoryImpl } from '@/infrastructure/repositories/impl-user.repository'
 import type { INestApplication } from '@nestjs/common'
 import type { TestingModule } from '@nestjs/testing'

@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core'
 import { UserRole } from '@prisma/client'
 import { ROLES_KEY } from './roles.decorator'
 import { JwtService } from '@nestjs/jwt'
-import { UserRoleVaziaException } from '@/infrastructure/exceptions/user/user-role-vazia.exception'
+import { UserRoleVaziaError } from '@/application/errors/user-role-vazia.error'
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -29,7 +29,7 @@ export class RolesGuard implements CanActivate {
     )
 
     if (!role || role.length === 0) {
-      throw new UserRoleVaziaException()
+      throw new UserRoleVaziaError()
     }
     return requiredRoles.some(requiredRoles => role.includes(requiredRoles))
   }

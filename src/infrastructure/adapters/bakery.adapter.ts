@@ -1,6 +1,6 @@
 import BakeryEntity from '@/domain/entities/bakery.entity'
-import { CreateBakeryDto } from '@/infrastructure/dtos/bakery/create-bakery.dto'
-import type { UpdateBakeryDto } from '@/infrastructure/dtos/bakery/update-bakery.dto'
+import { CreateBakeryDto } from '@/infrastructure/dtos/create-bakery.dto'
+import type { UpdateBakeryDto } from '@/infrastructure/dtos/update-bakery.dto'
 
 export class BakeryAdapter {
   static toEntity(dto: CreateBakeryDto): BakeryEntity {

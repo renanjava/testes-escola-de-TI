@@ -9,8 +9,8 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common'
-import { CreateProductDto } from '@/infrastructure/dtos/bakery/create-product.dto'
-import { UpdateProductDto } from '@/infrastructure/dtos/bakery/update-product.dto'
+import { CreateProductDto } from '@/infrastructure/dtos/create-product.dto'
+import { UpdateProductDto } from '@/infrastructure/dtos/update-product.dto'
 import { ProductAdapter } from '@/infrastructure/adapters/product.adapter'
 import { IUserRequest } from './interfaces/user-request.interface'
 import { JwtAuthGuard } from '@/infrastructure/auth/jwt-auth.guard'

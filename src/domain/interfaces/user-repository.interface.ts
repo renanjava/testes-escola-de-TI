@@ -1,4 +1,4 @@
-import type { UserResponseProps } from '@/application/props/user-response.props'
+import type { UserResponseProps } from '@/application/dtos/interfaces/user-response.props'
 
 export default interface IUserRepository<TEntity> {
   userLogin(where: any): Promise<TEntity | null>

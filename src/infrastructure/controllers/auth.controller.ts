@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Post, Body } from '@nestjs/common'
-import { AuthLoginDto } from '@/infrastructure/dtos/auth/auth-login.dto'
+import { AuthLoginDto } from '@/infrastructure/dtos/auth-login.dto'
 import { HashPasswordPipe } from '@/infrastructure/common/pipes/hash-password.pipe'
-import { AuthRegisterDto } from '@/infrastructure/dtos/auth/auth-register.dto'
+import { AuthRegisterDto } from '@/infrastructure/dtos/auth-register.dto'
 import { AuthRegisterAdapter } from '@/infrastructure/adapters/auth-register.adapter'
 import { AuthLoginAdapter } from '@/infrastructure/adapters/auth-login.adapter'
 import { AuthUseCasesFactory } from '@/infrastructure/factories/auth-use-cases.factory'
