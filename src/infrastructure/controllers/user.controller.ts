@@ -3,7 +3,6 @@ import { User } from '@prisma/client'
 import { UpdateUserDto } from '@/infrastructure/dtos/user/update-user.dto'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { IUserRequest } from './interfaces/user-request.interface'
-import { ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { UserAdapter } from '@/infrastructure/adapters/user.adapter'
 import { UserUseCasesFactory } from '@/infrastructure/factories/user-use-cases.factory'
 
@@ -13,9 +12,6 @@ export class UserController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Usuário loga através do token JWT' })
-  @ApiResponse({ status: 200, description: 'Usuário buscado.' })
-  @ApiResponse({ status: 404, description: 'Usuário não encontrado.' })
   async findOne(@Req() request: IUserRequest): Promise<User> {
     const findOneUserUseCase =
       this.userUseCasesFactory.getFindOneUserUseCaseInstance()
@@ -24,8 +20,6 @@ export class UserController {
 
   @Patch()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Usuário atualiza seus dados através do token JWT' })
-  @ApiResponse({ status: 200, description: 'Usuário atualizado.' })
   async update(
     @Req() request: IUserRequest,
     @Body() updateUserDto: UpdateUserDto,

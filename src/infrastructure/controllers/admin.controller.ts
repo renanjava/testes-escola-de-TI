@@ -11,7 +11,6 @@ import {
 import { Bakery, BakeryManager, User, UserRole } from '@prisma/client'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { Roles } from '../auth/roles.decorator'
-import { ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { CreateBakeryManagerDto } from '@/infrastructure/dtos/bakery/create-bakery-manager.dto'
 import { BakeryManagerAdapter } from '@/infrastructure/adapters/bakery-manager.adapter'
 import { CreateBakeryDto } from '@/infrastructure/dtos/bakery/create-bakery.dto'
@@ -131,8 +130,6 @@ export class AdminController {
   @Get('user')
   @UseGuards(JwtAuthGuard)
   @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: 'Admin busca todos os usuários' })
-  @ApiResponse({ status: 200, description: 'Usuários listados.' })
   async findAllUsers(): Promise<User[]> {
     const findAllUsersUseCase =
       this.userUseCasesFactory.getFindAllUsersUseCaseInstance()
@@ -142,8 +139,6 @@ export class AdminController {
   @Delete('user/:id')
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Admin delete um usuário por id' })
-  @ApiResponse({ status: 200, description: 'Usuário deletado.' })
   async removeUser(@Param('id') id: string): Promise<User> {
     const removeUserUseCase =
       this.userUseCasesFactory.getRemoveUserUseCaseInstance()
@@ -153,10 +148,6 @@ export class AdminController {
   @Patch('user/:id')
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({
-    summary: 'Admin atualiza usuário por id',
-  })
-  @ApiResponse({ status: 200, description: 'Usuário atualizado.' })
   async update(
     @Param('id') id: string,
     @Body() adminUpdateUserDto: AdminUpdateUserDto,
