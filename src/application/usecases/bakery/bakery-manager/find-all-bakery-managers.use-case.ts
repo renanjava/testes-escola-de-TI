@@ -1,6 +1,6 @@
-import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
-import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
-import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
+import type IUseCases from '@/application/usecases/use-cases.interface'
+import type BakeryManagerEntity from '@/domain/entities/bakery-manager.entity'
+import type IBakeryManagerRepository from '@/domain/interfaces/bakery-manager-repository.interface'
 import { NenhumGerenteEncontradoException } from '@/infrastructure/exceptions/user/nenhum-gerente-encontrado.exception'
 
 export default class FindAllBakeryManagersUseCase implements IUseCases {

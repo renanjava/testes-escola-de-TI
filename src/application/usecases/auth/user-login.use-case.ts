@@ -1,10 +1,10 @@
-import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
-import type UserLoginEntity from '@/domain/user/entities/user-login.entity'
-import type UserEntity from '@/domain/user/entities/user.entity'
-import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
+import type IUseCases from '@/application/usecases/use-cases.interface'
+import type UserLoginEntity from '@/domain/entities/user-login.entity'
+import type UserEntity from '@/domain/entities/user.entity'
+import type IUserRepository from '@/domain/interfaces/user-repository.interface'
 import { SenhaInvalidaException } from '@/infrastructure/exceptions/user/senha-invalida.exception'
 import { UsuarioNaoEncontradoException } from '@/infrastructure/exceptions/user/usuario-nao-encontrado.exception'
-import { Password } from '@/shared/common/utils/password'
+import { Password } from '@/infrastructure/common/utils/password'
 
 export default class UserLoginUseCase implements IUseCases {
   constructor(private iUserRepository: IUserRepository<UserEntity>) {}

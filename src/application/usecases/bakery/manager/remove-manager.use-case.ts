@@ -1,7 +1,7 @@
-import type { UserResponseProps } from '@/application/props/user/user-response.props'
-import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
-import type UserEntity from '@/domain/user/entities/user.entity'
-import type IUserRepository from '@/domain/user/interfaces/user-repository.interface'
+import type { UserResponseProps } from '@/application/props/user-response.props'
+import type IUseCases from '@/application/usecases/use-cases.interface'
+import type UserEntity from '@/domain/entities/user.entity'
+import type IUserRepository from '@/domain/interfaces/user-repository.interface'
 
 export default class RemoveManagerUseCase implements IUseCases {
   constructor(private iUserRepository: IUserRepository<UserEntity>) {}

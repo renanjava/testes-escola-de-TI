@@ -1,6 +1,6 @@
-import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
-import type ProductEntity from '@/domain/bakery/entities/product.entity'
-import type IProductRepository from '@/domain/bakery/interfaces/product.repository'
+import type IUseCases from '@/application/usecases/use-cases.interface'
+import type ProductEntity from '@/domain/entities/product.entity'
+import type IProductRepository from '@/domain/interfaces/product.repository'
 
 export default class FindOneProductUseCase implements IUseCases {
   constructor(private iProductRepository: IProductRepository<ProductEntity>) {}

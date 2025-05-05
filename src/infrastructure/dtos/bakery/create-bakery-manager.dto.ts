@@ -1,4 +1,4 @@
-import BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
+import BakeryManagerEntity from '@/domain/entities/bakery-manager.entity'
 import { IsUUID } from 'class-validator'
 
 export interface CreateBakeryManagerProps extends BakeryManagerEntity {

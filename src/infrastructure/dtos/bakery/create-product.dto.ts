@@ -1,4 +1,4 @@
-import ProductEntity from '@/domain/bakery/entities/product.entity'
+import ProductEntity from '@/domain/entities/product.entity'
 import { IsBoolean, IsNumber, IsString, IsUUID } from 'class-validator'
 
 export class CreateProductProps implements ProductEntity {

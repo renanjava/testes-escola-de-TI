@@ -1,4 +1,4 @@
-import BakeryEntity from '@/domain/bakery/entities/bakery.entity'
+import BakeryEntity from '@/domain/entities/bakery.entity'
 import { IsString } from 'class-validator'
 
 export interface CreateBakeryProps extends BakeryEntity {

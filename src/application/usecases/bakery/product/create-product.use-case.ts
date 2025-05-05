@@ -1,8 +1,8 @@
-import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
-import type BakeryManagerEntity from '@/domain/bakery/entities/bakery-manager.entity'
-import type ProductEntity from '@/domain/bakery/entities/product.entity'
-import type IBakeryManagerRepository from '@/domain/bakery/interfaces/bakery-manager-repository.interface'
-import type IProductRepository from '@/domain/bakery/interfaces/product.repository'
+import type IUseCases from '@/application/usecases/use-cases.interface'
+import type BakeryManagerEntity from '@/domain/entities/bakery-manager.entity'
+import type ProductEntity from '@/domain/entities/product.entity'
+import type IBakeryManagerRepository from '@/domain/interfaces/bakery-manager-repository.interface'
+import type IProductRepository from '@/domain/interfaces/product.repository'
 import { UsuarioNaoEGerenteException } from '@/infrastructure/exceptions/bakery/product/usuario-nao-gerente.exception'
 
 export default class CreateProductUseCase implements IUseCases {

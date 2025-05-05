@@ -1,4 +1,4 @@
-import { AuthLoginProps } from '@/application/props/auth/auth-login.props'
+import { AuthLoginProps } from '@/application/props/auth-login.props'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsNotEmpty,

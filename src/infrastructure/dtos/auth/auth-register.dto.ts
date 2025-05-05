@@ -1,4 +1,4 @@
-import { AuthRegisterProps } from '@/application/props/auth/auth-register.props'
+import { AuthRegisterProps } from '@/application/props/auth-register.props'
 import { ApiProperty } from '@nestjs/swagger'
 import {
   IsEmail,
