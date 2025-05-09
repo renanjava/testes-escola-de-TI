@@ -1,4 +1,4 @@
-import { IEmailMessage } from '@/application/email/interfaces/email-message.interface'
+import { IEmailMessage } from '@/application/email/email-message.interface'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import * as nodemailer from 'nodemailer'

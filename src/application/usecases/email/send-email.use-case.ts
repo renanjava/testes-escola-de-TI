@@ -1,5 +1,5 @@
-import type { IEmailMessage } from '@/application/email/interfaces/email-message.interface'
-import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
+import type { IEmailMessage } from '@/application/email/email-message.interface'
+import type IUseCases from '@/application/usecases/use-cases.interface'
 
 export class SendEmailUseCase implements IUseCases {
   constructor(private readonly iEmailMessage: IEmailMessage) {}

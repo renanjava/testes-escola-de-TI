@@ -1,72 +1,174 @@
 ```mermaid
-graph TD
-    %% Application Layer
-    subgraph Application Layer
-        A2[UseCases]
+%% Clean Architecture do Projeto Delivery de Padarias
+
+flowchart TB
+    %% Camadas Principais
+    subgraph Domain ["Domain"]
+        direction TB
+        DomainEntities["Entities"]
+        DomainRepositories["Repositories Interfaces"]
     end
 
-    %% Domain Layer
-    subgraph Domain Layer
-        D1[Entities]
+    subgraph Application ["Application"]
+        direction TB
+        ApplicationUseCases["Use Cases"]
+        ApplicationDTOs["DTOs"]
+        ApplicationErrors["Errors"]
+        ApplicationInterfaces["Interfaces"]
+        ApplicationServices["Services"]
     end
 
-    %% Infrastructure Layer
-    subgraph Infrastructure Layer
-        A1[Controllers]
-        I1[Adapters]
-        I2[Repositories]
-        I3[Services]
-        I4[JwtStrategy]
+    subgraph Infrastructure ["Infrastructure"]
+        direction TB
+        InfrastructureControllers["Controllers"]
+        InfrastructureAdapters["Adapters"]
+        InfrastructurePipes["Pipes"]
+        InfrastructureRepositories["Repositories"]
+        InfrastructureUtils["Utils"]
+        InfrastructureModules["Modules"]
+        InfrastructureGuards["Guards"]
+        InfrastructureFactories["Factories"]
     end
 
-    %% Shared Layer
-    subgraph Shared Layer
-        S1[GlobalLoggerInterceptor]
-        S2[GlobalExceptionFilter]
-        S3[RolesGuard]
+    subgraph Framework ["Framework"]
+        direction TB
+        FrameworkNestJS["NestJS Framework"]
     end
 
-    %% Database
-    subgraph Database
-        DB[Database]
-        P1[Prisma]
+    %% Relacionamentos entre Camadas
+    DomainEntities -->|Define| DomainRepositories
+    ApplicationUseCases -->|Usa| DomainRepositories
+    ApplicationUseCases -->|Usa| ApplicationDTOs
+    ApplicationUseCases -->|Usa| ApplicationErrors
+    ApplicationUseCases -->|Usa| ApplicationServices
+    InfrastructureControllers -->|Chama| ApplicationUseCases
+    InfrastructureControllers -->|Usa| InfrastructurePipes
+    InfrastructureControllers -->|Usa| InfrastructureGuards
+    InfrastructureAdapters -->|Converte| ApplicationDTOs
+    InfrastructureRepositories -->|Implementa| DomainRepositories
+    InfrastructureFactories -->|Cria| ApplicationUseCases
+    InfrastructureModules -->|Agrupa| InfrastructureControllers
+    InfrastructureModules -->|Agrupa| InfrastructureRepositories
+    InfrastructureModules -->|Agrupa| InfrastructureFactories
+    InfrastructureUtils -->|Fornece| ApplicationServices
+    FrameworkNestJS -->|Fornece| InfrastructureModules
+
+    %% Domain Entities
+    subgraph DomainEntities ["Entities"]
+        UserEntity["UserEntity"]
+        BakeryEntity["BakeryEntity"]
+        ProductEntity["ProductEntity"]
+        ManagerEntity["ManagerEntity"]
+        BakeryManagerEntity["BakeryManagerEntity"]
     end
 
-    %% Configurations
-    subgraph Configurations
-        C1[.env]
-        C2[nest-cli.json]
+    %% Domain Repositories
+    subgraph DomainRepositories ["Repositories Interfaces"]
+        IUserRepository["IUserRepository"]
+        IBakeryRepository["IBakeryRepository"]
+        IProductRepository["IProductRepository"]
+        IManagerRepository["IManagerRepository"]
+        IBakeryManagerRepository["IBakeryManagerRepository"]
     end
 
-    %% Testing
-    subgraph Testing
-        T1[Unit Tests]
-        T2[Integration Tests]
-        T3[E2E Tests]
+    %% Application Use Cases
+    subgraph ApplicationUseCases ["Use Cases"]
+        SignInUseCase["SignInUseCase"]
+        CreateUserUseCase["CreateUserUseCase"]
+        ManageBakeryUseCase["ManageBakeryUseCase"]
+        ListProductsUseCase["ListProductsUseCase"]
+        AssignManagerUseCase["AssignManagerUseCase"]
+        RemoveBakeryUseCase["RemoveBakeryUseCase"]
     end
 
-    %% CI/CD
-    subgraph CI/CD
-        CI1[GitHub Actions]
+    %% Application DTOs
+    subgraph ApplicationDTOs ["DTOs"]
+        SignInInput["SignInInput"]
+        CreateUserInput["CreateUserInput"]
+        CreateBakeryInput["CreateBakeryInput"]
+        CreateProductInput["CreateProductInput"]
+        AssignManagerInput["AssignManagerInput"]
     end
 
-    %% Connections
-    A1 --> I1
-    I3 --> A2
-    I1 --> I3
-    A2 --> D1
-    I2 --> DB
-    I3 --> I2
-    I4 --> S3
-    S1 --> A1
-    S2 --> A1
-    S3 --> A1
-    P1 --> DB
-    T1 --> A2
-    T2 --> I3
-    T3 --> A1
-    CI1 --> T3
-    CI1 --> DB
-    C1 --> A1
-    C2 --> A1
+    %% Application Errors
+    subgraph ApplicationErrors ["Errors"]
+        UsuarioNaoEncontradoError["UsuarioNaoEncontradoError"]
+        ProdutoNaoEncontradoError["ProdutoNaoEncontradoError"]
+        BakeryNaoEncontradaError["BakeryNaoEncontradaError"]
+        AtribuicaoInvalidaError["AtribuicaoInvalidaError"]
+    end
+
+    %% Application Services
+    subgraph ApplicationServices ["Services"]
+        TokenService["TokenService"]
+        HashService["HashService"]
+    end
+
+    %% Infrastructure Controllers
+    subgraph InfrastructureControllers ["Controllers"]
+        AuthController["AuthController"]
+        UserController["UserController"]
+        BakeryController["BakeryController"]
+        ProductController["ProductController"]
+        ManagerController["ManagerController"]
+    end
+
+    %% Infrastructure Adapters
+    subgraph InfrastructureAdapters ["Adapters"]
+        UserAdapter["UserAdapter"]
+        BakeryAdapter["BakeryAdapter"]
+        ProductAdapter["ProductAdapter"]
+        SignInAdapter["SignInAdapter"]
+    end
+
+    %% Infrastructure Pipes
+    subgraph InfrastructurePipes ["Pipes"]
+        CreateUserPipe["CreateUserPipe"]
+        CreateBakeryPipe["CreateBakeryPipe"]
+        CreateProductPipe["CreateProductPipe"]
+        SignInPipe["SignInPipe"]
+    end
+
+    %% Infrastructure Repositories
+    subgraph InfrastructureRepositories ["Repositories"]
+        UserRepository["UserRepository"]
+        BakeryRepository["BakeryRepository"]
+        ProductRepository["ProductRepository"]
+        ManagerRepository["ManagerRepository"]
+        BakeryManagerRepository["BakeryManagerRepository"]
+    end
+
+    %% Infrastructure Utils
+    subgraph InfrastructureUtils ["Utils"]
+        AxiosImpl["AxiosImpl"]
+        BcryptImpl["BcryptImpl"]
+        LoggerImpl["LoggerImpl"]
+        UuidImpl["UuidImpl"]
+    end
+
+    %% Infrastructure Modules
+    subgraph InfrastructureModules ["Modules"]
+        AppModule["AppModule"]
+        AuthModule["AuthModule"]
+        UserModule["UserModule"]
+        BakeryModule["BakeryModule"]
+        ProductModule["ProductModule"]
+        ManagerModule["ManagerModule"]
+        DatabaseModule["DatabaseModule"]
+    end
+
+    %% Infrastructure Guards
+    subgraph InfrastructureGuards ["Guards"]
+        AuthGuard["AuthGuard"]
+    end
+
+    %% Infrastructure Factories
+    subgraph InfrastructureFactories ["Factories"]
+        AuthUseCasesFactory["AuthUseCasesFactory"]
+        UserUseCasesFactory["UserUseCasesFactory"]
+        BakeryUseCasesFactory["BakeryUseCasesFactory"]
+        ProductUseCasesFactory["ProductUseCasesFactory"]
+        ManagerUseCasesFactory["ManagerUseCasesFactory"]
+    end
+
 ```

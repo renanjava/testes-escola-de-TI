@@ -1,5 +1,5 @@
 import { Injectable, PipeTransform } from '@nestjs/common'
-import { Password } from '@/shared/common/utils/password'
+import { Password } from '@/infrastructure/common/utils/password'
 
 @Injectable()
 export class HashPasswordPipe implements PipeTransform {

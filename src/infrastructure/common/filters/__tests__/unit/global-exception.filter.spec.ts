@@ -16,7 +16,9 @@ describe('GlobalExceptionFilter', () => {
   })
 
   it('should handle unknown exception', () => {
-    const exception = new Error('Unknown error')
+    const timestamp = new Date()
+    const exception = new Error('Erro interno no servidor')
+
     const host = {
       switchToHttp: jest.fn().mockReturnValue({
         getResponse: jest.fn().mockReturnValue({}),
@@ -30,9 +32,9 @@ describe('GlobalExceptionFilter', () => {
       {},
       {
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-        timestamp: expect.any(String),
+        timestamp: timestamp,
         path: undefined,
-        message: 'Unknown error',
+        message: 'Erro interno no servidor',
       },
       HttpStatus.INTERNAL_SERVER_ERROR,
     )

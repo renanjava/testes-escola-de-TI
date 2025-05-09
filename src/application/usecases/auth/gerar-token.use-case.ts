@@ -1,7 +1,7 @@
-import type { IUserPayload } from '@/application/controllers/interfaces/user-payload.interface'
-import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
-import type { TokenProps } from '@/application/controllers/interfaces/token-props.interface'
-import type { IAccessToken } from '@/application/controllers/interfaces/access-token.interface'
+import type { IUserPayload } from '@/application/controllers/user-payload.interface'
+import type IUseCases from '@/application/usecases/use-cases.interface'
+import type { TokenProps } from '@/application/controllers/token-props.interface'
+import type { IAccessToken } from '@/application/controllers/access-token.interface'
 
 export class GerarTokenUseCase implements IUseCases {
   constructor(private readonly iAccessToken: IAccessToken) {}

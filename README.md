@@ -21,19 +21,19 @@
 
 <h2>🔥 Stack Utilizada</h2>
 <ul>
-    <li><strong>Node.js</strong>: v20.12.2 - Plataforma de execução JavaScript para back-end.</li>
-    <li><strong>NestJS</strong>: Framework modular baseado em Node.js, inspirado em arquitetura Angular.</li>
-    <li><strong>JWT</strong>: @nestjs/jwt v11.0.0 - Gerenciamento e autenticação via tokens JWT.</li>
-    <li><strong>Bcrypt</strong>: v5.1.1 - Hash e verificação segura de senhas.</li>
-    <li><strong>Class Transformer</strong>: v0.5.1 - Conversão automática entre objetos e DTOs.</li>
-    <li><strong>Class Validator</strong>: v0.14.1 - Validação automática de dados de entrada.</li>
-    <li><strong>Jest</strong>: v29.7.0 - Framework de testes unitários e de integração.</li>
-    <li><strong>Prettier</strong>: v3.4.2 - Formatação automática e padronização do código.</li>
-    <li><strong>Prisma</strong>: v6.4.0 - ORM moderno para facilitar manipulação do banco.</li>
-    <li><strong>ESLint</strong>: v9.20.1 - Análise estática para garantir qualidade e boas práticas.</li>
-    <li><strong>Faker.js</strong>: v9.5.0 - Geração de dados fictícios para testes e mocks.</li>
-    <li><strong>Supertest</strong>: v6.3.3 - Biblioteca para testes de integração de APIs.</li>
-    <li><strong>UUID</strong>: v9.0.0 - Geração de valores válidos de UUID para testes.</li>
+    <li><strong>Node.js</strong>: v20.12.2</li>
+    <li><strong>NestJS</strong>: v11.0.10</li>
+    <li><strong>JWT</strong>: @nestjs/jwt v11.0.0</li>
+    <li><strong>Bcrypt</strong>: v5.1.1</li>
+    <li><strong>Class Transformer</strong>: v0.5.1</li>
+    <li><strong>Class Validator</strong>: v0.14.1</li>
+    <li><strong>Jest</strong>: v29.7.0</li>
+    <li><strong>Prettier</strong>: v3.4.2</li>
+    <li><strong>Prisma</strong>: v6.4.0</li>
+    <li><strong>ESLint</strong>: v9.20.1</li>
+    <li><strong>Faker.js</strong>: v9.5.0</li>
+    <li><strong>Supertest</strong>: v6.3.3</li>
+    <li><strong>UUID</strong>: v9.0.0</li>
 </ul>
 
 <h2>🚀 Tecnologias Utilizadas</h2>
@@ -89,11 +89,6 @@
             <li><small>Geração de artefatos Docker e push para Docker Hub.</small></li>
         </ul>
     </li>
-    <li><strong>Documentação: Swagger</strong> 
-        <ul>
-            <li><small>Gera documentação interativa da API automaticamente.</small></li>
-        </ul>
-    </li>
     <li><strong>Containerização: Docker e DockerHub</strong> 
         <ul>
             <li><small>Docker para criar contêineres e DockerHub para armazenar e distribuir imagens Docker.</small></li>
@@ -119,21 +114,10 @@
 <h2>📂 Estrutura do Projeto</h2>
 <pre>
   /src
-  |-- __tests__/e2e/      # Testes de ponta-a-ponta da aplicação
-  |-- application/        # Casos de uso e regras de negócio
-  |   |-- usecases/       # Representam uma ação dentro do sistema
-  |-- domain/             # Entidades e interfaces de domínio
-  |   |-- entities/       # Representam uma tabela no banco de dados
-  |   |-- interfaces/     # Interfaces de entrada e saída (controllers, DTOs, etc.)
-  |-- infrastructure/     # Implementações de infraestrutura (banco, serviços, etc.)
-  |   |-- adapters/       # Adapters para integração com serviços externos
-  |   |-- auth/           # Regras de Autenticação e Autorização
-  |   |-- common/         # Recursos do framework
-  |   |-- helper/         # Recursos do bibliotecas externas
-  |   |-- repositories/   # Abstração de queries SQL em formato de funções (Prisma)
-  |   |-- services/       # Agrupamento de Use Cases e adição de mais lógicas
-  |-- shared/             # Compartilhamento de dados entre entidades
-  |-- main.ts             # Arquivo principal
+  |-- application/        # Camada de aplicação (use cases, DTOs, errors)
+  |-- domain/             # Camada de domínio (entidades e interfaces)
+  |-- infrastructure/     # Camada de infraestrutura (controllers, adapters, pipes, repositories)
+  |-- main.ts             # Arquivo principal da aplicação
 </pre>
 
 <h2>🌀 Design Patterns</h2>
@@ -170,20 +154,10 @@
 </ol>
 
 <h2>🖥️ Como Rodar a API</h2>
-<h3>Ambiente de Desenvolvimento</h3>
-<ol>
-    <li>Inicie os serviços do <code>docker-compose.yml</code>:<br><code>docker-compose up -d</code></li>
-    <li>Execute as migrações do Prisma:<br><code>npx prisma migrate dev</code></li>
-    <li>Inicie a aplicação em ambiente de desenvolvimento:<br><code>npm run start:dev</code></li>
-    <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
-</ol>
-
-<h3>Ambiente de Produção (com Docker)</h3>
 <ol>
     <li>Certifique-se de ter o Docker instalado e em execução.</li>
     <li>Faça o pull da imagem Docker:<br><code>docker pull renancesu/cafe-com-type:latest</code></li>
-    <li>Suba os contêineres:<br><code>docker-compose -f docker-compose.prod.yml up -d</code></li>
-    <li>Acesse a documentação da API:<br><code>http://localhost:3000/api</code></li>
+    <li>Suba os contêineres:<br><code>npm run docker:up</code></li>
 </ol>
 
 <h2>📚 Rotas da API</h2>

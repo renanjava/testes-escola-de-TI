@@ -1,25 +1,26 @@
 import { ConsoleLogger, Module } from '@nestjs/common'
-import { AuthModule } from './auth/auth.module'
+import { AuthModule } from './auth.module'
 import { ConfigModule } from '@nestjs/config'
-import { UserModule } from './user/user.module'
+import { UserModule } from './user.module'
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
 import { GlobalLoggerInterceptor } from '@/infrastructure/common/interceptors/global-logger.interceptor'
-import { RolesGuard } from '@/infrastructure/auth/rbac/roles.guard'
+import { RolesGuard } from '@/infrastructure/auth/roles.guard'
 import { GlobalExceptionFilter } from '@/infrastructure/common/filters/global-exception.filter'
-import { JwtService } from '@nestjs/jwt'
-import { NodemailerModule } from './email/nodemailer.module'
-import { BakeryModule } from './bakery/bakery.module'
-import { AdminModule } from './user/admin.module'
-import { ProductModule } from './bakery/product/product.module'
-import { PrismaModule } from './prisma/prisma.module'
-import { ManagerUseCasesFactory } from '@/infrastructure/factories/user/manager-use-cases.factory'
-import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user.repository'
+import { NodemailerModule } from './nodemailer.module'
+import { BakeryModule } from './bakery.module'
+import { AdminModule } from './admin.module'
+import { ProductModule } from './product.module'
+import { PrismaModule } from './prisma.module'
+import { UserRepositoryImpl } from '@/infrastructure/repositories/impl-user.repository'
+import { BakeryManagerModule } from './bakery-manager.module'
+import { ManagerModule } from './manager.module'
+import { JwtModule } from '@nestjs/jwt'
 
 @Module({
   imports: [
     AuthModule,
+    JwtModule,
     ConfigModule.forRoot({
-      envFilePath: '.env.development',
       isGlobal: true,
     }),
     UserModule,
@@ -28,9 +29,12 @@ import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user
     AdminModule,
     ProductModule,
     PrismaModule,
+    BakeryManagerModule,
+    ManagerModule,
   ],
   providers: [
-    JwtService,
+    ConsoleLogger,
+    { provide: 'UserRepository', useExisting: UserRepositoryImpl },
     {
       provide: APP_FILTER,
       useClass: GlobalExceptionFilter,
@@ -43,9 +47,6 @@ import { UserRepositoryImpl } from '@/infrastructure/repositories/user/impl-user
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
-    ConsoleLogger,
-    ManagerUseCasesFactory,
-    { provide: 'UserRepository', useClass: UserRepositoryImpl },
   ],
 })
 export class AppModule {}

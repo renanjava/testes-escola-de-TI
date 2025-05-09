@@ -1,5 +1,5 @@
-import type UserEntity from '@/domain/user/entities/user.entity'
-import type IUseCases from '@/application/usecases/interfaces/use-cases.interface'
+import type UserEntity from '@/domain/entities/user.entity'
+import type IUseCases from '@/application/usecases/use-cases.interface'
 import type CreateUserUseCase from '@/application/usecases/user/create-user.use-case'
 import type { SendEmailUseCase } from '@/application/usecases/email/send-email.use-case'
 
